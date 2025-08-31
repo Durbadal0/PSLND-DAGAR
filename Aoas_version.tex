@@ -1,0 +1,1100 @@
+%
+\documentclass[aoas]{imsart}
+\usepackage{amsthm}
+%\usepackage{textcomp}
+\usepackage{lmodern}
+
+\usepackage{amsmath}
+
+%\usepackage{textcomp}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\graphicspath{{pics/}}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\setlength{\parskip}{0pt}
+\usepackage{multirow}
+\usepackage{xcolor}
+
+% Define the exact Viridis colors used in the plot
+
+% \usepackage{xcolor}
+% \usepackage{tikz}
+
+% Define the Viridis colors
+\definecolor{viridis1}{RGB}{68,1,84}    % dark purple
+\definecolor{viridis2}{RGB}{49,104,142} % blue
+\definecolor{viridis3}{RGB}{53,183,121} % green
+\definecolor{viridis4}{RGB}{253,231,37} % yellow
+%documentclass[useAMS]{biom}
+%
+%  If your system does not have the AMS fonts version 2.0 installed, then
+%  remove the useAMS option.
+%
+%  useAMS allows you to obtain upright Greek characters.
+%  e.g. \umu, \upi etc.  For further information, see the section on "Upright Greek characters" in
+%  this guide.
+%
+%  If you are using AMS 2.0 fonts, bold math letters/symbols are available
+%  at a more extensive range of sizes for NFSS release 1 and 2 (using \boldmath or
+%  preferably \bmath).
+% 
+%  Other options are described in the user guide. Here are a few:
+% 
+%  -  If you use Patrick Daly's natbib  to cross-reference your 
+%     bibliography entries, use the usenatbib option
+%
+%  -  If you use \includegraphics (graphicx package) for importing graphics
+%     into your figures, use the usegraphicx option
+% 
+%  If you wish to typeset the paper in Times font (if you do not have the
+%  PostScript Type 1 Computer Modern fonts you will need to do this to get
+%  smoother fonts in a PDF file) then uncomment the next line
+%  \usepackage{Times}
+
+%%%%% PLACE YOUR OWN MACROS HERE %%%%%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+%\usepackage{natbib}
+
+
+\usepackage{algorithm}
+\usepackage{subfigure}
+
+\usepackage{algpseudocode}
+
+
+\RequirePackage{etoolbox}
+\csundef{c@author}
+\usepackage{biblatex}
+
+
+\addbibresource{biomsample.bib}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\renewbibmacro*{in:}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext{\intitlepunct}}}
+
+\def\bSig\mathbf{\Sigma}
+\newcommand{\VS}{V\&S}
+\newcommand{\tr}{\mbox{tr}}
+\usepackage{tikz}
+
+\newcommand*{\tikzbulletred}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[red] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+\newcommand*{\tikzbulletgreen}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[green] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletyellow}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[yellow] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletblue}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[blue] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+%\RequirePackage[authoryear]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}
+\usepackage{dsfont}
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothesis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{definition}            %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{fact}{Fact}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Estimation of cluster-specific causal effects on spatially associated  survival data using SoftBART}
+%\title{A sample article title with some additional note\thanksref{t1}}
+\runtitle{ Causal Inference on Spatially Clustered Survival data}
+%\thankstext{T1}{A sample additional note to the title.}
+
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only one address is permitted per author. %%
+%% Only division, organization and e-mail is %%
+%% included in the address.                  %%
+%% Additional information can be included in %%
+%% the Acknowledgments section if necessary. %%
+%% ORCID can be inserted by command:         %%
+%% \orcid{0000-0000-0000-0000}               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[A]{\fnms{Durbadal}~\snm{Ghosh} \ead[label=e1]{dg20ea@fsu.edu}},
+\author[A]{\fnms{Indrabati}~\snm{Bhattacharya}\ead[label=e2]{ib22g@fsu.edu}},
+
+
+
+\author[A]{\fnms{George}~\snm{Rust}\ead[label=e3]{george.rust@med.fsu.edu}}
+\and
+
+\author[A]{\fnms{Debajyoti}~\snm{Sinha}\ead[label=e4]{dsinha@fsu.edu}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Department of Statistics,
+Florida State University\printead[presep={ ,\ }]{e1,e2,e3,e4}}
+
+\end{aug}
+
+
+\begin{abstract}
+We propose a novel Bayesian approach to estimate causal effects in spatially clustered survival data. Using Soft Bayesian Additive Regression Trees (SBART), we introduce a nonparametric regression for a log-Normal survival model that accommodates spatial associations among unknown cluster effects through a Directed Acyclic Graph Auto-Regressive (DAGAR) model. We employ a two stage approach, which entails estimating the propensity score in the first step, and incorporating it as a confounder of the outcome model in the second step.
+%, achieving double robustness analogous to frequentist causal inference. 
+In our simulation study, we compare our method with existing approaches under various simulation scenarios, including both correctly specified and misspecified outcome models, to demonstrate the superior performance of our method.  We then apply our method to analyze the causal effect of Treatment Delay (TD) on post-treatment survival of breast cancer patients from the Florida Cancer Registry (FCR). 
+Our analysis produces the county-specific as well as state-wide assessment of the causal effects while accommodating spatial association among counties.
+ 
+%This comprehensive framework offers valuable tools for causal inference in survival analysis and yields practical insights for guiding health policy. 
+\end{abstract}
+
+
+
+
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please use \tableofcontents for articles %%
+%% with 50 pages and more                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\tableofcontents
+
+
+\section{Introduction.}
+Studies with spatially clustered survival data, where survival outcomes are clustered by geographic units such as counties, hospitals, or neighborhoods, frequently arise in epidemiology, environmental health, and social science. 
+For example, in the Florida Breast Cancer Registry (FCR), 68,009 breast cancer patients of Florida (FL)  are clustered in 67 counties. 
+%Analysis pose three intertwined challenges:  intracluster (spatial) dependence, unmeasured county‐level confounders, and right‐censored outcomes. 
+Often, in these studies, the main interest is the evaluation of the
+causal effects of the interventions (for the FCR study, $<90$ days of Treatment Delay (TD) on survival outcomes (time to death since cancer treatment) within each cluster as well as in the region (entire state of FL). 
+However, for such observational studies, the assignment of treatment (in FCR, TD $<90$ days) confound with observed  patient-level factors (age, tumor grade, hormone receptor (HR) status, stage, etc.) and unobserved cluster-level characteristics. Estimation of causal effects in such observational survival studies demands flexible models and associated methods that adjust for possible right-censoring, within-cluster (county) association, spatial dependence among clusters, and unknown nonlinear relationships among confounders, treatment, and survival outcome.
+
+%, yet presents challenges:  intracluster spatial dependence, right‑censoring, interactions between individual-level confounders, and possibly unmeasured area-level confounders.
+%, creating spatial confounding that standard causal‐survival methods (which ignore spatial association) or spatial survival models (which lack causal interpretation) cannot resolve.
+
+
+
+Challenges in observational data include nonrandomized treatment assignment, measured and unmeasured confounding \parencite{rosenbaum2002observational}. 
+%Unlike randomized trials, observational data require methods to adjust for systematic differences between treatment groups that could bias the causal effect estimates. 
+The potential outcomes framework \parencite{ rubin1974estimating} of causal modeling allows us to define cause-and-effect relationships by utilizing potential (hypothetical) outcomes under all possible treatment options for each subject. Such methods express the causal effects as the contrast (for example, difference, ratio) between these potential outcomes. 
+%while confounding adjustment strategies aim to eliminate selection bias. 
+%Within the potential outcomes framework, three main inferential approaches exist (Ding and Li, 2018 \parencite{Ding2018missingdata}): the Fisherian randomization test, Neyman's repeated-sampling evaluation, and Bayesian inference. The first two 
+The frequentist methods for causal inference in observational studies widely use the Propensity Score (PS), the probability of a subject being assigned a treatment, via either weighting \parencite{rosenbaum2002observational} or matching \parencite{rubin2006matching}.
+%or outcome regression \parencite{rubin1979regression, robins1986new}. 
+Such causal inference methods for survival data include the Inverse Probability Weighting (IPW) approaches (examples, \parencite{xie2005adjusted}, \parencite{sugihara2010survival}, \parencite{cole2004adjusted}), causal effects on survival probability and hazards (example, \parencite{austin2016performance}), on mean or median survival time  (example,  \parencite{VanderWeele2011causal}), and on hazards ratio (example, \parencite{gayat2012propensity}). 
+Recent literature on spatial causal inference for areal data 
+include adjusting for unmeasured spatial confounders via neighborhood smoothing (example, \parencite{Schnell2020spatialconfounding}), spatial propensity‐score matching (example, \parencite{Davis2021propensityscore}) and case–control matching (example, \parencite{Jarner2002casecontrol}). However, we are not aware of any frequentist causal inference method that allows us to integrate spatial dependence in clustered survival outcomes.
+
+
+
+
+
+
+ The Bayesian methods of causal inference have several advantages, including automatic probability based summary of causal estimands, incorporation of prior knowledge, and accommodation of flexible hierarchical models required for complex data structures such as clustered spatial outcomes. 
+ We later show how Bayesian approaches for causal inference can produce interval estimation of county-specific causal effects of no TD. Within a Bayesian framework, Rubin \cite{rubin1985propensity} first adjusted the outcome model solely for the Propensity Score (PS), but that approach suffered from sensitivity and poor empirical performance. 
+ Later works \parencite{zigler2015propensity} improve stability by including the estimated PS in the outcome model. Bayesian causal inference often omits modeling of PS by assuming independent priors \parencite{Hu2022clusteredsurvival, li2023bayesian, Zang2023causal}. However, independent priors can shrink selection bias toward zero as the number of confounders grows.  Linero et al. \parencite{linero2023how} and Li et al. \parencite{li2023bayesian} later showed that adding the PS in the outcome model avoids the shrinkage effect of independent priors.
+ In Bayesian causal inference, non‐parametric methods (e.g., Gaussian processes \parencite{xu2023bayesian} and Dirichlet process mixture models \parencite{Roy2018nonparametric, Arman2021nonparametric}) have gained popularity because restrictive parametric assumptions can cause biased causal estimates due to model misspecification. 
+ At least for independent and identically distributed outcomes, the tree-based ensemble method of Bayesian Additive Regression Trees (BART) \parencite{Chipman10} has shown promise in causal inference \parencite{hill2011bayesian, dorie2019automated}. 
+ 
+
+
+
+
+
+
+
+Bayesian causal inference for survival data primarily focuses on Accelerated Failure Time (AFT) models because AFT models offer computationally convenient likelihood in the presence of right censoring and integrate seamlessly with Bayesian nonparametric priors. Henderson et al.\ \parencite{henderson2020bayesian} extended Bayesian Additive Regression Trees (BART) to a nonparametric AFT model that flexibly captures the relationship between confounders and survival time for estimation of treatment effects. Other tree-based methods for causal inference for survival outcomes include Causal Forests, Random Survival Forest, and Deep Learning based methods \parencite{Zhang2017causalforest,  shen2018personalized, cui2023causal, tabib2020survivalrf}. 
+%Many of these methods estimate Individualized Treatment Effects (ITE) \parencite{Zhang2017causalforest, Zhu2020survival, shen2018personalized, cui2023causal}. 
+Literature on causal inference for even clustered survival data is limited \parencite{Hu2022clusteredsurvival, Lee2024survival}. Existing literature demonstrates that ignoring the cluster-level variation can lead to invalid inferences about causal effects. Hu et al.'s \parencite{Hu2022clusteredsurvival} random-intercept AFT model with BART (riAFT-BART) accounts for clustering, but cannot handle spatial association between clusters.
+
+Our motivating example is the Florida Breast Cancer Registry (FCR) study with 68,009 breast cancer patients in 67 counties. Our goal is to estimate the patient-specific as well as the county-specific causal effects of short Treatment Delay (TD) on survival outcomes. This problem poses multiple challenges. First, we need to deal with hierarchical associations where the patients are clustered within counties, followed by the spatial association among counties. Second, the relationship between the outcome and the treatment is potentially non-linear, requiring a flexible outcome model. To achieve these goals, we propose a novel, two-stage Bayesian causal inference approach combining Soft Bayesian Additive Regression Trees (SBART) with Directed Acyclic Graph Auto-Regressive (DAGAR) models \parencite{datta2019dagar}. We use BART here because, among the methods compared in \parencite{hu2021estimating}, including random survival forests \parencite{Ishwaran08} and neural network methods \parencite{katzman2018deep, kvamme2019time}, BART demonstrated superior performance even for right-censored survival data \parencite{hu2021estimating, henderson2020bayesian}.
+% Tian et al.\ \parencite{tian2014interaction} addressed the same by modeling interactions between treatment and a large number of confounders, focusing primarily on randomized clinical trials. Shen et al.\ \parencite{shen2018personalized} employed random forests with weighted bootstraps to estimate optimal personalized treatment strategies, while Cui et al.\ \parencite{cui2023causal} extended causal forests \parencite{wager2018estimation} to accommodate right-censored data, employing bootstrap methods for inference. %Additionally, Tabib and Larocque \parencite{tabib2020survivalrf} proposed a novel random forest splitting rule for partitioning survival data. 
+%Hu (2021)\parencite{hu2021estimating} compared a variety of nonparametric and deep learning-based methods for causal inference in survival data, including AFT-BART models \parencite{henderson2020bayesian}, random survival forests \parencite{Ishwaran08}, and neural network-based approaches like DeepSurv \parencite{katzman2018deep}, DR-DL, and DL-BJ \parencite{kvamme2019time, hu2021estimating}. 
+ %Current methods cannot simultaneously handle causal inference, spatial associations, and censored survival data.
+ Unlike competing spatial models such as CAR, ICAR and SAR, the DAGAR model guarantees a proper multivariate distribution of the counties with positive definite precision matrix, a correlation parameter with good physical interpretation and support in $(0,1)$, 
+and an easily implementable Bayesian tool to deal with even a large number of clusters  (see \parencite{datta2019dagar, Besag1974lattice, Banerjee2014spatial, Wall2004spatial} and others therein). 
+%DAGAR model also provides more efficient computation than the spatial models like CAR and SAR, particularly in sparse high dimensional datasets \parencite{datta2019dagar}. 
+%, DAGAR provides interpretable correlation parameters \parencite{datta2019dagar}. 
+%to estimate ITE on a spatially associated clustered and censored survival data. First, we estimate propensity scores using SBART. Second, we model survival outcomes with SBART while incorporating spatial associations through DAGAR. 
+Overall, our method using the BART for nonparametric regression function and the DAGAR for random cluster effects offers the following key advantages. It captures the unknown nonlinear treatment-confounder-outcome relationships and enables accurate estimation of county-specific and individual causal effects of the treatment. It accommodates a wide range of spatial associations among cluster effects with interpretable parameters quantifying this association. In Section 2, we discuss the proposed methodology.
+%The remainder of this paper is organized as follows. Section 2 details our two‐stage methodology. 
+Section 3 presents simulation studies comparing our approach to existing methods. Section 4 applies the method to the Florida Cancer Registry (FCR), highlighting spatial heterogeneity in the causal effects of TD across different counties of FL. Section 5 concludes with a discussion and future directions.
+
+
+
+\section{Notation.}
+
+
+FCR has a total sample size of $N = \sum_{i=1}^K n_i=68,009$ patients from $K=67$ clusters (counties), where patients $j=1,\cdots, n_i$ are nested within clusters $i=1,\cdots,K$. We have a binary treatment indicator $Z_{ij} \in \{0,1\}$, with $Z_{ij}=0$ indicating Treatment Delay (TD) of $>90$  and $Z_{ij}=1$ indicating TD of $<90$ days. 
+The observed data $(y_{ij},\delta_{ij},\mathbf{x}_{ij},z_{ij})$ from a subject $(i,j)$ is a realization of the random 
+$(Y_{ij}, \Delta_{ij}, \mathbf{X}_{ij}, Z_{ij})$, where $Y_{ij}=(T_{ij}\wedge C_{ij})$ with random survival time $T_{ij}$ being subject to noninformative right-censoring at $C_{ij}$, and the  censoring indicator $\Delta_{ij}=1$ when $Y_{ij}=T_{ij}$ ($\Delta_{ij}=0$ otherwise). 
+The random vector  of $p$ subject-level confounders  (e.g., age, tumor grade, HR status) 
+for subject $(i,j)$ is $\mathbf{X}_{ij} \in \mathbb{R}^p$ with $\mathbf{X}^a = \{\mathbf{X}_{ij}\}_{i=1,j=1}^{K,n_i}$ 
+%and $\mathbf{V} = \{\mathbf{V}_{i}\}_{i=1}^{K}$ as collections of patient-level and county-level confounders, respectively, 
+for all $N$ subjects.
+Corresponding collection of all the observed covariates $\mathbf{x}_{ij}$ is denoted by   $\mathbf{X}_o=\{\mathbf{x}_{ij}\}_{i=1,j=1}^{K,n_i}$.   
+%The with censored time $Y_{ij} = \min\{T_{ij}, C_{ij}\}$ and censoring indicator $\delta_{ij} = \mathds{1}(T_{ij} \leq C_{ij})$. 
+We use the notation $\mathbf{T}$, $\mathbf{C}$, $\mathbf{Y}$ and $\boldsymbol{\Delta}$
+to denote the collections of  $\{T_{ij}\}_{i=1,j=1}^{K,n_i}$, $\{C_{ij}\}_{i=1,j=1}^{K,n_i}$,  $\{Y_{ij}\}_{i=1,j=1}^{K,n_i}$ and $\{\Delta_{ij}\}_{i=1,j=1}^{K,n_i}$, respectively. 
+%Similar to the observed $\mathbf{x}_{ij}$ for confounders, we use small letters $y_{ij}$ and $\delta_{ij}$ to denote the observed survival time and the observed censoring indicator, respectively, from the subject $(i,j)$.
+
+%Our dataset does not include county-level confounders, thus $\mathbf{v}_i$ is empty for all counties $i$ in our application. 
+
+
+For causal inference, we define the potential survival times as $T_{ij}(1)$ and $T_{ij}(0)$ when the treatment indicator $Z_{ij}$, respectively, by
+well-defined (hypothetical) intervention, with $\mathbf{T}(z) = \{T_{ij}(z)\}_{i=1,j=1}^{K,n_i}$. Similarly, we define the potential censoring times $C_{ij}(1)$ and $C_{ij}(0)$, respectively, with $\mathbf{C}(z) = \{C_{ij}(z)\}_{i=1,j=1}^{K,n_i}$. 
+The Propensity Score (PS) for subject $(i,j)$ with observed confounders $\mathbf{x}_{ij}$ is denoted by $e_{ij} = P(Z_{ij} = 1 \mid   \mathbf{x}_{ij})$. 
+
+
+
+%\noindent {\bf Causal Estimands:}
+We now define several estimands useful for quantifying the causal  effects of treatment  on survival outcomes \parencite{Andersen2021observational}. %(Hernán and Robins, 2020 \parencite{henderson2020bayesian}; Robins, 2000 \parencite{Robins2000epidemiology}). 
+We begin with the definition 
+\begin{equation}
+S_{ij}^{(z)}(t \mid   \mathbf{x}_{ij}) = P(T_{ij}(z) \geq t \mid   \mathbf{x}_{ij}, \text{Cluster}=i) \hspace{2pt}
+\label{eq:condsurv}
+\end{equation}
+of the conditional probability that the subject $(i,j)$ from cluster $i$ with observed confounders $\mathbf{x}_{ij}$ will survive beyond time $t$ 
+if she is  assigned the treatment $z\in (0,1)$ via a hypothetical intervention. 
+For the subject $(i,j)$ with observed $\mathbf{x}_{ij}$, an important causal estimand is what we call the Causal treatment Effect on Restricted Mean ($CERM_{ij}$) survival time over a time interval $(0,t^*)$ defined as 
+\begin{equation}
+\text{CERM}_{ij}(t^*, \mathbf{x}_{ij}) = \mathbb{E}[\{T_{ij}(1)\wedge t^*\} - \{T_{ij}(0)\wedge t^*\} \mid   \mathbf{x}_{ij}, \text{Cluster}=i]\ ,
+\hspace{2pt}
+\label{eq:CERM}
+\end{equation}
+where $a\wedge b=\min\{a,b\}$. In \eqref{eq:CERM}, $\text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$  is the difference  in the expected survival times for the patient $(i,j)$ with confounder $\mathbf{x}_{ij}$ when 
+restricted to monitoring within $(0,t^*)$ if she is intervened to assign treatment arm $z=1$ versus $z=0$. 
+The $\text{CERM}_{ij}$  is a function $S_{ij}^{(z)}(t \mid   \mathbf{x}_{ij})$ of \eqref{eq:condsurv} because $\mathbb{E}[\{T(z) \wedge t^*\}  \mid   \mathbf{x}_{ij}, \text{Cluster}=i]\   
+=\ \int_0^{t^*} S_{ij}^{(z)}(t \mid   \mathbf{x}_{ij}) dt$.
+Similarly, the Conditional Survival Probability Treatment Effect (CSPTE)  $ S^{(1)}(t \mid   \mathbf{x}_{ij}, \text{Cluster}=i) - S^{(0)}(t \mid   \mathbf{x}_{ij}, \text{Cluster}=i)$ of the patient $(i,j)$ with confounders $\mathbf{x}_{ij}$  measures the difference in survival probabilities at time $t$ if we only intervene to assign different treatment without changing $\mathbf{x}_{ij}$.
+%Similar to the definition of CSPTE, the Conditional Average Treatment Effect (CATE) $\mathbb{E}[T(1) - T(0) \mid   \mathbf{x}_{ij}, \text{Cluster}=i]$ is the expected gain in survival for a patient with confounder value $\mathbf{x}_{ij}$. 
+% For example, a ${\text{CATE}_i}( \mathbf{x}_{ij})$ of 1.2 years indicates that the patient $j$ from county $i$ with confounders $\mathbf{x}_{ij}$ would live an additional 1.2 years on average if the same patient has no TD instead of having TD.
+In practice where survival times often experience substantial right-censoring, we focus on causal estimands such as \eqref{eq:CERM} which are restricted over a time interval $(0,t^*)$. 
+ A ${\text{CERM}_{ij}}(10, \mathbf{x}_{ij})$ of 1.2 years means that a patient from county $i$ with observed confounder $\mathbf{x}_{ij}$ 
+ is expected to gain an additional 1.2 years of survival within 10 years of monitoring interval if she is intervened to assign no TD versus TD.
+The definitions of cluster-specific causal estimands of \eqref{eq:CERM} for any subject $(i,j)$ within the study (example, FCR study) can be easily extended to any random future patient with random confounder $\mathbf{X}$ and even to a new future cluster. 
+These county-specific causal estimands of \eqref{eq:CERM} are important to assess the benefits of the intervention to avoid TD of every patient $(i,j)$ in counties $i=1,\cdots, K$ with actionable health policy insights for health policy makers (explained more later). 
+% and population-level estimands (ATE, ATT, ATU, RATE, RATT, RATU) inform short-term and long-term broad policy strategies across the Florida Cancer Registry.
+
+
+
+
+%  Thus, we have established in \eqref{eq:IndCenForObs} that the survival time $T_{ij}$ and censoring time $C_{ij}$ are conditionally independent.
+% Therefore, $p(T_{ij} \mid   \mathbf{x}_{ij}, \mathbf{v}_{i}, Z_{ij}=z, W_i, \boldsymbol{\Theta})$ can be identified from the joint distribution of the observed quantities $p(Y_{ij}, z_{ij}, \mathbf{x}_{ij}, \mathbf{v}_{i}, \delta_{ij} \mid W_i, \boldsymbol{\Theta})$ using \eqref{eq:IndCenForObs} and usual survival analysis methods.
+% % Since we observe $Y_{ij} = \min\{T_{ij}, C_{ij}\}$ and $\delta_{ij} = \mathds{1}(T_{ij} \leq C_{ij})$, the likelihood contribution from the observed data is:
+% % \begin{equation}
+% % L_{ij}^{obs} = \left[f_T(Y_{ij} \mid   \mathbf{x}_{ij}, \mathbf{v}_{i}, W_i, Z_{ij}=z, \boldsymbol{\Theta})\right]^{\delta_{ij}} \left[S_T(Y_{ij} \mid   \mathbf{x}_{ij}, \mathbf{v}_{i}, W_i, Z_{ij}=z, \boldsymbol{\Theta})\right]^{1-\delta_{ij}}
+% % \end{equation}
+
+% % where $f_T$ denotes the density function and $S_T$ denotes the survival function of $T_{ij}$.
+
+% % Therefore, the marginal distribution of potential outcomes factorizes as:
+% % \begin{equation}
+% % p(\mathbf{T}(z) \mid   \mathbf{X}, \mathbf{V}, \mathbf{W}, \boldsymbol{\Theta}) = \prod_{i=1}^K \prod_{j=1}^{n_i} L_{ij}^{obs}\end{equation}
+% \end{proof}
+% % This establishes that potential outcome distributions can be estimated from the observed censored data using standard survival analysis methods applied separately to each treatment group.
+%  Each causal estimand is a difference of the functionals of the marginal potential outcome distributions. This allows us to identify the causal estimands from the observed data.
+
+
+
+
+
+
+
+
+
+
+
+\section{Causal Model, Assumptions and Estimation.}
+Below, we present key assumptions to identify the causal estimands of interest.
+%\begin{enumerate}
+%\item 
+
+\noindent \textbf{Stable Unit Treatment Value Assumption (SUTVA):} 
+The potential outcome of any subject $(i,j)$ is not affected by the assigned treatments of other subjects, that is 
+   \begin{equation}
+   T_{ij}(z_{11},\cdots,z_{1n_1},\cdots z_{Kn_K}) = T_{ij}(z_{ij})
+   \hspace{2pt} .
+   \label{eq:SUTVA}
+   \end{equation}
+
+
+%\item 
+\noindent \textbf{Consistency:} The observed survival outcome $T_{ij}$ and observed censoring time $C_{ij}$ of any 
+subject $(i,j)$ are the same as the potential survival and the potential censoring times corresponding to  the allocated treatment, that is
+   \begin{equation}
+   T_{ij} =  Z_{ij} T_{ij}(1) + (1-Z_{ij}) T_{ij}(0) \ \text{and}\  C_{ij} = Z_{ij} C_{ij}(1)  +(1-Z_{ij}) C_{ij}(0) 
+   .
+   \label{eq:Consistency_Outcome}
+   \end{equation}
+
+\noindent \textbf{Unconfoundedness:} 
+Given confounders $ \mathbf{X}_{ij}$,
+%and latent cluster effects $W_i$, 
+treatment assignment $Z_{ij}$ is independent of potential outcomes $\{T_{ij}(1),T_{ij}(0), C_{ij}(1),C_{ij}(0)\}$, 
+that is    
+\begin{equation}
+  \left( T_{ij}(1), T_{ij}(0), C_{ij}(1),C_{ij}(0) \right) \perp\!\!\!\perp Z_{ij} \mid   \mathbf{X}_{ij}
+   \hspace{2pt}. 
+   \label{eq:Unconfoundedness}
+   \end{equation}
+
+\noindent\textbf{Positivity:} Given confounders $\mathbf{X}_{ij}$, there is a non-zero probability of receiving every level of the treatment $Z_{ij}$, that is
+\begin{equation}
+    0 < e_{ij}=P(Z_{ij}=1\vert \mathbf{X}_{ij})<1.
+\end{equation}
+
+\textbf{Two-stage estimation approach:} 
+In order to make the Bayesian causal estimation more robust to the model misspecification, 
+previous works (example,  \cite{hahn2020bayesian}) incorporate the PS $e_{ij}$ as a predictor in the outcome model for $T_{ij}$, However, at least for outcomes different from clustered survival times, it is well recognized that the joint Bayesian estimation of the $e_{ij}$ and the parameters of the outcome model causes the feedback issue (e.g., \parencite{zigler2013model, zigler2015propensity, li2023bayesian}) because a wrong specification of the outcome model can influence the Bayesian estimation of $e_{ij}$ and even violate the key assumption stated in  \eqref{eq:Unconfoundedness}. Hence, we employ a two-stage approach, where we first obtain a Bayesian estimate $\hat{e}_{ij}$ of $e_{ij}$ in Stage 1, and include it as confounder for the Bayesian estimation of the outcome model in Stage 2. This procedure eliminates the feedback issue, and is also computationally simpler than joint Bayesian estimation of the PS and the parameters of outcome models using single MCMC algorithm. 
+Below, we describe this two-stage method in detail.
+
+\textbf{Propensity Score Model in Stage~1:}  We employ the following two-stage procedure to implement the Bayesian causal analysis of the observed data $\mathcal{D}=\{(y_{ij},\delta_{ij},z_{ij},\mathbf{x}_{ij}): j=1,\cdots, n_i; i=1,\cdots K\}$ from FCR. 
+The random vector of treatment assignments $\mathbf{Z}_i=(Z_{i1},\cdots,Z_{in_i})$ given confounders $(\mathbf{x}_{i1},\cdots,\mathbf{x}_{in_i})$ in cluster $i$ has a multivariate Probit distribution \parencite{Lesaffre1991multivariate} with association parameter  $\rho_0 \in (0,1)$. The  resulting marginal 
+PS $e_{ij}$ can then be written as
+\begin{equation}
+e_{ij}=P(Z_{ij}=1\mid   \mathbf{x}_{ij})
+          = \Phi(b_1(\mathbf{x}_{ij})).
+\hspace{2pt} 
+\label{eq:PSmodel}
+\end{equation}
+Under the assumption of the PS model of \eqref{eq:PSmodel}, the corresponding likelihood of $b_1$ based on $\mathcal{D}_1=\{(z_{ij},\mathbf{x}_{ij}): j=1,\cdots, n_i; i=1,\cdots K\}$  is given by
+\begin{equation}
+ L_1(b_1, \rho_0 \vert \mathcal{D}_1)
+  \propto \prod_{i=1}^K\left[ \int_{A_{i1}}\cdots \int_{A_{in_i}} \Phi_{n_i}
+     (\textbf{u}_i\vert \mathbf{0},\Sigma_{\rho_0})\ \ d\textbf{u}_i\right] ,\label{eq:PSlikelihood}    
+\end{equation}
+where $\textbf{u}_i=(u_{i1},\cdots,u_{in_i})$ and $\Phi_{n_i}(\mathbf{u}\vert \mathbf{0},\Sigma_{\rho_0})$ is the cumulative distribution function of the $n_i$-variate Normal distribution with mean vector $\mathbf{0}$ and equi-correlation variance matrix $\Sigma_{\rho_0}$ with common correlation $\rho_0$. The intervals $A_{ij}=(-\infty,b_1(\mathbf{x}_{ij})$ if $z_{ij}=1$ and $A_{ij}=[b_1(\mathbf{x}_{ij}, +\infty)$ if $z_{ij}=0$.
+%$\mu_{1ij}^*=[b_1(\mathbf{x}_{ij}) + \rho_0 A_i^*]/{\sqrt{1-\rho_0^2}}$, and   $\phi(\cdot)$ and  
+In Stage~1 of our method, we obtain the MCMC samples of $b_1$ and approximations of $\hat{e}_{ij} = E[\Phi\{(b_1(\mathbf{x}_{ij})\} \mid \mathcal{D}_1]$, the posterior estimate of the PS $e_{ij}$ defined in \eqref{eq:PSmodel}, using  MCMC samples from the posterior $p(b_1, \rho_0\vert \mathcal{D}_1) \propto L_1(b_1, \rho_0 \vert \mathcal{D}_1)$ $p_{1SB}(b_1)p(\rho_0)$. We assume that the prior $p(\rho_0)$  is $\text{Beta}(a_{\rho_0}, b_{\rho_0})$, and 
+the prior $p_{1SB}$ for nonparametric $b_1:\mathbb{R}^p\to \mathbb{R}$ is a SBART prior (described later).
+To implement this MCMC tool for Stage~1, we use the data augmentation algorithm by Albert and Chib (1993) \parencite{AlbertJ.H.1993binary} in each iteration via sampling the latent variables $Z_{ij}^* \sim N(b_1(\mathbf{x}_{ij}) + \rho_0 A_i^*, 1-\rho_0^2)\mathds{1}(0, \infty)$ if $z_{ij} = 1$ and $Z_{ij}^* \sim N(b_1(\mathbf{x}_{ij}) + \rho_0 A_i^*, 1-\rho_0^2)\mathds{1}(-\infty, 0)$ if $z_{ij} = 0$, followed by sampling $A_i^*\sim N(\mu_{i*}, \sigma_{i*}^2)$, 
+where $\mu_{i*} = \frac{\rho_0 \sum_{j=1}^{n_i}(Z_{ij}^* - b_1(\mathbf{x}_{ij}))}{n_i\rho_0^2 + 1-\rho_0^2}$ and $\sigma_{i*}^2 = \frac{1-\rho_0^2}{n_i\rho_0^2 + 1-\rho_0^2}$,  then updating $\rho_0$ using the Metropolis-Hastings, and  $b_1$ using the ``Bayesian Backfitting'' of \parencite{Chipman10} while treating the $Z_{ij}^*$'s as the outcomes.
+
+%because   
+%\begin{equation}
+ %  0 <  P(Z_{ij}=1 \mid   \mathbf{X}_{ij}) < 1  \hspace{2pt}.
+%   \label{eq:Positivity}
+%   \end{equation}. 
+% Though our PS model in \eqref{eq:PSmodel} currently assumes there are no within-cluster associations, but this PS model can be easily extended to accommodate within cluster association among $(Z_{i1},\cdots,Z_{in_i})$.  
+
+\textbf{Outcome Model in Stage~2:}
+We assume that the survival outcomes $T_{ij}$ for given $(Z_{ij}, W_i,\mathbf{X}_{ij},\hat{e}_{ij})$ follow the independent parametric log-Normal distribution 
+\begin{equation}
+\log T_{ij} \overset{\mathrm{indep}}{\sim} N (b_2(Z_{ij}, \mathbf{X}_{ij},  \hat{e}_{ij}) + W_i,\ \sigma^2)
+\hspace{2pt}, 
+\label{eq:outcomemodel}
+\end{equation}
+\noindent where $b_2(\cdot): \mathbb{R}^{p+2}\to \mathbb{R}$ is an unknown nonparametric function, $\mathbf{W} = (W_1,\cdots, W_K)$ are county-specific unobservable random effects (cluster effects) that are independent of $(\mathbf{Z},\mathbf{X}_0,\mathbf{W}^*)$ and they capture the heterogeneity not explained by the observed confounders  $\mathbf{X}_{ij}$, and $\hat{e}_{ij}$. The model in \eqref{eq:outcomemodel} is a parametric case of the Accelerated Failure Time (AFT) model. 
+%\textcolor{red}{Sinha: Another case of poor writing  that is just confusing, unnecessary long, logically winding and often somewhat incorrect: 
+%Including the PS $e_{ij}$ of \eqref{eq:PSmodel} as an additional covariate in the regression function $b_2(\cdot)$ of \eqref{eq:outcomemodel} effectively performs outcome regression in \eqref{eq:outcomemodel} at each PS value and acts as a smoothed version of combining PS stratification and outcome modeling (Li et al.\, 2023\parencite{li2023bayesian}). This approach (inclusion of PS in the outcome model) provides a Bayesian analogue of double robustness (Li et al.\, 2023\parencite{li2023bayesian}, Tchegten et al. 2010 \parencite{Tchegten2010doublyrobust}, Bang and Robins, 2005 \parencite{Bang2005missingdata}). When the outcome model of \eqref{eq:outcomemodel} is correctly specified, the PS $e_{ij}=e(\mathbf{x}_{ij})$ becomes redundant since it is a function of the covariates already included in the outcome model. Conversely, if the PS model in \eqref{eq:PSmodel} is correctly specified, it protects against outcome model misspecification by ensuring covariate balance between treatment groups at each value of the PS.}
+We also assume that the censoring times $C_{ij}$ are independent of  $(T_{ij},W_i)$ given $(Z_{ij},\mathbf{X}_{ij})$, that is 
+\begin{equation}
+   C_{ij}\perp\!\!\!\perp (T_{ij}, W_i)  \mid   (\mathbf{X}_{ij},  Z_{ij}) 
+   \hspace{2pt}, 
+   \label{eq:IndCensoring}
+   \end{equation}
+and their distributions have no shared parameters. 
+We further assume the regularity condition that $P(C_{ij} > t^* \mid \mathbf{X}_{ij}, Z_{ij}) > \epsilon $ for all $(i,j)$, for some $\epsilon > 0$ and some pre-specified time $t^*$ of clinical interest (e.g., 20 years for the FCR study). This condition means that every patient, regardless of their covariate and treatment status has  some positive probability of not getting censored within the time interval $(0, t^*)$. In cancer registries, this is a practical assumption to ensure that administrative follow-up has positive probability to continue well beyond the time periods of clinical interest. 
+
+We now establish the identifiability of causal estimands defined in section 2.1., especially the Causal Treatment Effect on Restricted Mean $\text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$ in \eqref{eq:CERM},  based on our causal assumptions and modeling framework.
+For notational convenience, we suppress the patient-index $j$ within unit $(i,j)$ from clusters $i$.
+Under the conditionally independent censoring assumption in  \eqref{eq:IndCensoring} and the regularity condition that $P(C_{i} > t^* \mid \mathbf{X}_{i}, Z_{i}) > \epsilon$ for all subjects and for some $\epsilon > 0$, using existing survival analysis results, we know that the joint survival distribution
+$  
+P(T_{1} > t_{1}, \ldots, T_{K} > t_{K} \mid \mathbf{X}^a, \mathbf{Z})
+$
+for any $t_{i} \in (0, t^*)$ is identifiable from observed survival data subject to noninformative right-censoring.
+The proof of the following result about the identifiability of the causal effect is in the Supplementary Material.
+
+\noindent \begin{theorem}[Identifiability of CERM]
+Suppose the joint survival function
+$
+S_a(t_1, \ldots, t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K) := P(T_1 > t_1, \ldots, T_K > t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)
+$ and the joint distribution $P(Z_1 = z_1, \ldots, Z_K = z_K \mid \mathbf{X}_1, \ldots, \mathbf{X}_K)$
+are known  for all treatment assignments $z_i \in \{0,1\}$, and time points $t_i \in (0, t^*)$, then the $\text{CERM}_{ij}(t, \mathbf{X}_i)$ is identifiable for any $t \in (0, t^*)$ and  $ i \in \{1,\dots,K\}$.
+\end{theorem}
+
+
+
+\textbf{Directed Acyclic Graph Autoregressive (DAGAR) Model for Cluster Effects:}
+To account for the spatial dependencies among random cluster/county effects $\mathbf{W} = (W_1, \ldots, W_K)$, we use the DAGAR model of Datta et al., 2019, \parencite{datta2019dagar} for the 
+random effects distribution $p(\mathbf{W}\vert \rho,\tau_w)$ given unknown parameters $(\rho,\tau_w)$. 
+%\textcolor{red}{Unlike traditional CAR models of Besag, 1974 \parencite{Besag1974lattice} and others, the DAGAR model derives the precision matrix of $\mathbf{W}$ using a Directed Acyclic Graph (DAG) derived from the original undirected graph of spatial adjacencies.}
+Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ be the connected graph with the set $\mathcal{V}$ of $K$ FL counties (vertices), and the edge $i\sim j$ in set $\mathcal{E}$ means the counties $i$ and $j$ are neighbors, that is, $a_{ij} = 1$ for the adjacency matrix $\mathbf{A} = (a_{ij})$, and $a_{ij} = 0$ otherwise. 
+To construct the DAGAR model with $\mathcal{G}$, we first specify a labeling (ordering) $\pi = \{\pi_1, \ldots, \pi_K\}$ of the counties such that $\pi_j$ is a rank/order of county $j$ in $\mathcal{V}$. For any county $i$, we define its set of directed neighbors $\mathcal{N}_\pi(i) = \{j \mid i \sim j, \pi_j < \pi_i\}$, i.e., the neighboring counties that come before $i$ in the labeling $\pi$. Let $n_{\pi(i)} = |\mathcal{N}_\pi(i)|$ be the number of such directed neighbors.
+If  $\pi_i = 1$, then $\mathcal{N}_\pi(i)$ is an empty set with $n_{\pi(i)}=0$. 
+The DAGAR model is then defined via the conditional distribution of $W_i$ given $\{W_j :j\in \mathcal{N}_\pi(i)\}$ as Normal distribution with mean $\frac{\rho}{1+(n_{\pi(i)}-1)\rho^2}\sum_{j\in \mathcal{N}_\pi(i)} W_j$ and variance $\{1+(n_{\pi(i)}-1)\rho^2\}/\{\tau_w(1-\rho^2)\}$,
+where $\rho \in [0,1)$ is a spatial association parameter.
+%, and $W_{<i,\pi}$ is the set of $W_j$ such that $j \sim i$ and county $j$ comes before county $i$ in the labeling/ordering $\pi$.  
+For the the special case when the county/cluster $i$ has $\pi_i=1$, the $W_i$
+has the $ N(0,\; \tau_w^{-1})$ marginal distribution.
+%\label{eq:DAGARfirst}
+%\end{equation}
+This DAGAR model for conditional distributions  results in a proper multivariate Gaussian distribution $p(\mathbf{W}\vert \rho,\tau_w)$ 
+for $\mathbf{W}$ given $(\mathbf{Z},\mathbf{X}_o)$, expressed as 
+\begin{equation}
+\mathbf{W}\vert  (\mathbf{Z},\mathbf{X}_{o})\ \sim\ N(\mathbf{0}, \tau_w^{-1} Q_\pi(\rho)^{-1})
+\label{eq:DAGARjoint}
+\end{equation}
+\noindent 
+with positive-definite precision matrix $Q_\pi(\rho) = L_\pi^T F_\pi L_\pi$, where $L_\pi = I - B_\pi$, $F_\pi = \text{diag}(\tau_1, \tau_2, \ldots, \tau_K)$ with $\tau_i = \frac{1+(n_{\pi(i)}-1)\rho^2}{1-\rho^2}$,
+$B_\pi$ is a strictly lower triangular matrix with elements
+$(B_\pi)_{ij} = 
+\frac{\rho}{1+(n_{\pi(i)}-1)\rho^2}$
+if $j \in \mathcal{N}_\pi(i)$, otherwise $(B_\pi)_{ij}=0 $.
+In \eqref{eq:DAGARjoint},  the precision parameter  $\tau_w > 0$  controls the variability of the cluster effects $\mathbf{W}$.
+% These priors are chosen to be weakly informative while providing regularization to prevent overfitting (Gelman, 2006 \parencite{Gelman2006PriorDraper}).
+The DAGAR model of \eqref{eq:DAGARjoint} offers several key advantages over the popular spatial models like CAR, ICAR, and SAR. Unlike ICAR of  \parencite{Besag1974lattice}, distribution in \eqref{eq:DAGARjoint} guarantees a positive definite precision matrix $Q_\pi(\rho)$ and a proper distribution for $\mathbf{W}$ \parencite{datta2019dagar, Besag1974lattice, Banerjee2014spatial, Wall2004spatial}. Unlike CAR and SAR, the $\rho$ has a straightforward interpretation as a spatial correlation parameter
+%, particularly for tree graphs and regular lattices under certain labeling, where the correlation between neighboring regions is exactly $\rho$ 
+\parencite{datta2019dagar}. Unlike in proper CAR and SAR models, where even high values of $\rho$ induce only modest spatial correlation between neighboring counties, this correlation remains close to $\rho$ for DAGAR  \parencite{datta2019dagar, Wall2004spatial}. 
+% Furthermore, the DAGAR model ensures the same marginal distribution for any $W_i$, making $1/\tau_w$ directly interpretable as the marginal variance \parencite{datta2019dagar}.
+The precision matrix $Q_\pi(\rho)$ also maintains sparsity similar to that of the original graph $\mathcal{G}$, ensuring computational efficiency for a large number of clusters (including FCR with $K=67$). While the DAGAR model in \eqref{eq:DAGARjoint} depends on the ordering $\pi$, both theoretical and empirical studies shows that the inference is robust to the choice of $\pi$, particularly for moderate $\rho$ \parencite{datta2019dagar, Banerjee2014spatial, Besag1974lattice}.
+
+
+   
+%\end{enumerate}
+
+
+\textbf{Prior Specifications for Stage~2:}
+For the Bayesian model in Stage~2, we assume 
+\begin{equation}
+    p(\Omega_2)\propto   p(\sigma^2) \times p_{2SB}(b_2)  \times p(\rho) \times p(\tau_w)
+    \label{eq:jointprior}
+\end{equation}
+for the joint prior distribution $p(\Omega_2)$ of  parameters $\Omega_2=(b_2, \sigma^2,\rho,\tau_w)$, where $p_{2SB}(b_2)$ is the SBART prior (described below) for $b_2$ (independent of the $p_{1SB}(b_1)$  for the $b_1$ of  \eqref{eq:PSmodel}). The prior  $p(\sigma^2)$ for the parameter $\sigma^2$ of \eqref{eq:outcomemodel} is $\text{Inverse-Gamma}(a_\sigma, b_\sigma)$ with known prior expectation  $b_{\sigma}/(a_{\sigma}-1)$ for $a_{\sigma}>1$. For the precision parameter $\tau_w$ and the association parameter $\rho$ of the distribution $p(\mathbf{W} \mid \rho, \tau_w)$ in \eqref{eq:DAGARjoint}, the priors $p(\tau_w)$ and $p(\rho)$  are  independent $\text{Gamma}(a_\tau,b_\tau)$ and $\text{Beta}(a_\rho,b_\rho)$ respectively. 
+
+
+\textbf{ Soft-Bayesian Additive Regression Trees (SBART)  Priors:}
+%\textcolor{red}{Sinha: This subsection looks like a another sloppy cut and paste from some earlier paper. Present the SBART prior for $b_2(\cdot): \mathbb{R}^{p+q+2}\to \mathbb{R}$ using all z, x, v and hat{e} in the argument. You can possibly say that your SBART prior for b1 is similar except $b_1(\cdot): \mathbb{R}^{p+q}\to \mathbb{R}$}
+Even though we use independent SBART priors $p_{1SB}$ and $p_{2SB}$ for $b_1(\cdot)$ and $b_2(\cdot)$, for the sake of brevity, we only explain the SBART prior $p_{2SB}(b_2)$ of $b_2$ because the specification of $p_{1SB}(b_1)$ is very similar to that of $p_{2SB}(b_2)$. We assume that the unknown function $b_2(\cdot): \mathbb{R}^{p+2}\to \mathbb{R}$ to be a sum $b_2(\cdot) = \sum_{h=1}^{H}g(\cdot; \mathcal{T}_h, \mathcal{M}_h)$ of $H$ regression trees, where $\mathcal{T}_h$ denotes the topology (splitting rules) of the decision tree $h$ with set $\mathcal{J}_h$ being the resulting partitions of the covariate space.
+The set $\mathcal{M}_h = \{\mu_{h1}, \cdots, \mu_{h \mathcal{J}_h}\}$ is the set of predictions for the set of partitions (terminal nodes) of the decision tree $\mathcal{T}_h$. 
+So, each $g(\mathbf{u}; \mathcal{T}_h, {\mathcal M_h}) = \sum_{\ell=1}^{\mathcal{J}_h} \varphi_\ell(\mathbf{u}; \mathcal{T}_h) \mu_{h\ell}$ is a step function, where $\varphi_\ell(\mathbf{u}; \mathcal{T}_h)$ is the indicator of whether $\mathbf{u}$ is associated to leaf $\ell$ of $\mathcal{T}_h$. For every branch node $b$ of $\mathcal{T}_h$, a splitting rule of the form $[u_\nu \leq C_b]$ is assigned with $\mathbf{u}$ going left down the branch if the condition is satisfied and right otherwise. 
+Following Chipman et al. (2010), each unknown $\mathcal{T}_h$ is assigned a branching process prior with standard  regularization priors for depth termination, splitting variable selection at non-terminal nodes, and determination of corresponding cut points. 
+%A schematic diagram in Figure~\ref{fig:TreeGrow} shows how the branching process prior generates a sample of the decision tree $\mathcal{T}_h$ and, consequently, a partition of the covariate space. 
+The default Gaussian prior $\mu_{hl} \stackrel{iid}{\sim} N(0,\sigma^2_\mu)$ for $\mu_{hl}$ with $\sigma_{\mu}=3/(2\sqrt{H})$ ensures that $\Phi\{b_2(\cdot)\}$ is concentrated in the interval $(\Phi(-3),\Phi(+3))$. 
+However, when the underlying response surface $b_2(\cdot)$ is believed to be smooth, as is often the case in practice, prediction accuracy can be further improved theoretically, practically, and without compromising bias by extending the BART to SBART (Linero and Yang, 2018), which uses ``soft decision trees.'' SBART replaces the indicator function $\varphi_\ell(u; \mathcal{T}_h)$ with $ \prod_{k \in \mathcal A_h(\ell)} \psi(u_{\nu_k} ; C_k, \alpha_k)^{1-R_k} \{1-\psi(u_{\nu_k}; C_k, \alpha_k)\}^{R_k}$, where $A_h(\ell)$ denotes the collection of \emph{ancestor nodes} of leaf $\ell$, $R_k$ is the indicator that the path from root to $\ell$ at branch $k$ goes right, and $\psi(u; c, \alpha)=[1 + \exp\{-(u - c) / \alpha\}]^{-1}$ is a continuous distribution function with location $c$ and scale $\alpha>0$. The bandwidth parameter $\alpha$ controls the smoothness of the decisions, with $\alpha \to 0$ corresponding to the usual BART model. The prior $p_{1SB}$ for $b_1(\cdot): \mathbb{R}^{p}\to \mathbb{R}$ used in Stage~1 is similar. 
+
+
+Analysis methods using nonparametric regression functions with BART and SBART priors have emerged as particularly effective tools for causal inference because of their ability to capture complex, nonlinear relationships between confounders and outcomes without requiring pre-specification of functional forms (Hill, 2011 \parencite{hill2011bayesian}; Hahn et al., 2020 \parencite{hahn2020bayesian}). This is crucial in causal settings where wrong parametric assumptions about the PS in \eqref{eq:PSmodel} and the outcome models in \eqref{eq:outcomemodel} can lead to biased estimates of treatment effects. The regularization induced by BART's priors on tree depth prevents overfitting while still capturing important signals in the data (Dorie et al., 2019 \parencite{dorie2019automated}). 
+This balance is particularly valuable in causal inference, where the goal is to estimate treatment effects instead of only prediction of outcomes. {Simulation studies have consistently shown that BART and SBART based methods outperform competing methods for the estimation of causal treatment effects on various estimands including effects on \eqref{eq:CERM}  (Hill, 2011 \parencite{hill2011bayesian}; Dorie et al., 2019 \parencite{dorie2019automated}; Hahn et al., 2020 \parencite{hahn2020bayesian}) under various application scenarios.} 
+The SBART based methods also provide  credible intervals around the estimated treatment effect, which are often of practical interest to policy makers (Hill, 2011 \parencite{hill2011bayesian}). Furthermore, the adaptability of BART to studies with large numbers of covariates makes it well-suited for modern observational studies (like FCR) with many potential confounders \parencite{carnegie2019examining}. SBART based methods further enhance these capabilities by improving estimation performance of  smooth regression functions while maintaining BART's desirable properties (\parencite{Linero18},  \parencite{linero2023how}). 
+
+
+
+\textbf{MCMC for Stage~2:}
+As a consequence of \eqref{eq:outcomemodel} and \eqref{eq:IndCensoring}, the likelihood contribution for the outcome model from each subject $(i,j)$ given $\mathcal{D}_2=\{\mathbf{D}_{2ij}: j=1,\cdots, n_i; i=1,\cdots K\}$ is 
+\begin{equation}
+\begin{split}
+L_{ij}^{\text{*}}(W_i, b_2, \sigma,\mathbf{\Theta}_{\mathbf{C}}\vert \mathbf{D}_{2ij}) \propto\;&
+\left[
+f(y_{ij}\mid z_{ij}, \mathbf{x}_{ij} , \hat{e}_{ij},W_i) 
+\ S^C(y_{ij}\mid z_{ij}, \mathbf{x}_{ij}, \hat{e}_{ij})
+\right]^{\delta_{ij}} \\
+&\times
+\left[
+S(y_{ij}\mid z_{ij}, \mathbf{x}_{ij}, \hat{e}_{ij},W_i) 
+\ f^C(y_{ij}\mid z_{ij}, \mathbf{x}_{ij},\hat{e}_{ij})
+\right]^{1 - \delta_{ij}}
+\hspace{2pt},
+\end{split}
+\label{eq:likeliobs2}
+\end{equation}
+\noindent where $\mathbf{D}_{2ij}=(y_{ij},\delta_{ij},z_{ij},\mathbf{x}_{ij},\hat{e}_{ij})$,  $f$ and $S$ are respectively the density and survival functions corresponding to the  outcome model given in \eqref{eq:outcomemodel},  and $f^C$ and $S^C$ are the density and survival functions for censoring time $C_{ij}$ with unknown parameter vector  $\mathbf{\Theta}_{\mathbf{C}}$. 
+%Please note that $L_{ij}^*$ in \eqref{eq:likeliobs2} depends of $(b_1,A_i^*,\rho_0)$ only through $e_{ij}$ of \eqref{eq:PSmodel}. 
+Due to censoring assumption of \eqref{eq:IndCensoring}, the $L_{ij}^*$ in \eqref{eq:likeliobs2} can be written 
+as a product of 
+\begin{equation}
+L_{ij}^{C}(\Theta_c \vert \mathbf{D}_{2ij}) \propto 
+[S^C(y_{ij} \mid z_{ij}, \mathbf{x}_{ij},\hat{e}_{ij}; \mathbf{\Theta}_c)]^{\delta_{ij}} \,
+[f^C(y_{ij} \mid z_{ij},\mathbf{x}_{ij}, \hat{e}_{ij};\mathbf{\Theta}_C)]^{1 - \delta_{ij}}
+\hspace{2pt}.
+\label{eq:likeliobs}
+\end{equation}
+and (using the log-Normal model of \eqref{eq:outcomemodel}) the survival model likelihood 
+\begin{equation}
+L^{obs}_{ij}(W_i, b_2,\sigma\vert \mathbf{D}_{2ij}) \propto \left[\frac{1}{\sigma} \exp\left\{-\frac{(\log y_{ij} - \mu_{ij})^2}{2\sigma^2}\right\}\right]^{\delta_{ij}} \left[1 - \Phi\left(\frac{\log y_{ij} - \mu_{ij}}{\sigma}\right)\right]^{1-\delta_{ij}}
+\hspace{2pt}, 
+\label{eq:densityobs}
+\end{equation}
+where $\mu_{ij} = b_2(z_{ij}, \mathbf{x}_{ij}, \hat{e}_{ij})) + W_i$ and $\Phi(\cdot)$ is the CDF of standard Normal. 
+So, given the observed data $\mathcal{D}$ from FCR, the joint posterior for our model in Stage~2 is 
+\begin{equation}
+    p(\mathbf{W}, \Omega_2\vert \mathcal{D}_2) \propto L^{obs}(\mathbf{W}, b_2, \sigma \vert \mathcal{D}_2 )\times p(\mathbf{W} \mid \rho, \tau_w) \times p(\Omega_2),
+    \label{eq:JointPost}
+\end{equation}
+where $L^{obs}(\mathbf{W}, b_2, \sigma \vert \mathcal{D}_2 )\propto \prod_{i=1}^K \prod_{j=1}^{n_i} L_{ij}^{obs}(W_i, b_2, \sigma\vert \mathbf{D}_{2ij})$. In \eqref{eq:JointPost}, $p(\mathbf{W} \mid \rho, \tau_w)$ is the multivariate Normal distribution of $\mathbf{W}$ in \eqref{eq:DAGARjoint}, $p(\Omega_2)$ represents the joint prior of all  parameters $\Omega_2=( b_2, \sigma^2,\rho,\tau_w)$ (described in section~2.3) of the outcome model in \eqref{eq:outcomemodel}.  
+To obtain MCMC samples of $(\Omega_2,\mathbf{W})$ from the posterior in \eqref{eq:JointPost}, in each iteration, 
+we use the Data Augmentation algorithm  (\parencite{Tanner1987TheAugmentation}) via sampling latent  $\tilde{y}_{ij}$ from the Truncated-Normal distribution $N(\mu_{ij}, \sigma^2)\mathds{1}(\log y_{ij}, \infty)$ if $\delta_{ij} = 0$ so that the  augmented-data likelihood contribution is
+ $\tilde{L}^{obs}_{ij}(W_i, b_2, \sigma,  \vert \mathbf{D}_{2ij},\tilde{y}_{ij})\propto (1/\sigma)\exp\{(\log \tilde{y}_{ij}-\mu_{ij})^2/(2\sigma^2)\}$ when $\delta_{ij}=0$ and $\tilde{y}_{ij}=y_{ij}$ when $\delta_{ij}=1$. Using these augmented-data likelihood contributions $\tilde{L}^{obs}_{ij}$ to replace ${L}^{obs}_{ij}$ in  \eqref{eq:JointPost} facilitates MCMC sampling of  $b_2$ given the rest using the standard Bayesian Backfitting Algorithm of \parencite{Chipman10, Trevor2000backfitting}.
+%\noindent We estimate the parameters $(\Omega_2, \mathbf{W})$ of the outcome model using a Gibbs sampling algorithm (by Gelfand and Smith \parencite{Gelfand1990gibbs}). 
+The detailed steps of this algorithm are included the Supplementary Material. 
+%\begin{equation}
+%L^{obs}(\mathbf{W}, b_2, \sigma, b_1 \vert \mathcal{D} ) \propto \prod_{i=1}^K \prod_{j=1}^{n_i} L_{ij}^{obs}(W_i, b_2, \sigma\vert \mathbf{D}_{2ij})
+%\hspace{2pt}. 
+%\label{eq:jointlikeliobs}
+%\end{equation}
+
+
+ 
+
+% To avoid this, we instead employ the following two-stage procedure:
+
+
+
+
+
+% \noindent \textbf{Stage 2:} 
+% %\textcolor{red}{Sinha: a typical example of sloppy and totally careless writing is this paragrapah: We plug in the estimated PS $\hat{e}_{ij}$ from Stage 1 in the survival data likelihood $L^{obs}(\mathbf{W}, b_2, \sigma \vert \mathcal{D})$ of \eqref{eq:jointlikeliobs} replacing  the PSs $e_{ij}$ and then obtain MCMC samples for the parameters $\Omega_1=(\mathbf{W},b_2, \sigma^2, \rho, \tau_w)$ of the outcome model in \eqref{eq:outcomemodel} from the posterior $p(\Omega_1 \vert \mathcal{D}) \propto L^{obs}(\mathbf{W}, b_2, \sigma \vert \mathcal{D} )p(\Omega_1)$, where $p(\Omega_1)$ is the prior for the outcome model parameters $\Omega_1$ described earlier.} 
+% % We obtain MCMC samples for the parameters $(\Omega_2,\mathbf{W})$ for parameters $\Omega_2=( b_2, \sigma^2, \rho, \tau_w)$ of the outcome model in \eqref{eq:outcomemodel} from the posterior $p(\mathbf{W}, \Omega_2\vert \mathcal{D}_2)$ in \eqref{eq:JointPost}.
+% % % \begin{equation} 
+% % % p(\Omega_2,\mathbf{W}  \vert \tilde{\mathcal{D}}_2)\ \propto\ [\prod_{i=1}^K\prod_{j=1}^{n_i}\tilde{L}^{obs}_{ij}(\mathbf{W}, b_2, \sigma \vert {\mathbf{D}_{2ij}},\hat{e}_{ij})]\ p(\mathbf{W} \mid \rho, \tau_w)\ p(b_2)p(\sigma)p(\tau_w)p(\rho)\ ,
+% % %     \label{eq:s2Post}
+% % % \end{equation}
+% % % where $\tilde{\mathcal{D}_2}=\{( \mathbf{D}_{2ij}, \hat{e}_{ij}):\ i=1,\cdots, K; j=1,\cdots,n_i\}$. 
+% % In \eqref{eq:s2Post}, the likelihood contribution $\tilde{L}^{obs}_{ij}(\mathbf{W}, b_2, \sigma\vert {\mathbf{D}}_{2ij},\hat{e}_{ij})$ has the same expression as the $L_{ij}^{obs}$ from \eqref{eq:outcomemodel} except $\mu_{ij}$ is replaced by $\tilde{\mu}_{ij} = b_2(z_{ij}, \mathbf{x}_{ij}, \hat{e}_{ij}) + W_i$, where $\hat{e}_{ij} $ is the estimated PS obtained in Stage~1. 
+% To obtain MCMC samples of $(\Omega_2,\mathbf{W})$ from the posterior in \eqref{eq:JointPost}, in each iteration, 
+% we use the data augmentation  of \parencite{Tanner1987TheAugmentation} via sampling latent  $\tilde{y}_{ij}$ from the Truncated Normal distribution $N(\mu_{ij}, \sigma^2)\mathds{1}(\log y_{ij}, \infty)$ if $\delta_{ij} = 0$ so that the 
+%  $\tilde{L}^{obs}_{ij}(W_i, b_2, \sigma,  \vert \mathbf{D}_{2ij})$ can have the expression $(1/\sigma)\exp\{(\log \tilde{y}_{ij}-\mu_{ij})^2/(2\sigma^2)\}$ when $\delta_{ij}=0$.
+% %and $\log \tilde{y}_{ij}=\log y_{ij}$  otherwise. Using this augmentation scheme and the observed survival data likelihood $L^{obs}(\mathbf{W}, b_2, \sigma,\hat{b}_1 \vert \tilde{\mathcal{D}}_2)$ of \eqref{eq:s2Post}, the complete data likelihood for the outcome model becomes
+% %\begin{equation}
+% %L^{comp}(\Omega_2,\mathbf{W}) \propto \prod_{i=1}^K \prod_{j=1}^{n_i} \frac{1}{\sigma} \exp\left(-\frac{(\log \tilde{y}_{ij} - \mu_{ij})^2}{2\sigma^2}\right) \hspace{2pt}.
+% %\label{eq:likelicomp}\end{equation}
+% %\noindent 
+% Using this  complete-data likelihood  within the joint posterior  \eqref{eq:JointPost} facilitates MCMC sampling of  $b_2$ given the rest using the standard Bayesian Backfitting Algorithm of \parencite{Chipman10, Trevor2000backfitting}.
+% %\noindent We estimate the parameters $(\Omega_2, \mathbf{W})$ of the outcome model using a Gibbs sampling algorithm (by Gelfand and Smith \parencite{Gelfand1990gibbs}). 
+% \begin{equation}
+% \nonumber
+% \log \tilde{y}_{ij} = \begin{cases}
+% \log y_{ij}, & \text{if } \delta_{ij} = 1 \\
+% N(\mu_{ij}, \sigma^2)\mathds{1}(\log y_{ij}, \infty), & \text{if } \delta_{ij} = 0
+% \end{cases}
+% \hspace{2pt},
+% \label{eq:AugmForCen}
+% \end{equation}
+
+
+
+
+\textbf{Bayes Estimation of Causal Estimands:}
+After obtaining the $\hat{e}_{ij}$ from Stage~1 and a sufficient number of MCMC samples of $(b_2, \mathbf{W}, \sigma, \tau_w, \rho)$ from \eqref{eq:JointPost} in Stage~2, we compute the Monte Carlo (MC) approximation of the posterior estimates (both point-wise and interval) of the causal estimands of \eqref{eq:CERM} via obtaining the MC approximations of the Bayes estimates of the relevant model parameters associated with these estimands. 
+For instance, to compute the Bayes estimate of $\text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$ given in \eqref{eq:CERM} based on the posterior in  \eqref{eq:JointPost}, 
+we need to approximate the $E_{\mathcal{D}}[\mathbb{E}[\{T_{ij}(z)\wedge t^*\}\vert \mathbf{x}_{ij},W_i,\hat{e}_{ij}]]$ for $z=0,1$, 
+where $\mathbb{E}$ and $E_{\mathcal{D}}$ denote the expectations 
+with respect to the model in \eqref{eq:outcomemodel}-\eqref{eq:DAGARjoint} and with respect to the posterior in \eqref{eq:JointPost}. 
+%\textcolor{red}{Sinha: Now first give the expression of $\mathbb{E}[\min\{T(z),t^*\}]$ as a function of $(W_i,b_2,\sigma)$. Then just explain how the outer expectation will be approximated by using MCMC samples of (????) from \eqref{eq:s2Post}. Most of the expressions below are both confusing and contradictory with previous expression.}
+Using the property of the log-Normal distribution in \eqref{eq:outcomemodel}, we can show that 
+$\mathbb{E}[\{T_{ij}(z)\wedge t^*\}\mid \mathbf{x}_{ij},W_i,\hat{e}_{ij}]$ has the closed form expression
+$\exp(\mu_{ij}+ \sigma^2/2)\ \Phi\{(\log(t^*) -\mu_{ij} -\sigma^2)/\sigma\} + t^* [1 - \Phi\{({\log(t^*) - \mu_{ij}})/ {\sigma}\} ]$, 
+where $\mu_{ij} = b_2(z_{ij}, \mathbf{x}_{ij}, \hat{e}_{ij}) + W_i $. 
+As this is a function of $(b_2,W_i,\sigma,\hat{e}_{ij})$, we can approximate the Bayes estimate of ${\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})$ defined in \eqref{eq:CERM}  by using $\hat{e}_{ij}$ from Stage~1 and MCMC samples of $(b_2,W_i,\sigma)$ from \eqref{eq:JointPost} in Stage~2. 
+The corresponding credible intervals for the estimands in \eqref{eq:CERM} and others introduced in later sections are obtained from the empirical quantiles of their corresponding MCMC samples. For brevity, we are not reporting the posterior estimates of all estimands. 
+% We note that our method can estimate the conditional estimands given in \eqref{eq:CSPTE}-\eqref{eq:CERM} and \eqref{eq:C-ATE}-\eqref{eq:ACERMU} for all $i \in \{1, 2, ..., K\}$ (the observed counties) and any covariate profile $\mathbf{X} \in \mathbb{R}^p$, but cannot estimate these quantities for a new county $i_{\text{new}}$ ($i_{\text{new}} \notin \{1, 2, ..., K\}$) not included in the data set.
+
+
+
+
+
+
+
+% \section*{A. Identification of causal estimands}
+% %This section establishes the identifiability of causal estimands defined in section 2.1., with particular focus on the Causal Treatment Effect on Restricted Mean $\text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$.
+% Here, for notational convenience, we suppress the patient-index $j$ within unit $(i,j)$ of clusters $i$.
+% Using the conditionally independent censoring assumption in  \eqref{eq:Aoas_version-IndCensoring}, the regularity condition that $P(C_{i} > t^* \mid \mathbf{X}_{i}, Z_{i}) > \epsilon$ for all subjects and for some $\epsilon > 0$, and existing survival analysis results, we can show that the joint survival function
+% $  
+% P(T_{1} > t_{1}, \ldots, T_{K} > t_{K} \mid \mathbf{X}^a, \mathbf{Z})
+% $
+% for any $t_{1},\cdots, t_K \in (0, t^*)$ is identifiable from observed survival data subject to noninformative right-censoring, where .
+% %from $P(\mathbf{Y}, \boldsymbol{\Delta} \mid \mathbf{X}^a, \mathbf{Z})$, where $\mathbf{Y} = \{Y_{i}\}_{i=1,j=1}^{K,n_i}$, $\boldsymbol{\Delta} = \{\delta_{ij}\}_{i=1,j=1}^{K,n_i}$, $\mathbf{X}^a = \{\mathbf{X}_{ij}\}_{i=1,j=1}^{K,n_i}$, and $\mathbf{Z} = \{Z_{ij}\}_{i=1,j=1}^{K,n_i}$ denote the collections of observed survival times $T_{ij}$, censoring indicators $C_{ij}$, confounders, and treatment assignments, respectively.
+% \noindent We now present our main identifiability result.
+
+% \noindent \begin{theorem}[Identifiability of CERM]
+% Suppose the joint survival function
+% $
+% S_a(t_1, \ldots, t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K) := P(T_1 > t_1, \ldots, T_K > t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)
+% $ and the joint distribution $P(Z_1 = z_1, \ldots, Z_K = z_K \mid \mathbf{X}_1, \ldots, \mathbf{X}_K)$
+% are known  for all treatment assignments $z_k \in \{0,1\}$, and time points $t_k \in (0, t^*)$, then the $\text{CERM}_{kj}(t, \mathbf{X}_k)$ is identifiable for any $t \in (0, t^*)$ and for any $ k \in \{1,\dots,K\}$.
+% \end{theorem}
+
+
+% \begin{proof}
+
+% For any $t \in (0, t^*)$ and  $ k \in \{1,\dots,K\}$, 
+% \begin{align}
+% \nonumber &\text{CERM}_{kj}\bigl(t\mid \mathbf{X}_{k}\bigr)
+% = \mathbb{E}\bigl[\{T_k(1) \wedge t\}\mid \mathbf{X}_{k}\bigr]
+%  - \mathbb{E}\bigl[\{T_k(0) \wedge t\}\mid \mathbf{X}_{k}\bigr]\\ \nonumber 
+% &= \mathbb{E}\bigl[\{T_k(1) \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=1\bigr]
+%  - \mathbb{E}\bigl[\{T_k(0) \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=0\bigr] \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\ \nonumber 
+% &= \mathbb{E}\bigl[\{T_k \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=1\bigr]
+%  - \mathbb{E}\bigl[\{T_k \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=0\bigr] \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}})\\ \nonumber.
+% &=\int_{0}^{t}\bigl[P(T_k>t_k\mid \mathbf X_k,Z_k=1)\;-\;P(T_k>t_k\mid \mathbf X_k,Z_k=0)\bigr]\;dt_k. 
+% \end{align}
+%     To prove the theorem, we now show that the conditional survival probabilities $P(T_k > t_k \mid \mathbf{X}_k, Z_k = 1)$ and $P(T_k > t_k \mid \mathbf{X}_k, Z_k = 0)$ can be expressed in terms of the known joint survival function $S_a(t_1, \ldots, t_K \mid Z_1, \ldots, Z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)$ defined in the theorem statement.
+% \begin{align*}
+% &P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k\bigr) = \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k, \mathbf{W}\bigr)\bigr]   \quad ( \text{because }\mathbf{W} \perp\!\!\!\perp (\mathbf{Z},\mathbf{X}^a)) \\ 
+% &= \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k,\,\mathbf{Z}_{(_k)},\,\mathbf{X}_{(_k)},\,\mathbf{W}\bigr)\bigr] \quad (\text{using the outcome model in } \eqref{eq:outcomemodel})\\
+% &= \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid \mathbf{X}^a,\,\mathbf{Z},\,\mathbf{W}\bigr)\bigr]= P\bigl(T_k > t_k \mid \mathbf{X}^a,\,\mathbf{Z}\bigr)= 
+%   S_a\bigl(0,\dots,0,\,t_k,\,0,\dots,0
+%      \mid \mathbf{X}^a,\,\mathbf{Z}\bigr),
+% \end{align*}
+% where, $\mathbf{Z}_{(_k)}=(Z_1,\ldots,Z_{k-1},Z_{k+1},\ldots, Z_K)$ and $\mathbf{X}_{(_k)}=(\mathbf{X}_1,\ldots,\mathbf{X}_{k-1},\mathbf{X}_{k+1},\ldots, \mathbf{X}_K)$. We have therefore shown that $\text{CERM}_{kj}(t, \mathbf{X}_k)$ can be computed uniquely from the observable joint survival distribution for all $t \in (0, t^*)$ and $k \in \{1, \ldots, K\}$.
+% \end{proof}
+
+
+
+% \newpage
+% \newpage
+
+
+
+
+
+\section{Simulation Studies.}
+We conduct simulation studies to assess the performance of our method using Propensity Score within Log-Normal survival with DAGAR spatial model (called PS-LND model in short)  under three scenarios: (1) when there is strong spatial association among cluster effects on survival; (2) when there is no spatial association among cluster effects; and (3) when the true outcome model is different from \eqref{eq:outcomemodel}. We compare our proposed PS-LND based method with two competing approaches, namely riAFTBART by Hu et al., 2022 \parencite{Hu2022clusteredsurvival} and a causal method using Weibull outcome model with independent Gamma frailty (\parencite{Hougaard1995survival} (we call  PSW-Frailty model). The riAFTBART approach uses the log-Normal model of 
+\eqref{eq:outcomemodel} with  BART on $b_2(z_{ij},\mathbf{x}_{ij})$, but with i.i.d.\ Gaussian $W_i$ and without PS $e_{ij}$. The PSW-Frailty method also uses 2-stage Bayesian estimation 
+with SBART and Probit-link based Stage~1 (same as our method) to obtain  $\hat{e}_{ij}$ followed by the Bayesian analysis using  the conditional survival function  $S_{ij}(t|z_{ij},\mathbf{x}_{ij},\hat{e}_{ij} ) = \exp[-\lambda t^{\alpha}W_i\exp\{\boldsymbol{\beta}_1^T\mathbf{x}_{ij} + z_{ij}\boldsymbol{\beta}_2^T\mathbf{x}_{ij} + \beta_3 \hat{e}_{ij} \}]$ with the independent Gamma Frailty model of Hougaard, 1995 \parencite{Hougaard1995survival} 
+for cluster-specific random effects $W_i$ (with no spatial association among $W_1,\cdots,W_K$).
+
+
+Each of our simulated datasets has $K = 35$ clusters with sample sizes $n_i$ different for different clusters, total sample size $N = \sum_{i=1}^{35}n_i=1,750$, and spatial structures of points arranged on a $5 \times 7$ grid. We simulate five patient-level confounders for each subject $(i,j)$ as follows: $X_{ij1}\sim\text{Uniform}(0,1)$, $X_{ij2}\sim\text{Beta}(2,6)$, and two binary covariates $X_{ij3}\sim \text{Bernoulli}(0.8)$ and $X_{ij4}\sim\text{Bernoulli}(0.7)$, and $X_{ij5}\sim \text{Uniform}(0,10)$. 
+The treatment assignment $Z_{ij}$ is generated independently from the  model $P(Z_{ij} = 1 | \mathbf{X}_{ij}) = \Phi(0.5X_{ij1} - 0.3X_{ij2} + 0.2X_{ij3} - 0.1X_{ij4} + 0.05X_{ij2}(X_{ij5} - 5.5) + X_{ij1}X_{ij2})$. 
+
+For our particular application, one of the major interests is to make the posterior inference about the average causal effect $\text{ACERM}_i(t^*)=\sum_{j=1}^{n_i}\text{CERM}_{ij}(t^*,\mathbf{x}_{ij})/n_i$ of the intervention on  all existing $n_i$ patients within cluster/county $i$. So, we focus on the estimator 
+\begin{equation}
+\widehat{\text{ACERM}}_i(t^*) = \frac{1}{n_i} \sum_{j=1}^{n_i} \widehat{\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})
+\hspace{2pt},
+\label{eq:ACERM}
+\end{equation}
+of  $\text{ACERM}_i(t^*)$, where  $\widehat{\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})$ is the posterior estimate of ${\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})$. We evaluate the performance of the competing approaches based on the Monte Carlo approximations (using $R=150$ independent replications of the datasets) of following metrics:
+(1) $\text{Coverage}_{it^*}=\mathbb{P}_s[\text{ACERM}_{i0}(t^*)\in \text{CI}_{it^*}]$,
+where the probability $\mathbb{P}_s$ with corresponding expectation $\mathbb{E}_s$ is evaluated with respect to the sampling distribution of the statistic, and $\text{CI}_{it^*}$ denotes the 95\% interval estimate of true $\text{ACERM}_{i0}(t^*)$; 
+(2) $\text{MAE}_{it^*} = \mathbb{E}_s[|\widehat{\text{ACERM}}_{i}(t^*) - \text{ACERM}_{i0}(t^*)|]$,
+%where $\mathbb{E}_s$ is the expectation with respect to the sampling distribution, and 
+where $\widehat{\text{ACERM}}_{i}(t^*)$ is the point estimate of  $\text{ACERM}_{ij}(t^*)$ (obtained by the inferential method) of the true $\text{ACERM}_{i0}(t^*)$;  (3) $\text{Mean Width}_{it^*} = \mathbb{E}_s[\text{CI}_{it^*,U} - \text{CI}_{it^*,L}]$, where  $(\text{CI}_{it^*,L},\text{CI}_{it^*,U})$ is the 95\% interval estimate of $\text{ACERM}_{ij}(t^*)$. 
+For the sake of brevity, we only present here these metrics for a big cluster $i=4$ with size $n_i=100$ and a small cluster $i=10$ with size $n_i=25$. 
+
+
+
+
+% sampling coverage probability (called $Coverage_{it^*}$) of the Credible Interval of $\text{ACERM}_{it^*}$, Mean Absolute Error (MAE), and Mean Width of the credible intervals (CI) across $R = 150$ replications. We evaluated these metrics for $\text{ACERM}(5)_i$ and $\text{ACERM}(15)_i$ for 2 clusters ($i=4$ and $i=10$). For all methods, we calculate the posterior mean $\widehat{\text{ACERM}(t)_i}^{(r)}$ along with the 95\% credible interval $\text{CI}^{(r)}_i=(\text{CI}^{(r)}_{i,L},\text{CI}^{(r)}_{i,U})$ within each replication $r$. The metrics are:
+% \begin{align}
+% \nonumber
+% \text{Coverage}_i &= \frac{1}{150}\sum_{r=1}^{150} \mathds{1}(\text{ACERM}(t)_{i,0} \in \text{CI}_i^{(r)}),\\ \nonumber
+% \text{MAE}_i &= \frac{1}{150}\sum_{r=1}^{150} |\widehat{\text{ACERM}(t)_i}^{(r)} - \text{ACERM}(t)_{i,0}|,\\ \nonumber
+% \text{Mean Width}_i &= \frac{1}{150}\sum_{r=1}^{150} (\text{CI}^{(r)}_{i,U}-\text{CI}^{(r)}_{i,L}),
+% \end{align}
+% where $\text{ACERM}(t)_{i,0}$ is the true value of $\text{ACERM}_i(t)$.
+
+ \textbf{Scenario 1}  reflects the practical situation when there is a strong spatial association among clusters because neighboring geographic units may share similar unobservable characteristics. So, random cluster effects $\mathbf{W} = (W_1, \ldots, W_K)^T$ are generated from the DAGAR model of \eqref{eq:DAGARjoint} with true  $\rho = 0.7$ and precision parameter $\tau_w = 2.0$. The potential survival times $T_{ij}(z)$ are generated from the following log-Normal distribution identical to the outcome model in \eqref{eq:outcomemodel} with the true $\sigma^2=1.5$ and the true mean function 
+\begin{align}
+\nonumber
+b_2(z,\mathbf{x}) &= 1.0z + 0.7x_1 - 0.5x_2 + 0.3zx_1\exp(x_2) + 0.5x_3 - 0.2x_4 + 0.1x_5\\ \nonumber
+&\quad + 0.4x_1x_2\exp(x_2) + 0.3x_2x_4 + 0.2x_1x_3x_4 + 0.35zx_2x_3 + 0.25z\log(x_1)x_4\\ \nonumber
+&\quad + 0.15zx_3x_4x_5/10 + 0.5\sin(\pi x_5/5) + 0.3\sin(\pi x_1x_3) + 0.2z\sin(\pi x_2x_4)\\ \nonumber
+&\quad + 0.5z\exp(x_1)\log(x_2). 
+\end{align}
+This complex functional form of true $b_2$ includes a very non-linear main effects with the treatment-covariate interactions. The noninformative potential censoring times $C_{ij}(z)$ are generated independently from $\text{Exponential}(0.1)$.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=01\textwidth]{pics/causal_effects_plot.pdf}
+
+\caption{ $\exp\{b_2(1,\mathbf{x})\} - exp\{b_2(0,\mathbf{x})\}$ as functions of continuous covariates $x_1$, $x_2$, and $x_5$ for all combinations of binary covariates $(x_3, x_4)$: \colorbox{viridis1}{\textcolor{white}{\phantom{x}}} $(0,0)$, \colorbox{viridis2}{\textcolor{white}{\phantom{x}}} $(0,1)$, \colorbox{viridis3}{\phantom{x}} $(1,0)$, \colorbox{viridis4}{\phantom{x}} $(1,1)$.}
+%Default values for other continuous covariates: $x_1 = 0.5$, $x_2 = 0.25$, $x_5 = 5$.}
+\label{fig:causal_effects}
+\end{figure}
+Figure~\ref{fig:causal_effects} shows how the $\exp\{b_2(1,\mathbf{x})\} - exp\{b_2(0,\mathbf{x})\}$ based on the true $b_2(\cdot)$ of Scenario~1 varies with each continuous variable $(x_1, x_2, x_5)$. Each panel contains four lines representing the four combinations of binary variables $x_3$ and $x_4$.
+The results of Scenario~1 and others are summarized in Table~\ref{tab:Simulation_CERM_best}.
+Under Scenario~1, our PS-LND based method achieves excellent coverage (ranges from 96.0\% to 97.3\%) and lowest MAE across all time points and clusters. At $t=5$, our method attains MAE=0.07 for both clusters, outperforming riAFTBART (MAE up to 0.16) and PSW-Frailty (MAE up to 0.12). At $t=15$, PS-LND maintains superior performance (MAE ranges from 0.21 to 0.22) compared to riAFTBART (MAE=0.58 for cluster 4) and PSW-Frailty (MAE=0.50 for cluster 10). Notably, coverage probability for  cluster 4 (ranges from 46.0\% to 53.3\%) using riAFTBART and that for cluster 10 using PSW-Frailty (ranges from 54.0\% to 67.3\%) are substantially low (compared to even targeted 95\%).
+
+
+%\textbf{Scenario 2} compares the methods when the true random cluster effects $\mathbf{W}$ are not (spatially) associated. Instead, they are generated independently from Normal distribution with $W_i \sim N(0, \tau_w^{-1})$, where $\tau_w = 2.0$. The potential survival times $T_{ij}(z)$ are generated from the log-Normal outcome model in \eqref{eq:outcomemodel} with the $b_2(z,\mathbf{x})$ being identical to that of Scenario 1. 
+%In Scenario 2, PS-LND achieves the lowest MAE for ACERM estimands (0.07 at $t=5$ and 0.22 to 0.23 at $t=15$ for both clusters). riAFTBART shows higher MAE, particularly for cluster 4 (0.16 at $t=5$ and 0.56 at $t=15$), while PSW-Frailty has intermediate MAE values. Coverage for PS-LND is excellent (94.0\%-96.7\%) across all settings. riAFTBART severely undercovers for cluster 4 (52.7\% and 51.3\%) but maintains good coverage for cluster 10. PSW-Frailty shows good coverage for cluster 4 but poor coverage for cluster 10 (64.0\% at $t=5$ and 46.7\% at $t=15$).
+\begin{table}[ht]
+\centering
+\caption{Comparison of 3 competing methods (PS-LND with SBART, riAFTBART, and PSW-Frailty) via 3 metrics: Coverage probability and Mean Width of the $95\%$ Credible Interval, and Mean Absolute Error (MAE) of the point estimates of $\text{ACERM}_i(t)$ for clusters $i=4$ and $i=10$, at $t=5,15$, and across two simulation scenarios (each with 150 independent replications of datasets).}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllcccc}
+\toprule
+Scenario & Metric & Method & Cluster $4$, $t=5$ & Cluster $4$, $t=15$ & Cluster $10$, $t=5$ & Cluster $10$, $t=15$ \\
+\midrule
+\multirow{9}{*}{\rotatebox{90}{\textbf{Scenario 1}}}
+  & \multirow{3}{*}{Coverage} & PS-LND & 97.3 & 97.3 & 96.0 & 96.7 \\
+  &                          & riAFTBART & 53.3 & 46.0 & 94.0 & 95.3 \\
+  &                          & PSW-Frailty & 96.0 & 96.7 & 67.3 & 54.0 \\
+  & \multirow{3}{*}{Mean Width} & PS-LND & 0.35 & 1.05 & 0.35 & 1.05 \\
+  &                             & riAFTBART & 0.30 & 0.97 & 0.39 & 1.17 \\
+  &                             & PSW-Frailty & 0.39 & 1.17 & 0.29 & 0.96 \\
+  & \multirow{3}{*}{MAE} & PS-LND & 0.07 & 0.22 & 0.07 & 0.21 \\
+  &                      & riAFTBART & 0.16 & 0.58 & 0.08 & 0.23 \\
+  &                      & PSW-Frailty & 0.08 & 0.23 & 0.12 & 0.50 \\
+\midrule
+%\multirow{9}{*}{\rotatebox{90}{\textbf{Scenario 2}}}
+%  & \multirow{3}{*}{Coverage} & PS-LND & 96.7 & 94.0 & 94.7 & 94.7 \\
+%  &                          & riAFTBART & 52.7 & 51.3 & 94.7 & 96.0 \\
+%  &                          & PSW-Frailty & 95.3 & 96.0 & 64.0 & 46.7 \\
+%  & \multirow{3}{*}{Mean Width} & PS-LND & 0.36 & 1.08 & 0.35 & 1.08 \\
+%  &                             & riAFTBART & 0.30 & 0.98 & 0.39 & 1.18 \\
+%  &                             & PSW-Frailty & 0.39 & 1.19 & 0.30 & 0.95 \\
+%  & \multirow{3}{*}{MAE} & PS-LND & 0.07 & 0.23 & 0.07 & 0.22 \\
+%  &                      & riAFTBART & 0.16 & 0.56 & 0.08 & 0.24 \\
+%  &                      & PSW-Frailty & 0.08 & 0.23 & 0.12 & 0.50 \\
+%\midrule
+\multirow{9}{*}{\rotatebox{90}{\textbf{Scenario 2}}}
+  & \multirow{3}{*}{Coverage} & PS-LND & 92.0 & 94.0 & 97.3 & 93.3 \\
+  &                          & riAFTBART & 77.3 & 78.7 & 89.3 & 86.0 \\
+  &                          & PSW-Frailty & 88.0 & 88.7 & 64.0 & 80.0 \\
+  & \multirow{3}{*}{Mean Width} & PS-LND & 0.52 & 1.55 & 0.63 & 1.92 \\
+  &                             & riAFTBART & 0.80 & 2.41 & 0.82 & 2.29 \\
+  &                             & PSW-Frailty & 0.93 & 2.66 & 0.49 & 1.62 \\
+  & \multirow{3}{*}{MAE} & PS-LND & 0.12 & 0.33 & 0.12 & 0.41 \\
+  &                      & riAFTBART & 0.28 & 0.79 & 0.20 & 0.56 \\
+  &                      & PSW-Frailty & 0.21 & 0.63 & 0.21 & 0.49 \\
+\bottomrule
+\end{tabular}%
+}
+\label{tab:Simulation_CERM_best}
+\end{table}
+
+\noindent \textbf{Scenario 2} aims to test the robustness of our method when the outcome model in \eqref{eq:outcomemodel} of PS-LND method is misspecified because the true distribution of the potential log-survival time $\log(T_{ij}(z))$ given $(z,\mathbf{x}, w_i)$ is
+\begin{equation}
+\nonumber
+N( b_2(z,\mathbf{x}) + 0.3x_1w_i + 0.2x_2w_i + 0.15x_3w_i + 0.1(x_5-5.5)w_i+ 0.25zx_1w_i), \sigma^2) \ ,
+\end{equation}
+where $b_2(z,\mathbf{x})$ is defined as in Scenario 1, and $\sigma^2=0.15$. 
+This simulation model also allows interactions between covariates $\mathbf{x}_{ij}$ and random cluster effects $W_i$. Howeve, random  $\mathbf{W}$ are still generated from the same DAGAR model used in Scenario~1. In Scenario 3, PS-LND method still has the lowest MAE values among all methods across all ACERM estimands. At $t=5$, MAE for PS-LND is less (MAE=0.12) for both clusters compared to riAFTBART (MAE=0.28 for cluster 4 and 0.20 for cluster 10) and PSW-Frailty (MAE=0.21 for both clusters). At $t=15$, PS-LND has substantially superior performance (MAE=0.33 for cluster 4 and 0.41 for cluster 10) compared to riAFTBART (MAE=0.79 for cluster 4 and 0.56 for cluster 10) and PSW-Frailty (MAE=0.63 for cluster 4 and 0.49 for cluster 10). Coverage for PS-LND remains excellent (92.0\% to 97.3\%) across both clusters and time points. Interval estimates from riAFTBART have undercoverage with values ranging from 77.3\% to 89.3\%. The coverage of PSW-Frailty is adequate (88.0\% and 88.7\%) for cluster 4  but poor for cluster 10 at $t=5$ (64.0\%). In both scenarios, PS-LND either outperforms (especially at $t=15$) or matches competing methods based on our metrics.
+
+
+\section{Causal analysis of Florida Cancer Registry (FCR) Study.}
+For the  FCR study with 68,009 patients in 67 FL  counties, the survival data in months have $41.3\%$ right-censoring. Patient-level confounders include HR status (positive/negative), Tumor Grade or TG (1/2/3), Age at diagnosis (continuous), and Biopsy Delay or BD (long/short, 90-day threshold).
+% We note that our dataset does not include county-level confounders and thus, $\mathbf{v}_i = \emptyset$ for all counties $i$ in our application, and so, we drop the notation $\mathbf{v}$ or $\mathbf{v}_i$ further in the remainder of this section.
+Treatment Delay (TD) is our binary exposure/treatment with $Z=0$ for long $>90$ days of TD, and $Z=1$ for short $\le 90$  days of TD. 
+Separately in six strata based on the combinations of two races (African American (AA) and Non-AA (WA)) and 3 stages of diagnosis (Distant/Regional/Local), our main analysis goal is to provide a posterior probability based assessment of the causal effect of an intervention to ensure a $\text{TD}\ <90$ days on the survival 
+times of the patient in different counties. 
+For brevity, this paper presents the analysis results for only one of 4 strata, WA patients with Distant stage disease ($N=1994$), called ``WA-D'' patients in short. For illustration of our method, we focus on this population also because existing literature also suggests that the causal effects of TD are expected to be particularly critical for such patients \parencite{Gwyn2004racialdifference,Bleicher2016breastcancersurvival, Richards1999delay}. 
+
+\textbf{Patient-level Treatment Effects:}
+We begin with the causal effects of short TD ($<90$ days) on survival of WA-D BC patients through the CERM defined in \eqref{eq:CERM} over two time intervals $(0,5)$ years and $(0,10)$ years. For brevity, we present comprehensive results for only one county, Broward  $(i = 6)$, a large metropolitan county with  $183$ of WA-D patients in FCR. In Table~\ref{tab:cate_CERM_big_county_names} we provide the estimates $\widehat{\text{CERM}}_6(10, \mathbf{x})$ and $\widehat{\text{CERM}}_6(5, \mathbf{x})$ for $\mathbf{x} = (\text{Age}, \text{BD}, \text{HR}, \text{TG})$ with Age $\in \{55, 65, 75\}$ years, BD $\in \{\text{yes}, \text{no}\}$, HR $\in \{\text{+ve}, \text{-ve}\}$, and TG $\in \{1, 2, 3\}$, that is, 36 different values of $\mathbf{x}$.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Point and $95\%$ interval (in bracket) estimates  of ${\text{CERM}}$ (in months)  restricted within intervals of 5 (first column) and 10 years (second column)   for WA patients with Distant-stage cancer in Broward County for 3 different values  of Age (55/65/75 years), Biopsy Delay (BD=yes/no), HR status (HR=+ve/-ve), and Tumor Grade (TG=1/2/3).}
+\label{tab:cate_CERM_big_county_names}
+\begin{tabular}{l|l|cccc}
+\hline
+BD & HR & TG & Age & $\widehat{\text{CERM}}$  in 5 years& $\widehat{\text{CERM}}$ in 10 years\\
+%&  &  &  & (Months) & (Months) \\
+\hline
+\multirow{18}{*}{No} & \multirow{9}{*}{Negative} & 1 & 55 & 10.40 (3.6, 18.1) & 17.30 (5.0, 31.4) \\
+ &  & 1 & 65 & 10.60 (3.8, 18.3) & 17.60 (5.4, 32.0) \\
+ &  & 1 & 75 & 10.10 (1.3, 18.6) & 16.60 (2.1, 33.9) \\
+ &  & 2 & 55 & 10.30 (4.7, 15.9) & 17.50 (7.8, 28.7) \\
+ &  & 2 & 65 & 10.60 (5.2, 16.2) & 18.00 (8.1, 29.1) \\
+ &  & 2 & 75 & 10.10 (1.8, 17.5) & 17.00 (2.9, 31.2) \\
+ &  & 3 & 55 & 10.40 (5.0, 15.6) & 17.70 (8.1, 27.7) \\
+ &  & 3 & 65 & 10.70 (5.2, 16.1) & 18.30 (7.7, 28.3) \\
+ &  & 3 & 75 & 10.20 (1.4, 17.7) & 17.40 (2.4, 31.2) \\
+\cline{2-6}
+ & \multirow{9}{*}{Positive} & 1 & 55 & 4.30 (-2.4, 10.9) & 8.40 (-4.4, 22.1) \\
+ &  & 1 & 65 & 4.60 (-2.4, 11.7) & 9.00 (-4.1, 23.2) \\
+ &  & 1 & 75 & 4.10 (-4.4, 12.8) & 8.10 (-8.3, 25.1) \\
+ &  & 2 & 55 & 4.20 (-0.6, 9.1) & 8.50 (-0.4, 18.3) \\
+ &  & 2 & 65 & 4.50 (-0.4, 9.3) & 9.10 (0.5, 18.4) \\
+ &  & 2 & 75 & 4.00 (-2.5, 10.8) & 8.10 (-4.0, 21.5) \\
+ &  & 3 & 55 & 4.50 (0.9, 8.5) & 9.10 (2.0, 17.0) \\
+ &  & 3 & 65 & 4.80 (1.4, 8.7) & 9.60 (2.9, 17.3) \\
+ &  & 3 & 75 & 4.30 (-0.9, 10.4) & 8.70 (-1.3, 20.3) \\
+\hline
+\multirow{18}{*}{Yes} & \multirow{9}{*}{Negative} & 1 & 55 & 2.90 (-5.1, 10.5) & 5.50 (-10.0, 20.8) \\
+ &  & 1 & 65 & 3.10 (-5.0, 11.0) & 5.80 (-9.8, 21.4) \\
+ &  & 1 & 75 & 3.10 (-5.8, 11.8) & 5.70 (-10.8, 22.7) \\
+ &  & 2 & 55 & 3.10 (-3.5, 10.1) & 5.80 (-7.0, 19.6) \\
+ &  & 2 & 65 & 3.30 (-3.2, 10.3) & 6.10 (-6.3, 19.7) \\
+ &  & 2 & 75 & 3.30 (-4.3, 11.3) & 6.10 (-8.3, 21.8) \\
+ &  & 3 & 55 & 3.10 (-3.0, 9.5) & 5.90 (-6.0, 18.4) \\
+ &  & 3 & 65 & 3.30 (-2.9, 9.9) & 6.20 (-5.7, 19.3) \\
+ &  & 3 & 75 & 3.30 (-4.2, 11.3) & 6.20 (-8.0, 21.6) \\
+\cline{2-6}
+ & \multirow{9}{*}{Positive} & 1 & 55 & -2.70 (-10.5, 4.6) & -5.70 (-22.2, 10.3) \\
+ &  & 1 & 65 & -2.50 (-10.4, 5.1) & -5.30 (-21.7, 11.2) \\
+ &  & 1 & 75 & -2.70 (-11.2, 5.5) & -5.50 (-22.9, 11.8) \\
+ &  & 2 & 55 & -2.50 (-8.3, 3.5) & -5.10 (-17.0, 8.0) \\
+ &  & 2 & 65 & -2.30 (-8.2, 3.8) & -4.80 (-16.7, 8.5) \\
+ &  & 2 & 75 & -2.60 (-9.4, 4.2) & -5.10 (-18.8, 9.1) \\
+ &  & 3 & 55 & -2.30 (-7.6, 3.7) & -4.40 (-15.3, 8.3) \\
+ &  & 3 & 65 & -2.10 (-7.5, 4.1) & -4.00 (-14.9, 9.0) \\
+ &  & 3 & 75 & -2.40 (-8.8, 4.7) & -4.40 (-17.3, 10.0) \\
+\hline
+\end{tabular}
+\end{table}
+In Table~\ref{tab:cate_CERM_big_county_names}, one of the first things to notice is the lack of statistical evidence of beneficial causal effects of short TD for patients with BD (Biopsy Delay) because the 95\% CI of $\text{CERM}$ for patients with BD always contain $0$ irrespective of the monitoring interval, tumor-grade (TG), HR status or age. Also, the strongest statistical evidence of the beneficial causal effects of short TD (as well as large magnitudes of the estimated causal effects $\widehat{\text{CERM}}$) are there for HR $-ve$ patients with no BD (irrespective of the monitoring interval, TG or age). The ${\text{CERM}}_{6}(10\,)$ of HR $-ve$ patients with no BD range between 16.6-18.3 months, while  $\widehat{\text{CERM}}_{6}(10)$ of HR positive with no BD range from 8.1-9.6 months. 
+%The $\widehat{\text{CERM}}_{6}(10)$ of HR positive with BD range from –5.70 to –4.00 months, with 95\% CI that include zero, indicating that short TD does not have a substantial causal effect for this subgroup of WA-D patients.  
+
+Among HR $-ve$ patients, 
+%$\widehat{\text{CERM}}_{6}(10)$ for TG 1 range from 16.6-17.60 months, followed by TG 2 (17-18 months) and TG 3 (17.40 to 18.30 months).  This pattern holds for all combinations of age and BD, that is, 
+$\widehat{\text{CERM}}_{6}(10)$ of TG 1 are higher than that of TG 2 and TG 3 subgroups for all age and BD combinations. The $\widehat{\text{CERM}}_{6}(10)$ of 55-year-old patient subgroup are slightly higher than that of 75-year-old  (a 0.7-1 month difference), suggesting that the causal effects of interventions to achieve short TD should benefit patients from all age groups.  The $\widehat{\text{CERM}}_6(10, \mathbf{x})$ and $\widehat{\text{CERM}}_6(5, \mathbf{x})$ exhibit similar patterns across different covariate combinations. For example, for both time intervals, $\widehat{\text{CERM}}_6$ of HR-negative with no BD consistently is the highest, $\widehat{\text{CERM}}_6$ of HR-positive with no BD ranks second, and $\widehat{\text{CERM}}_6$ of HR-positive with BD is the lowest. For any values of the confounders $\mathbf{x}$, the $95\%$ CI of ${\text{CERM}}$ restricted to 5 years is narrower than the corresponding $95\%$ CI for 10 years (unsurprisingly), giving policymakers greater confidence in the estimands restricted to the interval $(0,5)$ years.  These results identify whom to prioritize among WA-D patients in Broward County. Both $\widehat{\text{CERM}}_{6}(10)$ and $\widehat{\text{CERM}}_{6}(5)$ of HR-negative with TG 1 and no BD are the highest among all other combinations of covariates, and therefore HR negative patients with TG 1 and no BD should be the first focus of the policy makers.
+
+\textbf{County-level Treatment Effects:}
+%after obtaining the point and interval estimates of ${\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})$  of all current (observed) $n_i$ patients in FCR, 
+%we compute 
+%\begin{equation}
+%\widehat{\text{ACERM}}_i(t^*) = \frac{1}{n_i} \sum_{j=1}^{n_i} \widehat{\text{CERM}_{ij}}(t^*, \mathbf{x}_{ij})
+%\hspace{2pt},
+%\label{eq:ACERM}
+%\end{equation}
+%an estimator of  $\text{ACERM}_i(t^*)$  of all existing patients within cluster $i$. Here, 
+Here, we focus on $\text{ACERM}_i(t^*)$ of \eqref{eq:ACERM}, interpreted as the average gain in the expected survival time over $(0,t^*)$ in county $i$ if all $n_i$ current patients are intervened to have TD $<90$ days $(z=1)$ versus TD $>90$ days $(z=0)$. Also, $\widehat{\text{ACERM}}_i(t^*)$ of \eqref{eq:ACERM} is an estimator of $\mathbb{E}[\{T_i(1) \wedge t^*\} - \{T_i(0) \wedge t^*\} \mid \text{Cluster}=i]$, where $T_i(z)$ is the potential survival time of a randomly selected patient from county $i$ when she is intervened to receive treatment $z$. 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{pics/Plot1_C-RATE_5yr_10yr.pdf}
+\caption{Spatial pattern of  $\widehat{\text{ACERM}}$ from different counties at 5 (left panel) and 10 (right panel) years for  WA patients with Distant stage cancer in FCR. Colors range from light shades of yellow (near 0 months) to darker shades of green (15+ months), with gray indicating counties with no WA-D patients observed in FCR.}
+\label{fig:county_ate}
+\end{figure}
+Figure~\ref{fig:county_ate} demonstrates the heterogeneity and the spatial patterns in $\widehat{\text{ACERM}}_i(10)$ and $\widehat{\text{ACERM}}_i(5)$ of \eqref{eq:ACERM} across all counties in FL. The $\widehat{\text{ACERM}}_i(10)$ for rural northern counties such as Union County ($i=63$) and Baker County ($i=2$) exceeds 18 months, indicating that the average expected gain in survival time for these counties over the time interval (0,10) years would be more than 18 months, if every observed WA-D patient these counties would have been intervened to short TD versus long TD. 
+In contrast, the $\widehat{\text{ACERM}}_i(10)$ for very few counties (such as Bradford ($i=4$)) are either close to zero or slightly negative (with their narrow $95\%$ CIs containing zero), suggesting no substantial causal effect of short TD over the interval $(0,10)$ years in these counties. 
+In particular, the $\widehat{\text{ACERM}}_i(5)$ value of Bradford is approximately 55\% of the average $(1/K)\sum_{i=1}^K\widehat{\text{ACERM}}_i(10)$ of all $K=67$ FL counties  and the width of the 95\% CI for $\widehat{\text{ACERM}}_i(10)$ of Badford is approximately 54\% of the average width of 95\% CI for ${\text{ACERM}}_i(10)$ for rest of the FL counties. The spatial patterns of the $\widehat{\text{ACERM}}_i(5)$ and $\widehat{\text{ACERM}}_i(10)$ are similar. The values of $\widehat{\text{ACERM}}_i(10)$ and $\widehat{\text{ACERM}}_i(5)$ for Union County ($i=63$) and Baker County ($i=2$) are the highest, while those of Bradford County ($i=4$) are the lowest among all counties. Thus, BC patients from counties with high values of both $\widehat{\text{ACERM}}_i(10)$ and $\widehat{\text{ACERM}}_i(5)$, such as Union and Baker, deserve immediate attention from policy makers for intervention to avoid long TD.
+
+The policymakers of any county are also interested in the probabilistic assessment of the expected gain in BC survival of various subgroups of patients in their county if they intervene to ensure short ($<90$ days)  TD among these patients. 
+Similar to the $\text{ACERM}_i(t^*)$ estimated  in \eqref{eq:ACERM}, we define the Average of Causal treatment Effects on Restricted Mean on the Treated (ACERMT) patients of county $i$ over a time interval $(0, t^*)$ as
+$\text{ACERMT}_i(t^*) = \frac{1}{n_{1i}} \sum_{j: z_{ij}=1} \text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$
+which quantifies the average expected gain in survival times over a time interval $(0,t^*)$ for all treated (observed $z_{ij}=1$) patients in county $i$ instead of being assigned no treatment $(z=0)$.
+Similarly, the Average Causal Effect on Restricted Mean for the currently "Untreated" (observed $z_{ij}=0$) patients, $\text{ACERMU}_i(t^*) = \frac{1}{n_{0i}} \sum_{j: z_{ij}=0} \text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$,  in county $i$  over a time interval $(0, t^*)$ quantifies the average expected loss in survival over a time interval $(0,t^*)$ for all untreated (observed $z_{ij}=1$) patients in county $i$ for not being intervened to assign treatment (that is, for note being intervened to avoid TD). 
+
+
+%Our analysis reveals pronounced geographic clustering in TD impacts across Florida counties.
+% In Figure~\ref{fig:rho_histogram}, we present the histogram of the MCMC samples of the correlation parameter $\rho$ of the DAGAR model of \eqref{eq:DAGARjoint} from the posterior in \eqref{eq:s2Post}, whose posterior mean is 0.8.  This strong spatial correlation indicates that the unobserved county effects $\mathbf{W}=(W_1,\cdots, W_K)$ are highly similar between neighboring counties. %This suggests that unmeasured factors influencing TD have a relatively uniform impact across the counties.
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.6\textwidth]{pics/rho_post_beta_2_2.pdf}
+% \caption{Histogram of the MCMC samples spatial correlation parameter $\rho$ of the DAGAR model of unobserved county effects $\mathbf{W}$.}
+% \label{fig:rho_histogram}
+% \end{figure}
+
+%We quantify county-level impacts through three measures. C-ATE$_i = \frac{1}{n_i}\sum_{j=1}^{n_i}{\text{CATE}_i}(\mathbf{x}_{ij}, \mathbf{v}_{i})$ represents the average effect if all county $i$ patients received timely treatment. C-ATT$_i = \frac{1}{n_{1i}}\sum_{j: z_{ij}=1}{\text{CATE}_i}(\mathbf{x}_{ij}, \mathbf{v}_{i})$ captures the realized effect among those who accessed timely care. C-ATU$_i = \frac{1}{n_{0i}}\sum_{j: z_{ij}=0}{\text{CATE}_i}(\mathbf{x}_{ij}, \mathbf{v}_{i})$ estimates the potential effect for those experiencing delays. The restricted 5-year versions (ACERM, ACERMT, ACERMU) capture benefits within typical budget cycles, critical for policy planning.
+
+
+%Although $\text{ACERM}_i$ quantifies the average expected gain in survival time over the interval $(0,t^*)$ in county $i$ if every observed WA-D patient $(i,j)$ in that county had been intervened to ensure no TD $(z=1)$ instead of having TD $(z=0)$, while keeping their observed confounder values $\mathbf{x}_{ij}$ unchanged, one may approximately interpret $\text{ACERM}_i$ as the expected gain in survival time if a randomly chosen WA-D patient from county $i$ were assigned no TD instead of TD. This interpretation similarly applies to $\text{ACERMT}_i$ of \eqref{eq:ACERMT} and $\text{ACERMU}_i$ of \eqref{eq:ACERMU} for their respective subpopulations. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{pics/Plot2_C-RATT_5yr_10yr.pdf}
+\caption{Spatial pattern of  $\widehat{\text{ACERMT}}$ restricted within the 5 (left panel) and 10 (right panel) years since diagnosis for every Florida county among WA patients with Distant stage cancer. Colors range from light shades of yellow (near 0 months) to darker shades of green (15+ months), with gray indicating counties with no WA-D patient in the available data.}
+\label{fig:county_att}
+\end{figure}
+
+
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=1\textwidth]{pics/Plot3_C-RATU_5yr_10yr.pdf}
+% \caption{Spatial pattern of  $\widehat{\text{ACERMU}}$ restricted within the interval of 5 (left panel) and 10 (right panel) years for every Florida county among WA patients with Distant stage cancer. Colors range from light shades of yellow (near 0 months) to darker shades of green (15+ months), with gray indicating counties with no WA-D patient in the available data.}
+% \label{fig:county_atu}
+% \end{figure}
+
+\noindent Figure~\ref{fig:county_att} presents the spatial pattern of $\widehat{\text{ACERMT}}_i(10)$ and $\widehat{\text{ACERMT}}_i(5)$ across all FL counties for WA-D patients.
+Figure~\ref{fig:county_att} shows many FL counties with high values of $\widehat{\text{ACERMT}}_i(10)$ (for example, Gilchrist $(i=21)$) that exceed 16 months), while $\widehat{\text{ACERMT}}_i(10)$ of some counties are negative with $95\%$ CIs containing zero. The $\widehat{\text{ACERMT}}_i(5)$ in Figure~\ref{fig:county_att} shows similar spatial patterns with most values ranging from 0 to 10 months. 
+% Figure~\ref{fig:county_atu} presents the spatial 
+For brevity, here we omit the maps showing the patterns of $\widehat{\text{ACERMU}}_i(10)$ and $\widehat{\text{ACERMU}}_i(5)$ across counties in Fl among WA-D patients. These statistics help policymakers identify counties where interventions among the WA-D patients who experienced long TDs would yield the greatest average gains in survival time. 
+For example, the $\widehat{\text{ACERMU}}_i(10)$ exceeds 18 months in two counties (Union and Baker), which means that the average expected gains in survival time in both counties are greater than 10 months within the first 5 years if every observed WA-D patient $(i,j)$ who experienced TD in these counties was intervened to receive no TD, while keeping their observed covariate $\mathbf{x}_{ij}$ unchanged.
+%  % These values indicate that every WA-D patients who experienced TDs in these counties would have gained over 15 months of survival time on average within the time interval $(0,10)$ years if they had received timely treatment. 
+%  Panhandle counties with $\widehat{\text{ACERMU}}_i(10)$ values exceeding 10 months (Union ($i=63$), Baker ($i=2$), Franklin ($i=19$), and Putnam ($i=54$)) could share mobile oncology units or rotating specialists. For Union County (i=63), the $\widehat{\text{ACERMU}}_i(5)$ value is also the highest among other counties, exceeding 10 months. In most counties, $\widehat{\text{ACERMU}}_i(10)$ exceeds $\widehat{\text{ACERMT}}_i(10)$ (and also $\widehat{\text{ACERMU}}_i(5) \ge \widehat{\text{ACERMT}}_i(5)$), demonstrating the heterogeneity in the county-level causal effect of no TD in both treatment groups.   
+
+
+
+
+
+
+
+
+
+\textbf{Average Causal Effects within State:}
+To the state of FL  policymakers, we also provide similar state-wide statistical summaries by averaging the relevant subject-level estimated causal effects over all the current patients in FL.
+We define the marginal survival function $S^{(z)}_i(t) = \mathbb{E}_{\mathbf{X}}[S_i^{(z)}(t \mid   \mathbf{X})]$, where $S_i^{(z)}(t \mid   \mathbf{X})=P[T(z)>t \vert \mathbf{X}, \text{Cluster}=i]$ is from \eqref{eq:condsurv} and $\mathbb{E}_{\mathbf{X}}$ denotes the expectation of over the multivariate distribution of all the confounders $\mathbf{X}$ in county $i$. The Survival Probability Treatment Effect (SPTE) over a time interval $(0,t^*)$ in county $i$ is given by
+${\text{SPTE}}_i(t) = S^{(1)}_i(t) - S^{(0)}_i(t)$.
+%\noindent which quantifies the causal effect at the population level (e.g., state level for the FCR study) on the probability of survival at a specific time $t$. 
+For example, ${\text{SPTE}}_i(5) = 1.5$ means that the intervention to achieve short TD would increase the expected 5-year survival probability of a randomly selected future patient in county $i$ by 1.5 months.
+The Restricted Average Treatment Effect,  ${\text{RATE}}(t^*)=\mathbb{E}[\{T(1) \wedge t^*\}] - \mathbb{E}[\{T(0) \wedge t^*\}]=\sum_{i=1}^{K}\int_0^{t^*} \eta_i\  {\text{SPTE}}_i(t)\ dt$, over interval $(0, t^*)$ years is
+the 
+expected life years gained for intervening to assign short TD to a randomly selected future FL patient within a policy-relevant monitoring interval (for example, 5 years). Here, $\eta_i$ is the probability of the randomly selected future BC patient being in county $i$.
+%${\text{RATE}}(5) = 0.8$ years means that in the interval $(0,5)$ years, eliminating TD would increase the expected survival time of a randomly chosen patient in FL by 0.8 years. %This measure can be crucial for cost-effectiveness analyses.
+Similarly, we can define the Restricted Average Treatment Effect on  a future Treated patient
+$\text{RATT}(t^*) = \mathbb{E}[\{T(1) \wedge t^*\} - \{T(0) \wedge t^*\} \mid Z = 1]$
+and the Restricted Average Treatment Effect on a Untreated future patient $
+\text{RATU}(t^*) = \mathbb{E}[\{T(1) \wedge t^*\} - \{T(0) \wedge t^*\} \mid Z = 0]$
+over a time interval $(0, t^*)$. 
+%We estimate these state-level causal estimands (SPTE, RATE, RATT and RATU) by averaging the patient-level causal effect estimates $\widehat{\text{CATE}}_i(\mathbf{x}_{ij})$ and $\widehat{\text{CERM}}_i(t^*, \mathbf{x}_{ij})$ over all observed $j=1,\cdots, n_i$ patients in county $i$. 
+Instead of modeling $\mathbf{X}_i$ within cluster $i$, we utilize the empirical distribution of $\mathbf{X}_i$ along with the Bayes estimate $\text{CERM}_{ij}\bigl(t^*,\,\mathbf{x}_{ij}\bigr)$ to provide the estimates $\widehat{\mathrm{RATE}}(t^*)
+= \frac{1}{N}
+  \sum_{i=1}^{K} \sum_{j=1}^{n_i} 
+    \widehat{\text{CERM}_{ij}}\bigl(t^*,\,\mathbf{x}_{ij}\bigr)$, 
+$\widehat{\mathrm{RATT}}(t^*)
+= \frac{1}{N_1}
+  \sum_{i=1}^{K} \sum_{{j=1}}^{n_i}  z_{ij}
+    \widehat{\text{CERM}_{ij}}\bigl(t^*,\,\mathbf{x}_{ij}\bigr)$, 
+$\widehat{\mathrm{RATU}}(t^*)
+= \frac{1}{N_0}
+  \sum_{i=1}^{K} \sum_{{j=1 }}^{n_i}  (1-z_{ij})
+    \widehat{\text{CERM}_{ij}}\bigl(t^*,\,\mathbf{x}_{ij}\bigr)$ of the state-level causal estimands RATE, RATT and RATU,
+where $N_1 = \sum_{i=1}^K \sum_{j=1}^{n_i} z_{ij}$ is the total number of treated subjects $N_0 = N-N_1$ is the total number of untreated subjects.
+In Table~\ref{tab:AT}, we present these estimates (measured in months) of RATE, RATT and RATU (each restricted to 5 and 10 years) for the state of FL.
+\begin{table}[ht]
+\label{tab:AT}
+\centering
+\caption{The point and 95\% interval (in bracket) estimates of ${\text{RATE}}$, ${\text{RATT}}$ and ${\text{RATU}}$ restricted within intervals of 5 and 10 years for WA patients with Distant stage cancer in Fl.}
+\begin{tabular}{lcccc}
+\hline
+Estimands & Interval & Sample & Estimate & 95\% Credible \\
+ & (years) & Size & (months) & Interval \\
+\hline
+RATE & 10 & 1994 & 8.1 & (2.4, 15.4) \\
+RATT & 10 & 687 & 6.9 & (0.8, 14.9) \\
+RATU & 10 & 1307 & 8.8 & (3.5, 15.8) \\
+RATE & 5 & 1994 & 4.6 & (1.8, 8.4) \\
+RATT & 5 & 687 & 4.0 & (0.9, 7.9) \\
+RATU & 5 & 1307 & 4.9 & (2.2, 8.6) \\
+\hline
+\end{tabular}
+\end{table}
+For example, the 95\% CI of (2.4, 15.4) months for  ${\text{RATE}}(10)$ suggests that a state-level intervention to ensure $\text{TD}\le 90$ days (as opposed to the intervention to assign $\text{TD}>90$) of a randomly chosen current WA patient with Distance-stage cancer in FL would increase her expected survival time by 2.4 to 15.4 months (with 95\% probability) within the monitoring interval $(0,10)$ years. Similarly,  $\widehat{\text{RATE}}(5)=4.6$  months suggests that the corresponding gain in expected survival time of the same patient is estimated to be 4.6 months in 5 5-year monitoring interval. 
+%65.6\% of the patients $(n=1,307)$ experienced TD, while only 34.4\% $(n=687)$ received timely treatment. 
+The $\widehat{\text{RATT}}(10 )$ (6.9 months) has the widest $95\%$ CI due to the smaller sample of patients receiving short TD ($N_1=687$ versus $N_0=1,307$). The $\widehat{\text{RATU}}(10 )$ exceeds $\widehat{\text{RATT}}(10 )$ (8.8 vs. 6.9 months), suggesting that a randomly chosen existing WA-D patient with long TD would have gained 1.9 months more in survival time on average in the interval (0,10) years (via ensuring short TD) compared to the corresponding expected gain in restricted mean survival time of a randomly selected existing patient who already received short TD. 
+Even when we narrow the monitoring interval to 5 years, this pattern of higher loss in restricted mean survival for a random patient currently receiving long TD versus the gain enjoyed by a random patient currently receiving short PD (example, $\widehat{\text{RATU}}(5 )$ > $\widehat{\text{RATE}}(5 )$ > $\widehat{\text{RATT}}(5 )$). 
+The overlapping CIs of the currently observed short TD and the long TD groups suggest no substantial heterogeneity in the causal effects between WA-D patients from both treatment groups. 
+The 5-year restricted effects ($\widehat{\text{RATE}}(5 )$, $\widehat{\text{RATT}}(5 )$, and $\widehat{\text{RATU}}(5 )$) are about 57\% of the 10-year restricted effects ($\widehat{\text{RATE}}(10 )$, $\widehat{\text{RATT}}(10 )$, and $\widehat{\text{RATU}}(10 )$). This indicates that the state-level causal benefits of no TD persist beyond the interval $(0,5)$ years for WA-D patients in FL. The widths of $95\%$ CIs of the effects on survival restricted to 5 years are approximately half the widths of the corresponding intervals for effects restricted to 10 years, reflecting the much higher certainty in the state-level causal effects estimates when restricted to $(0,5)$ years. 
+No CI in Table~\ref{tab:AT} contains zero, suggesting strong statistical evidence of the benefits of state-level intervention to ensure short TD. 
+\begin{figure}[ht]
+\centering
+\small
+\includegraphics[width=0.7\textwidth]{pics/S_0_S_1_SPTE.pdf}
+\caption{Estimators of $S^{(1)}(t)$ (\rule[0.5ex]{0.6em}{1pt}\hspace{0.2em}\rule[0.5ex]{0.6em}{1pt}\hspace{0.2em}\rule[0.5ex]{0.6em}{1pt}), $S^{(0)}(t)$ (\rule[0.5ex]{0.15em}{1pt}\hspace{0.15em}\rule[0.5ex]{0.15em}{1pt}\hspace{0.15em}\rule[0.5ex]{0.15em}{1pt}\hspace{0.15em}\rule[0.5ex]{0.15em}{1pt}) and of the causal estimand $\text{SPTE}(t)= S^{(1)}(t) - S^{(0)}(t)$ (solid blue line) vs Time $t$ (in months) for all WA patients with Distant-stage cancer in FL, with corresponding $95\%$ credible intervals (blue band) for $\text{SPTE}(t)$.}
+\label{fig:spte}
+\end{figure}
+\noindent Figure~\ref{fig:spte} displays the estimated curve $\widehat{\text{SPTE}}(t)$, representing the average causal effect on survival probability at a specific time  $t$ for a randomly selected WA-D patient in Fl. The $\widehat{\text{SPTE}}(t)$ peaks at 11\% for $t=2.2$ years. If we assign no TD to all WA-D patients in the population, on average 11\% more would survive at least 2.2 years compared to if all WA-D patients in the population were assigned TD. The estimated curve $\widehat{\text{SPTE}}(t)$ in Figure~\ref{fig:spte} suggests that no TD would have its most pronounced causal impact on early mortality, with the survival advantage persisting but diminishing over time. Even at 10 years, approximately 6\% more WA-D patients in the population would remain alive with timely treatment intervention. Notably, the entire $95\%$ CI remains above zero throughout the follow-up period, providing strong evidence that timely treatment would consistently improve the population-level effect of no TD. 
+
+
+
+
+\section{Discussion.}
+Our PS-LND is the first approach that enables the statistical evaluations  of cluster-specific causal effects on survival  when the clusters are spatially associated. Our PS-LND approach implements  nonparametric regression using SBART while allowing the interpretable DAGAR model for spatial associations among counties, to estimate the state-level, county-level, and individual-level causal treatment effects. 
+%The DAGAR model provides an interpretable spatial correlation parameter $\rho$ with a guaranteed positive definite precision matrix $Q_\pi(\rho)$. 
+Our two-stage estimation approach achieves double robustness, ensuring consistent causal estimates when at least one of the PS and the outcome model is correctly specified. 
+Under our simulation studies, the method maintains nominal coverage even under model misspecification. The application to the FCR study reveals some important insights for health policy makers. 
+We can identify the counties and subpopulations where the intervention to ensure short TD would benefit the most in terms of life-years saved. %Patient-level effects show which subgroups would benefit the most from eliminating TD. 
+State-level results inform broad policy strategies. Despite these strengths, several 
+% future research directions are remain important. First,  our current implementation requires parametric error distributions despite a nonparametric mean function. Another research direction  may involve modeling the  hazard  using nonparametric methods, building on recent work by \parencite{Ghosh2024survival}. 
+% Here, we do not provide the estimates of the causal effects for counties with no current patients  in the sample, but our method can provide such posterior estimates and predictions. 
+Our PS-LND method does not  directly deal with missing values in covariates.
+%(e.g., the Screening Mammography proportions from FCR as discussed in \parencite{Ghosh2024survival}). 
+Lastly, we observed instances of moderately negative estimated treatment effects (e.g., $\widehat{\text{C-ATT}}_i < 0$ for Levy County), which are not compatible with the clinical intuition and common sense. These anomalous results should be interpreted with caution and can be addressed in future works by imposing constraints (for example, imposing monotonic treatment effects via an mBART extension).% or by more carefully modeling the interdependencies among covariates.
+
+
+
+% \subsection{Individualized Treatment Effects:}
+
+% We examine individualized treatment effects through the Conditional Average Treatment Effect (CATE) and Causal Treatment Effect on Restricted Mean (CERM). CATE is defined as $ \mathbb{E}[T(1) - T(0)\mid   \mathbf{x}]$, representing the expected survival gain for a patient with characteristics $\mathbf{x}$. CERM is $ \mathbb{E}[\min\{T(1), 5\} - \min\{T(0), 5\}\mid   \mathbf{x}]$, capturing expected life-years gained within 5 years for patients with specific confounder profiles $\mathbf{x}$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Software}
+
+R code implementing our method for the simulation studies and data analysis is available at \url{https://github.com/Durbadal0/PSLND-DAGAR}.
+
+
+
+
+
+
+\section{Acknowledgments}
+
+This research was supported by a grant from the state of Florida, 5UL1TR001427-08, NIH grants R03CA205018-01 and R21DE034124-01A1, and NSF Award 2413549. We thank Dr.E.Slate and Dr.Z.He for valuable comments.\\
+
+
+\begin{supplement}
+{The section ~ A of the Supplementary Material contains the sketch of the proof of Theorem~3.1 and the main algorithm for our analysis tool is provided in the section~B of the Supplementary Material.}
+\end{supplement}
+
+
+
+\printbibliography 
+
+
+\end{document}

@@ -1,0 +1,632 @@
+%
+\documentclass[aoas]{imsart}
+\usepackage{newtxtext}
+%\usepackage{textcomp}
+\usepackage{lmodern}
+
+
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\graphicspath{{pics/}}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\setlength{\parskip}{0pt}
+\usepackage{multirow}
+%documentclass[useAMS]{biom}
+%
+%  If your system does not have the AMS fonts version 2.0 installed, then
+%  remove the useAMS option.
+%
+%  useAMS allows you to obtain upright Greek characters.
+%  e.g. \umu, \upi etc.  For further information, see the section on "Upright Greek characters" in
+%  this guide.
+%
+%  If you are using AMS 2.0 fonts, bold math letters/symbols are available
+%  at a more extensive range of sizes for NFSS release 1 and 2 (using \boldmath or
+%  preferably \bmath).
+% 
+%  Other options are described in the user guide. Here are a few:
+% 
+%  -  If you use Patrick Daly's natbib  to cross-reference your 
+%     bibliography entries, use the usenatbib option
+%
+%  -  If you use \includegraphics (graphicx package) for importing graphics
+%     into your figures, use the usegraphicx option
+% 
+%  If you wish to typeset the paper in Times font (if you do not have the
+%  PostScript Type 1 Computer Modern fonts you will need to do this to get
+%  smoother fonts in a PDF file) then uncomment the next line
+%  \usepackage{Times}
+
+%%%%% PLACE YOUR OWN MACROS HERE %%%%%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+%\usepackage{natbib}
+
+
+\usepackage{algorithm}
+\usepackage{subfigure}
+
+\usepackage{algpseudocode}
+
+
+\RequirePackage{etoolbox}
+\csundef{c@author}
+\usepackage{biblatex}
+
+
+\addbibresource{biomsample.bib}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\renewbibmacro*{in:}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext{\intitlepunct}}}
+
+\def\bSig\mathbf{\Sigma}
+\newcommand{\VS}{V\&S}
+\newcommand{\tr}{\mbox{tr}}
+\usepackage{tikz}
+
+\newcommand*{\tikzbulletred}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[red] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+\newcommand*{\tikzbulletgreen}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[green] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletyellow}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[yellow] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletblue}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[blue] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+%\RequirePackage[authoryear]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}
+\usepackage{dsfont}
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothesis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{definition}            %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{fact}{Fact}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Appendix}
+%\title{A sample article title with some additional note\thanksref{t1}}
+\runtitle{ Causal Inference on Spatially Clustered Survival data}
+%\thankstext{T1}{A sample additional note to the title.}
+
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only one address is permitted per author. %%
+%% Only division, organization and e-mail is %%
+%% included in the address.                  %%
+%% Additional information can be included in %%
+%% the Acknowledgments section if necessary. %%
+%% ORCID can be inserted by command:         %%
+%% \orcid{0000-0000-0000-0000}               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[A]{\fnms{Durbadal}~\snm{Ghosh} \ead[label=e1]{dg20ea@fsu.edu}},
+\author[A]{\fnms{Indrabati}~\snm{Bhattacharya}\ead[label=e2]{ib22g@fsu.edu}}
+\and
+\author[A]{\fnms{Debajyoti}~\snm{Sinha}\ead[label=e3]{dsinha@fsu.edu}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Department of Statistics,
+Florida State University\printead[presep={ ,\ }]{e1,e2,e3}}
+
+\end{aug}
+
+
+
+
+
+
+
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please use \tableofcontents for articles %%
+%% with 50 pages and more                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\tableofcontents
+\section{Proofs.}
+
+
+
+\subsection{Identification of Causal Estimands}
+
+This section establishes the identifiability of causal estimands defined in equation \eqref{eq:CRATE}, with particular focus on the Conditional Restricted Average Treatment Effect $\text{CRATE}_i(t^*, \mathbf{x}_{oij})$.
+
+We first establish that the observable data distribution uniquely determines the joint survival distribution under our modeling assumptions. Under the conditionally independent censoring assumption in equation \eqref{eq:IndCensoring} and the regularity condition that $P(C_{ij} > t^* \mid \mathbf{X}_{ij}, Z_{ij}) > \epsilon$ for all subjects $(i,j)$ and some $\epsilon > 0$, the observed data distribution $P(\mathbf{Y}, \boldsymbol{\Delta} \mid \mathbf{X}^a, \mathbf{Z})$ uniquely determines the joint survival distribution
+$
+P(T_{11} > t_{11}, \ldots, T_{Kn_K} > t_{Kn_K} \mid \mathbf{X}^a, \mathbf{Z})
+$
+for any $t_{ij} \in (0, t^*)$ and all $(i,j)$, where $\mathbf{Y} = \{Y_{ij}\}_{i=1,j=1}^{K,n_i}$, $\boldsymbol{\Delta} = \{\delta_{ij}\}_{i=1,j=1}^{K,n_i}$, $\mathbf{X}^a = \{\mathbf{X}_{ij}\}_{i=1,j=1}^{K,n_i}$, and $\mathbf{Z} = \{Z_{ij}\}_{i=1,j=1}^{K,n_i}$ denote the collections of observed survival times $T_{ij}$, censoring indicators $C_{ij}$, confounders, and treatment assignments, respectively.
+
+For notational simplicity in the following theorem, we suppress the subject index $j$ within clusters. We now present our main identifiability result.
+
+\begin{theorem}[Identifiability of CRATE]
+Suppose the joint survival function
+$
+S_a(t_1, \ldots, t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K) := P(T_1 > t_1, \ldots, T_K > t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)
+$
+is identified from the observed data distribution for all treatment assignments $z_i \in \{0,1\}$, time points $t_i \in (0, t^*)$, and clusters $i = 1, \ldots, K$. Then the $\text{CRATE}_i(t, \mathbf{X}_i)$ is identifiable for any $t \in (0, t^*)$ and $\forall i \in \{1,\dots,K\}$.
+\end{theorem}
+
+
+\begin{proof}
+
+We fix any $t \in (0, t^*)$ and any $ i \in \{1,\dots,K\}$, then
+\begin{align}
+\nonumber &\text{CRATE}_i\bigl(t\mid \mathbf{X}_{i}\bigr)
+= \mathbb{E}\bigl[\min\{T_i(1),t\}-\min\{T_i(0),t\}\mid \mathbf{X}_{i}\bigr]\\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_i(1),t\}\mid \mathbf{X}_{i}\bigr]
+ - \mathbb{E}\bigl[\min\{T_i(0),t\}\mid \mathbf{X}_{i}\bigr]\\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_i(1),t\}\mid \mathbf{X}_{i},\,Z_{i}=1\bigr]
+ - \mathbb{E}\bigl[\min\{T_i(0),t\}\mid \mathbf{X}_{i},\,Z_{i}=0\bigr] \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_i,t\}\mid \mathbf{X}_{i},\,Z_{i}=1\bigr]
+ - \mathbb{E}\bigl[\min\{T_i,t\}\mid \mathbf{X}_{i},\,Z_{i}=0\bigr] \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}})\\ \nonumber.
+&=\int_{0}^{t}\bigl[P(T_i>t_i\mid X_i,Z_i=1)\;-\;P(T_i>t_i\mid X_i,Z_i=0)\bigr]\;dt_i \\ \nonumber
+&= \lim_{t_1\to\infty}\cdots\lim_{t_{i-1}\to\infty}
+\;\lim_{t_{i+1}\to\infty}\cdots\lim_{t_K\to\infty}\,
+\int_{0}^{t} \int \int
+[S_a\bigl(t_1,\dots,t_K \mid Z_{(-i)},\mathbf X_{(-i)},Z_i=1,\mathbf{X}_i),\bigr)P(Z_{(-i)} \mid \mathbf X_{(-i)})\\ \nonumber
+&-S_a\bigl(t_1,\dots,t_K \mid Z_{(-i)},\mathbf X_{(-i)},Z_i=0,\mathbf{X}_i,\bigr)P(Z_{(-i)} \mid \mathbf X_{(-i)}) P(X_{(-i)})]\;dt_i d\mathbf{X}_{(-i)} dZ_{(-i)}
+\end{align}
+    
+\end{proof}
+We now present the expressions for the potential survival function $S^{(z)}_i(t \mid \mathbf{X}_{i})$ and Conditional Restrictive Treatment Effect ${\text{CRATE}_i}(t^*, \mathbf{x}_{oij}) $.
+% We use the assumptions in \eqref{eq:SUTVA}-\eqref{eq:Positivity} to derive the expression of conditional survival function $S^{(z)}_i(t \mid \mathbf{X}_{i})$ (defined in \eqref{eq:condsurv}) from the outcome model in \eqref{eq:outcomemodel}.
+
+\begin{align*}
+&S_i^{(z)}(t\mid \mathbf X_{ij}) \ 
+= \Pr\bigl(T_{ij}{(z)}>t \mid \mathbf X_{ij}\bigr) \\[6pt]
+&= \Pr\bigl(T_{ij}(z)>t \mid Z_{ij}=z,\;\mathbf X_{ij}\bigr)
+   \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\[6pt]
+&= \Pr\bigl(T_{ij}>t \mid Z_{ij}=z,\;\mathbf X_{ij}\bigr)
+   \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}}) \\[6pt]
+&= \mathbb{E}_{(W_i,b_2,\sigma)}[P\bigl(T_{i}\ge t \mid Z_{i}=z,\mathbf{X}_{i};W_i,b_2,\sigma\bigr)]\\
+&=\mathbb{E}_{(W_i,b_2,\sigma)}\left[ 1 - \Phi\!\bigr(\frac{\log t - b_2\bigl(z,\mathbf{X}_{i},\hat e(\mathbf{X}_{i})\bigr) - W_i}{\sigma}\bigr)\right].
+\end{align*}
+
+
+% \begin{equation}\nonumber
+% \begin{aligned}
+% S_i^{(z)}\bigl(t\mid \mathbf{X}_{i}\bigr) 
+% &= P\bigl(T_{i}\ge t \mid Z_{i}=z,\mathbf{X}_{i}\bigr) \quad (\text{by Theorem~2.1}) \\
+% &= \mathbb{E}_{(W_i,b_2,\sigma)}[P\bigl(T_{i}\ge t \mid Z_{i}=z,\mathbf{X}_{i};W_i,b_2,\sigma\bigr)]\\
+% &=\mathbb{E}_{(W_i,b_2,\sigma)}\left[ 1 - \Phi\!\bigr(\frac{\log t - b_2\bigl(z,\mathbf{X}_{i},\hat e(\mathbf{X}_{i})\bigr) - W_i}{\sigma}\bigr)\right].
+% \end{aligned}\label{eq:condsurvexpr}
+% \end{equation} 
+% The conditional survival function $S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v})$ is given by:
+% \begin{equation}
+% S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v}) = 1 - \Phi\left(\frac{\log t - b_2(z, \mathbf{x}, \mathbf{v}, \hat{e}(\mathbf{x}, \mathbf{v})) - W_i}{\sigma}\right)
+% \label{eq:condsurvexpr}.
+% \end{equation}
+
+
+% \begin{equation}
+% \nonumber
+% \text{CATE}_i(\mathbf{x}_{oij}) = \exp\left(\frac{\sigma^{2}}{2} + W_i\right) \left[\exp(b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij})) - \exp(b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}))\right].
+% \label{eq:CATEexpr}
+% \end{equation}
+
+
+
+
+\begin{align}\nonumber
+{\text{CRATE}_i}(t^*, \mathbf{x}_{oij}) &= \mathbb{E}_{(W_i,b_2,\sigma)}\left[\theta_{1ij} \Phi\left(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right)\right] \\ \nonumber
+&\quad + \mathbb{E}_{(W_i,b_2,\sigma)}\left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i} {\sigma})\right) \right]\\ \nonumber
+&\quad -\mathbb{E}_{(W_i,b_2,\sigma)} \left[ \theta_{0ij} \Phi\left(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right) \right]  \\ \nonumber
+&\quad - \mathbb{E}_{(W_i,b_2,\sigma)} \left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i}{\sigma})\right)\right], 
+\end{align}\label{eq:CRATEexpr}
+
+\noindent where $\theta_{0ij} = \exp\{b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$ and  $\theta_{1ij} = \exp\{b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$.
+
+
+% % We use the assumptions in \eqref{eq:SUTVA}-\eqref{eq:Positivity} to derive the expression of conditional survival function $S^{(z)}_i(t \mid \mathbf{X}_{ij})$ (defined in \eqref{eq:condsurv}) from the outcome model in \eqref{eq:outcomemodel}.
+
+
+% \begin{equation}\nonumber
+% \begin{aligned}
+% S_i^{(z)}\bigl(t\mid \mathbf{X}_{ij}\bigr) 
+% &= P\bigl(T_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr) \quad (\text{by Theorem~2.1}) \\
+% &= \mathbb{E}_{(W_i,b_2,\sigma)}[P\bigl(T_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma\bigr)]\\
+% &=\mathbb{E}_{(W_i,b_2,\sigma)}\left[ 1 - \Phi\!\bigr(\frac{\log t - b_2\bigl(z,\mathbf{X}_{ij},\hat e(\mathbf{X}_{ij})\bigr) - W_i}{\sigma}\bigr)\right].
+% \end{aligned}\label{eq:condsurvexpr}
+% \end{equation} 
+% % The conditional survival function $S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v})$ is given by:
+% % \begin{equation}
+% % S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v}) = 1 - \Phi\left(\frac{\log t - b_2(z, \mathbf{x}, \mathbf{v}, \hat{e}(\mathbf{x}, \mathbf{v})) - W_i}{\sigma}\right)
+% % \label{eq:condsurvexpr}.
+% % \end{equation}
+
+
+% % \begin{equation}
+% % \nonumber
+% % \text{CATE}_i(\mathbf{x}_{oij}) = \exp\left(\frac{\sigma^{2}}{2} + W_i\right) \left[\exp(b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij})) - \exp(b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}))\right].
+% % \label{eq:CATEexpr}
+% % \end{equation}
+
+
+
+
+% \begin{align}\nonumber
+% {\text{CRATE}_i}(t^*, \mathbf{x}_{oij}) &= \mathbb{E}_{(W_i,b_2,\sigma)}\left[\theta_{1ij} \Phi\left(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right)\right] \\ \nonumber
+% &\quad + \mathbb{E}_{(W_i,b_2,\sigma)}\left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i} {\sigma})\right) \right]\\ \nonumber
+% &\quad -\mathbb{E}_{(W_i,b_2,\sigma)} \left[ \theta_{0ij} \Phi\left(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right) \right]  \\ \nonumber
+% &\quad - \mathbb{E}_{(W_i,b_2,\sigma)} \left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i}{\sigma})\right)\right], 
+% \end{align}\label{eq:CRATEexpr}
+
+% \noindent where $\theta_{0ij} = \exp\{b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$ and  $\theta_{1ij} = \exp\{b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$.
+
+
+
+
+% \subsection{Identification of the Causal 
+%  Estimands.}
+
+% % \noindent The derivations of the county-level causal effects (defined in \eqref{eq:C-ATE}-\eqref{eq:C-RATU}) are straightforward consequences of Equations \eqref{eq:C-ATE}–\eqref{eq:C-RATU} combined with Equations \eqref{eq:CATEexpr}–\eqref{eq:CRATEexpr} and are included in the supplementary material to maintain brevity. 
+
+% \noindent This section provides theorems on the identifiability of the potential survival functions $S_i^{(z)}\bigl(t \mid \mathbf{X}_{ij}\bigr)$ of \eqref{eq:condsurv} and the causal estimands of \eqref{eq:CRATE}. We also provide their corresponding expressions.
+
+\begin{theorem}[Identification of Potential Survival Times]
+Under the assumptions in \eqref{eq:SUTVA}-\eqref{eq:Positivity} and the assumption that there is no censoring in the interval $(0,t^*)$, that is, $P(C_{ij}>t^* \mid (Z_{ij},\mathbf{X}_{ij}))=1$ for any subject $(i,j)$, the potential survival function $S_i^{(z)}\bigl(t \mid \mathbf{X}_{ij}\bigr)$ for all $t \in (0,t^*)$, and $z \in \{0,1\}$ can be identified and is given by
+\begin{equation}
+\nonumber
+S_i^{(z)}\bigl(t \mid \mathbf{X}_{ij}\bigr)
+= P\bigl(Y_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr).
+\end{equation}
+\noindent
+
+
+\end{theorem}
+\begin{proof}
+Fix $t$ in $(0,t^*)$.
+\[
+\begin{aligned}
+S_i^{(z)}\bigl(t\mid \mathbf{X}_{ij}\bigr) 
+&= P\bigl(T_{ij}(z)\ge t \mid \mathbf{X}_{ij}\bigr) \\
+&= P\bigl(T_{ij}(z)\ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr)  \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\
+&= P\bigl(T_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr) \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}}) \\
+&= 1-P\bigl(T_{ij} < t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr) \\
+&=1- P\bigl(Y_{ij} < t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr) \quad (\text{$Y_{ij}=T_{ij}$ when $T_{ij} < t < t^* <C_{ij}$}) \\
+&= P\bigl(Y_{ij} \ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr).
+\end{aligned}
+\]
+\end{proof}
+
+
+
+\begin{theorem}[Identification of CRATE]
+Under the assumptions in \eqref{eq:SUTVA}-\eqref{eq:Positivity} and the assumption that there is no censoring in the interval $(0,t^*)$, that is, $P(C_{ij}>t^* \mid (Z_{ij},\mathbf{X}_{ij})=1$ for any subject $(i,j)$ , the Conditional Restricted Treatment Effect $\text{CRATE}_i\bigl(t \mid \mathbf{X}_{ij}\bigr)$ for all $t \in (0,t^*)$ can be identified and is given by
+\begin{equation}
+\nonumber
+ \text{CRATE}_i\bigl(t \mid \mathbf{X}_{ij}\bigr)= \mathbb{E}\bigl[\min\{Y_{ij}, t\} \mid Z_{ij}=1,\mathbf{X}_{ij}\bigr]-\mathbb{E}\bigl[\min\{Y_{ij}, t\} \mid Z_{ij}=0,\mathbf{X}_{ij}\bigr].
+\end{equation}
+\begin{proof}
+
+
+\begin{align}
+\nonumber &\text{CRATE}_i\bigl(t\mid \mathbf{X}_{ij}\bigr)
+= \mathbb{E}\bigl[\min\{T_{ij}(1),t\}-\min\{T_{ij}(0),t\}\mid \mathbf{X}_{ij}\bigr]\\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_{ij}(1),t\}\mid \mathbf{X}_{ij}\bigr]
+ - \mathbb{E}\bigl[\min\{T_{ij}(0),t\}\mid \mathbf{X}_{ij}\bigr]\\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_{ij}(1),t\}\mid \mathbf{X}_{ij},\,Z_{ij}=1\bigr]
+ - \mathbb{E}\bigl[\min\{T_{ij}(0),t\}\mid \mathbf{X}_{ij},\,Z_{ij}=0\bigr] \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\ \nonumber 
+&= \mathbb{E}\bigl[\min\{T_{ij},t\}\mid \mathbf{X}_{ij},\,Z_{ij}=1\bigr]
+ - \mathbb{E}\bigl[\min\{T_{ij},t\}\mid \mathbf{X}_{ij},\,Z_{ij}=0\bigr] \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}})\\ \nonumber 
+&= \mathbb{E}\bigl[\min\{Y_{ij},t\}\mid \mathbf{X}_{ij},\,Z_{ij}=1\bigr]
+ - \mathbb{E}\bigl[\min\{Y_{ij},t\}\mid \mathbf{X}_{ij},\,Z_{ij}=0\bigr] \quad (\text{$Y_{ij}=T_{ij}$ when $T_{ij} < t < t^* <C_{ij}$}).
+\end{align}
+    
+\end{proof}
+\noindent
+
+
+\end{theorem}
+
+
+
+\begin{theorem}[Identification of Causal Effects]
+Under the assumptions in \eqref{eq:SUTVA}-\eqref{eq:IndCensoring} and for any subject $(i,j)$ and $z \in \{0,1\}$, the potential survival function $S_i^{(z)}\bigl(t \mid \mathbf{X}_{ij}\bigr)$ is identified, that is, there exists a functional \(\mathcal{G}\) on the observed data distribution $P[Y_{ij},\delta_{ij}\mid Z_{ij},\mathbf{X}_{ij}]$
+
+\noindent such that
+\begin{equation}
+S_i^{(z)}\bigl(t \mid \mathbf{X}_{ij}\bigr)
+= \mathcal{G}\bigl(P[Y_{ij},\delta_{ij}\mid Z_{ij},\mathbf{X}_{ij}]\bigr).
+\end{equation}
+\noindent
+\end{theorem}
+ 
+
+\begin{proof}
+\begin{align*}
+&S_i^{(z)}(t\mid \mathbf X_{ij}) \ 
+= \Pr\bigl(T_{ij}{(z)}>t \mid \mathbf X_{ij}\bigr) \\[6pt]
+&= \Pr\bigl(T_{ij}(z)>t \mid Z_{ij}=z,\;\mathbf X_{ij}\bigr)
+   \quad (\text{by assumption in \eqref{eq:Unconfoundedness}}) \\[6pt]
+&= \Pr\bigl(T_{ij}>t \mid Z_{ij}=z,\;\mathbf X_{ij}\bigr)
+   \quad (\text{by assumption in \eqref{eq:Consistency_Outcome}}) \\[6pt]
+&= \exp\!\Bigl\{-\!\int_{0}^{t}
+     h_{ij}\bigl(y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)\,dy\Bigr\} \quad (\text{by survival-hazard relationship})  \\[6pt]
+&= \exp\!\Bigl\{-\!\int_{0}^{t}\lim_{\Delta\downarrow0}
+     \frac{\Pr\bigl(T_{ij}\in[y,y+\Delta)\mid Z_{ij}=z,\mathbf X_{ij}\bigr)/\Delta}
+          {\Pr\bigl(T_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)}
+     \,dy\Bigr\} \\[6pt]
+&= \exp\!\Bigl\{-\!\int_{0}^{t}\lim_{\Delta\downarrow0}
+     \frac{\Pr\bigl(T_{ij}\in[y,y+\Delta),\,C_{ij}\ge y
+               \mid Z_{ij}=z,\mathbf X_{ij}\bigr)\,
+           \Pr\bigl(C_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)/\Delta}
+          {\Pr\bigl(T_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)\,
+           \Pr\bigl(C_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)}
+     \,dy\Bigr\} \\[6pt]
+&= \exp\!\Bigl\{-\!\int_{0}^{t}\lim_{\Delta\downarrow0}
+     \frac{\Pr\bigl(T_{ij}\in[y,y+\Delta),\,C_{ij}\ge y
+               \mid Z_{ij}=z,\mathbf X_{ij}\bigr)}
+          {\Pr\bigl(T_{ij}\ge y,\,C_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)}
+     \,dy\Bigr\} \quad (\text{by Independent Censoring})  \\[6pt]
+&= \exp\!\Bigl\{-\!\int_{0}^{t}\lim_{\Delta\downarrow0}
+     \frac{\Pr\bigl(Y_{ij}\in[y,y+\Delta),\,\delta_{ij}=1
+               \mid Z_{ij}=z,\mathbf X_{ij}\bigr)/\Delta}
+          {\Pr\bigl(Y_{ij}\ge y\mid Z_{ij}=z,\mathbf X_{ij}\bigr)}
+     \,dy\Bigr\}.
+\end{align*}
+\end{proof}
+  
+\begin{align}
+\text{CRATE}_i(t^*,\mathbf{x}_{oij})
+&= \mathbb{E}\bigl[\min\{T_{ij}(1),t^*\} - \min\{T_{ij}(0),t^*\}\,\bigm|\,\mathbf{x}_{oij}\bigr] 
+\label{eq:CRATEdef}\\
+&= \int_{0}^{t^*}\Bigl[S_i^{(1)}(u\mid\mathbf{x}_{oij})
+          - S_i^{(0)}(u\mid\mathbf{x}_{oij})\Bigr]\,du
+\label{eq:CRATEint}\\
+&= \mathbb{E}_{W,b_2,\sigma}\!\Biggl[
+   \underbrace{\int_{0}^{t^*}\!1 - \Phi\bigl(\tfrac{\log u - \mu_{1ij}}{\sigma}\bigr)\,du}_{I_1}
+ - \underbrace{\int_{0}^{t^*}\!1 - \Phi\bigl(\tfrac{\log u - \mu_{0ij}}{\sigma}\bigr)\,du}_{I_0}
+\Biggr]
+\label{eq:swap}\\
+&= \mathbb{E}_{W,b_2,\sigma}\!\Bigl[I_1 - I_0\Bigr],
+\end{align}
+
+where \(\mu_{zij}=b_2(z,\mathbf{x}_{oij},\hat e_{ij})+W_i\).  Each integral has the closed‐form
+\[
+\int_{0}^{t^*}\!1 - \Phi\!\bigl(\tfrac{\log u - \mu}{\sigma}\bigr)du
+= e^{\mu + \tfrac{\sigma^2}{2}}
+  \Phi\!\Bigl(\tfrac{\log t^* - \mu - \sigma^2}{\sigma}\Bigr)
++ t^*\Bigl\{1-\Phi\!\bigl(\tfrac{\log t^* - \mu}{\sigma}\bigr)\Bigr\}.
+\]
+Plugging this into \(I_1\) and \(I_0\) recovers exactly the four‐term form in \eqref{eq:CRATEexpr}.
+
+ 
+% % \begin{proof}
+% % We outline the proof using the following three main steps.
+
+% % \begin{align*}
+% % \textbf{Step 1:}\quad &
+% % \lim_{\text{dy} \downarrow 0}
+% % \frac{
+% %   P_{\tilde{\boldsymbol{\Omega}}}\left[Y_{ij}\in [y,y+\text{dy}), \delta_{ij}=1 \mid Y_{ij}\ge y,Z_{ij}=z, \mathbf{X}_{ij}\right]
+% % }{
+% %   \text{dy}
+% % } \\
+% % &= h_{T_{ij}}\left(y\mid Z_{ij}=z,\mathbf{X}_{ij}; W_i,b_2,\sigma^2\right). \\[1pt]
+% % %
+% % \textbf{Step 2:}\quad &
+% % P\left[T_{ij}\ge t\mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma^2\right]
+% % = e^{-\int_0^t h_{T_{ij}}\left(u\mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma^2\right) du}. \\[1pt]
+% % %
+% % \textbf{Step 3:}\quad &
+% % S_i^{(z)}(t\mid \mathbf{X}_{ij})
+% % = P\left[T_{ij}\ge t\mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma^2\right].
+% % \end{align*}
+% % Step 1 uses the Conditionally Independent Censoring Assumption of \eqref{eq:IndCensoring} to express the hazard function $h_{T_{ij}}(\cdot)$ of the survival time $T_{ij}$ as a functional of the observed data distribution $P_{\tilde{\boldsymbol{\Omega}}}[\mathbf{Y},\boldsymbol{\Delta},\mathbf{Z},\mathbf{X}^a]$. The derivation of Step 1 is shown below
+% % \begin{align*}
+% % &\lim_{\text{dy} \downarrow 0} \frac{P_{\tilde{\boldsymbol{\Omega}}}[Y_{ij} \in [y, y+\text{dy}), \delta_{ij} = 1 | Y_{ij} > y, Z_{ij} = z, \mathbf{X}_{ij} ]}{\text{dy}}\\
+% % &= \lim_{\text{dy} \downarrow 0} \frac{P_{\tilde{\boldsymbol{\Omega}}}[Y_{ij} \in [y, y+\text{dy}), \delta_{ij} = 1 | Z_{ij} = z, \mathbf{X}_{ij} ]}{\text{dy} \cdot P_{\tilde{\boldsymbol{\Omega}}}[Y_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}\\
+% % &= \lim_{\text{dy} \downarrow 0} \frac{P_{\tilde{\boldsymbol{\Omega}}}[T_{ij} \in [y, y+\text{dy}), C_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}{\text{dy} \cdot P_{\tilde{\boldsymbol{\Omega}}}[T_{ij} > y, C_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}\\
+% % &= \lim_{\text{dy} \downarrow 0} \frac{P_{(b_2, W_i, \sigma)}[T_{ij} \in [y, y+\text{dy}) | Z_{ij} = z, \mathbf{X}_{ij} ] \cdot P_{\boldsymbol{\Theta}}[C_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}{\text{dy} \cdot P_{(b_2, W_i, \sigma)}[T_{ij} > y | \mathbf{X}_{ij} , Z_{ij} = z] \cdot P_{\boldsymbol{\Theta}}[C_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}\\
+% % &= \lim_{\text{dy} \downarrow 0} \frac{P_{(b_2, W_i, \sigma)}[T_{ij} \in [y, y+\text{dy}) | Z_{ij} = z, \mathbf{X}_{ij} ]}{\text{dy} \cdot P_{(b_2, W_i, \sigma)}[T_{ij} > y | Z_{ij} = z, \mathbf{X}_{ij} ]}\\
+% % &= h_{T_{ij}}(y | Z_{ij} = z, \mathbf{X}_{ij}; W_i, b_2, \sigma^2).
+% % \end{align*}
+% % Step 2 applies the standard hazard-survival relationship. We established Step 3 in \eqref{eq:condsurvexpr} using assumptions \eqref{eq:SUTVA}-\eqref{eq:Unconfoundedness}. Since Steps 1-2 express the conditional survival function $P\left[T_{ij}\ge t\mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma^2\right]$ as a functional of the observed data distribution $P_{\tilde{\boldsymbol{\Omega}}}[\mathbf{Y},\mathbf{\Delta},\mathbf{Z},\mathbf{X}^a]$   and Step 3 shows that $P\left[T_{ij}\ge t\mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma^2\right]$ equals $S_i^{(z)}(t\mid \mathbf{x}_{oij})$, the potential survival function is a functional $\mathcal{G}$ of $P[\mathbf{Y},\mathbf{\Delta},\mathbf{Z},\mathbf{X}^a]$.
+
+
+% \noindent It is straightforward to extend Theorems 2.1 and 2.2 to incorporate censoring. To maintain brevity, we defer these extensions to the Appendix.  Using the Theorems 2.1 and 2.2, we now present the expressions for the potential survival function $^{(z)}_i(t \mid \mathbf{X}_{ij})$ and Conditional Restritive Treatment Effect ${\text{CRATE}_i}(t^*, \mathbf{x}_{oij}) $.
+% % We use the assumptions in \eqref{eq:SUTVA}-\eqref{eq:Positivity} to derive the expression of conditional survival function $S^{(z)}_i(t \mid \mathbf{X}_{ij})$ (defined in \eqref{eq:condsurv}) from the outcome model in \eqref{eq:outcomemodel}.
+
+
+% \begin{equation}\nonumber
+% \begin{aligned}
+% S_i^{(z)}\bigl(t\mid \mathbf{X}_{ij}\bigr) 
+% &= P\bigl(T_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij}\bigr) \quad (\text{by Theorem~2.1}) \\
+% &= \mathbb{E}_{(W_i,b_2,\sigma)}[P\bigl(T_{ij}\ge t \mid Z_{ij}=z,\mathbf{X}_{ij};W_i,b_2,\sigma\bigr)]\\
+% &=\mathbb{E}_{(W_i,b_2,\sigma)}\left[ 1 - \Phi\!\bigr(\frac{\log t - b_2\bigl(z,\mathbf{X}_{ij},\hat e(\mathbf{X}_{ij})\bigr) - W_i}{\sigma}\bigr)\right].
+% \end{aligned}\label{eq:condsurvexpr}
+% \end{equation} 
+% % The conditional survival function $S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v})$ is given by:
+% % \begin{equation}
+% % S^{(z)}_i(t \mid \mathbf{x}, \mathbf{v}) = 1 - \Phi\left(\frac{\log t - b_2(z, \mathbf{x}, \mathbf{v}, \hat{e}(\mathbf{x}, \mathbf{v})) - W_i}{\sigma}\right)
+% % \label{eq:condsurvexpr}.
+% % \end{equation}
+
+
+% % \begin{equation}
+% % \nonumber
+% % \text{CATE}_i(\mathbf{x}_{oij}) = \exp\left(\frac{\sigma^{2}}{2} + W_i\right) \left[\exp(b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij})) - \exp(b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}))\right].
+% % \label{eq:CATEexpr}
+% % \end{equation}
+
+
+
+
+% \begin{align}\nonumber
+% {\text{CRATE}_i}(t^*, \mathbf{x}_{oij}) &= \mathbb{E}_{(W_i,b_2,\sigma)}\left[\theta_{1ij} \Phi\left(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right)\right] \\ \nonumber
+% &\quad + \mathbb{E}_{(W_i,b_2,\sigma)}\left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i} {\sigma})\right) \right]\\ \nonumber
+% &\quad -\mathbb{E}_{(W_i,b_2,\sigma)} \left[ \theta_{0ij} \Phi\left(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i-\sigma^2}{\sigma}\right) \right]  \\ \nonumber
+% &\quad - \mathbb{E}_{(W_i,b_2,\sigma)} \left[t^* \left(1 - \Phi(\frac{\log(t^*) - b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i}{\sigma})\right)\right], 
+% \end{align}\label{eq:CRATEexpr}
+
+% \noindent where $\theta_{0ij} = \exp\{b_2(0, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$ and  $\theta_{1ij} = \exp\{b_2(1, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i + \sigma^2/2\}$.
+
+
+
+
+
+
+\begin{align*}
+\text{CRATE}_i(t^*,\mathbf{x}_{oij})
+&= \int_{0}^{t^*}\bigl[S_i^{(1)}(u\mid\mathbf{x}_{oij})
+            - S_i^{(0)}(u\mid\mathbf{x}_{oij})\bigr]\,du \\[6pt]
+&= \int_{0}^{t^*}\bigl[\Pr\{T_{ij}(1)>u\mid\mathbf{x}_{oij}\}
+            - \Pr\{T_{ij}(0)>u\mid\mathbf{x}_{oij}\}\bigr]\,du \\[6pt]
+&= \int_{0}^{t^*}\bigl[\Pr\{T_{ij}>u\mid Z_{ij}=1,\mathbf{x}_{oij}\}
+            - \Pr\{T_{ij}>u\mid Z_{ij}=0,\mathbf{x}_{oij}\}\bigr]\,du 
+   \quad(\text{by Unconfoundedness})\\[6pt]
+&= \int_{0}^{t^*}\bigl[S(u\mid Z_{ij}=1,\mathbf{x}_{oij})
+            - S(u\mid Z_{ij}=0,\mathbf{x}_{oij})\bigr]\,du
+   \quad(\text{by Consistency})\\[6pt]
+&= \mathbb{E}_{W_i,b_2,\sigma}\Bigl[
+   \theta_{1,ij}\,\Phi\!\bigl(\tfrac{\log t^*-\mu_{1,ij}-\sigma^2}{\sigma}\bigr)
+ + t^*\{1-\Phi(\tfrac{\log t^*-\mu_{1,ij}}{\sigma})\} \\[-2pt]
+&\quad\;-\;\theta_{0,ij}\,\Phi\!\bigl(\tfrac{\log t^*-\mu_{0,ij}-\sigma^2}{\sigma}\bigr)
+ - t^*\{1-\Phi(\tfrac{\log t^*-\mu_{0,ij}}{\sigma})\}
+\Bigr],
+\end{align*}
+
+where 
+\[
+\mu_{z,ij} = b_2\bigl(z,\mathbf{x}_{oij},\hat e_{ij}\bigr) + W_i,
+\quad
+\theta_{z,ij} = e^{\,\mu_{z,ij}}.
+\]
+
+
+\section{Algorithm.}
+
+
+\noindent \textbf{ MCMC sampling of the outcome model parameters}
+
+\begin{enumerate}
+\item Initialize all parameters: $b_2^{(0)}(\cdot)$, $\mathbf{W}^{(0)}$, $\sigma^{2(0)}$, $\tau_w^{(0)}$, $\rho^{(0)}$
+   
+\item For iterations $m = 1, 2, ..., M$:
+
+\noindent a. \textbf{Imputation of censored $T_{ij}$}
+When $\delta_{ij} = 0$, impute 
+ $
+      \log \tilde{y}_{ij}^{(m)} \sim N(\tilde{\mu}_{ij}^{(m-1)}, \sigma^{2(m-1)}) \mathds{1}( \log y_{ij}, \infty)
+      $, where $\tilde{\mu}_{ij}^{(m-1)} = b_2^{(m-1)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i^{(m-1)}$
+   
+\noindent b. \textbf{Updating of $(\mathbf{W},\rho,\tau_w$})
+      
+      Get the MCMC samples of $\mathbf{W}^{(m)}$ from
+      \begin{equation}
+     p(\mathbf{W} | \cdot) \propto \exp\left(-\frac{1}{2}\left[\sum_{i=1}^K\sum_{j=1}^{n_i} \frac{(\log \tilde{y}_{ij}^{(m)} - b_2^{(m-1)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i)^2}{\sigma^{2(m-1)}} \right.\right. \\
+\left.\left. + \tau_w^{(m-1)} \mathbf{W}^T Q_\pi(\rho^{(m-1)}) \mathbf{W}\right]\right) \nonumber
+      \hspace{2pt}. \end{equation}
+      
+      Update $\tau_w^{(m)}$ from
+      \begin{equation}
+      \tau_w^{(m)} \sim \text{Gamma}\left(a_\tau + \frac{K}{2}, b_\tau + \frac{1}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^{(m-1)})\mathbf{W}^{(m)}\right) \nonumber
+      \hspace{2pt}. \end{equation}
+      
+      Update $\rho^{(m)}$ using Metropolis-Hastings (Chib and Greenberg, 1995 \parencite{chib1995understanding})
+      
+      Propose $\rho^* \sim N(\rho^{(m-1)}, \sigma_\rho^2) \mathds{1}(0, 1)$
+      
+      Accept with probability
+      \begin{equation}
+\begin{split}
+\min\biggl(1, \frac{(\rho^*)^{a_\rho - 1}(1-\rho^*)^{b_\rho - 1}}{(\rho^{(m-1)})^{a_\rho - 1}(1-\rho^{(m-1)})^{b_\rho - 1}} \times \frac{|Q_\pi(\rho^*)|^{1/2}\exp\left(-\frac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^*)\mathbf{W}^{(m)}\right)}{|Q_\pi(\rho^{(m-1)})|^{1/2}\exp\left(-\frac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^{(m-1)})\mathbf{W}^{(m)}\right)}\biggr). \nonumber
+\end{split}
+\hspace{2pt}
+\end{equation}
+   
+ \noindent  c. \textbf{Updating of $b_2$}
+For $h = 1, 2, ..., H$, compute partial residuals
+      \begin{equation}
+      \begin{split} 
+      R_{ij}^{(h)} = \log \tilde{y}_{ij}^{(m)} - W_i^{(m)} - \sum_{l \neq h} g(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}; \mathcal{T}_l^{(m-1)}, \mathcal{M}_l^{(m-1)}) \nonumber
+      \end{split}
+      \hspace{2pt}. \end{equation}
+      
+      Update $(\mathcal{T}_h^{(m)}, \mathcal{M}_h^{(m)})$ using Bayesian backfitting (Chipman et al., 2010 \parencite{Chipman10})
+   
+\noindent d. \textbf{Update $\sigma^2$}
+      \begin{equation}
+      \begin{split}
+      \frac{1}{\sigma^{2(m)}} \sim \text{Gamma}\biggl(a_\sigma + \frac{N}{2}, b_\sigma + \frac{1}{2}\sum_{i=1}^K\sum_{j=1}^{n_i}(\tilde{y}_{ij}^{(m)} - \\
+      b_2^{(m)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i^{(m)})^2\biggr) \nonumber
+      \end{split}
+      \hspace{2pt}. \end{equation}
+\end{enumerate}
+
+
+
+
+
+
+\end{document}
