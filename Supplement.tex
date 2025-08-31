@@ -1,0 +1,407 @@
+\let\algorithmic\relax
+%\documentclass{imsart}
+\documentclass[aoas]{imsart}
+\usepackage{amsthm}
+%\usepackage{textcomp}
+\usepackage{lmodern}
+
+\usepackage{amsmath}
+
+%\usepackage{textcomp}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\graphicspath{{pics/}}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\setlength{\parskip}{0pt}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{xr}
+\usepackage{hyperref}
+\usepackage{xr-hyper}
+\externaldocument{Aoas_version}
+ \usepackage{algorithm}
+% \usepackage{algorithmic}
+ \usepackage{amsmath}
+ \usepackage{amssymb}  % for \mathds symbol
+% Define the exact Viridis colors used in the plot
+%\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{dsfont} 
+% \usepackage{xcolor}
+% \usepackage{tikz}
+
+% Define the Viridis colors
+\definecolor{viridis1}{RGB}{68,1,84}    % dark purple
+\definecolor{viridis2}{RGB}{49,104,142} % blue
+\definecolor{viridis3}{RGB}{53,183,121} % green
+\definecolor{viridis4}{RGB}{253,231,37} % yellow
+%documentclass[useAMS]{biom}
+%
+%  If your system does not have the AMS fonts version 2.0 installed, then
+%  remove the useAMS option.
+%
+%  useAMS allows you to obtain upright Greek characters.
+%  e.g. \umu, \upi etc.  For further information, see the section on "Upright Greek characters" in
+%  this guide.
+%
+%  If you are using AMS 2.0 fonts, bold math letters/symbols are available
+%  at a more extensive range of sizes for NFSS release 1 and 2 (using \boldmath or
+%  preferably \bmath).
+% 
+%  Other options are described in the user guide. Here are a few:
+% 
+%  -  If you use Patrick Daly's natbib  to cross-reference your 
+%     bibliography entries, use the usenatbib option
+%
+%  -  If you use \includegraphics (graphicx package) for importing graphics
+%     into your figures, use the usegraphicx option
+% 
+%  If you wish to typeset the paper in Times font (if you do not have the
+%  PostScript Type 1 Computer Modern fonts you will need to do this to get
+%  smoother fonts in a PDF file) then uncomment the next line
+%  \usepackage{Times}
+
+%%%%% PLACE YOUR OWN MACROS HERE %%%%%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+%\usepackage{natbib}
+
+
+\usepackage{algorithm}
+\usepackage{subfigure}
+
+\usepackage{algpseudocode}
+
+
+\RequirePackage{etoolbox}
+\csundef{c@author}
+\usepackage{biblatex}
+
+
+\addbibresource{biomsample.bib}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\renewbibmacro*{in:}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext{\intitlepunct}}}
+
+\def\bSig\mathbf{\Sigma}
+\newcommand{\VS}{V\&S}
+\newcommand{\tr}{\mbox{tr}}
+\usepackage{tikz}
+
+\newcommand*{\tikzbulletred}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[red] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+\newcommand*{\tikzbulletgreen}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[green] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletyellow}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[yellow] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+
+
+\newcommand*{\tikzbulletblue}{%
+  \setbox0=\hbox{\strut}%
+  \begin{tikzpicture}
+  \fill[blue] (0,0) circle (0.1cm);
+\end{tikzpicture}%
+}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+%\RequirePackage[authoryear]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}
+\usepackage{dsfont}
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothesis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{definition}            %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{fact}{Fact}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Supplementary Material for ``Estimation of cluster-specific causal effects on spatially associated survival data using SoftBART''}
+\runtitle{Supplement to Causal Inference on Spatially Clustered Survival data}
+
+%\thankstext{T1}{A sample additional note to the title.}
+
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only one address is permitted per author. %%
+%% Only division, organization and e-mail is %%
+%% included in the address.                  %%
+%% Additional information can be included in %%
+%% the Acknowledgments section if necessary. %%
+%% ORCID can be inserted by command:         %%
+%% \orcid{0000-0000-0000-0000}               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[A]{\fnms{Durbadal}~\snm{Ghosh} \ead[label=e1]{dg20ea@fsu.edu}},
+\author[A]{\fnms{Indrabati}~\snm{Bhattacharya}\ead[label=e2]{ib22g@fsu.edu}},
+
+
+
+\author[A]{\fnms{George}~\snm{Rust}\ead[label=e3]{george.rust@med.fsu.edu}}
+\and
+
+\author[A]{\fnms{Debajyoti}~\snm{Sinha}\ead[label=e4]{dsinha@fsu.edu}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Department of Statistics,
+Florida State University\printead[presep={ ,\ }]{e1,e2,e3,e4}}
+
+\end{aug}
+
+
+
+
+
+
+
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please use \tableofcontents for articles %%
+%% with 50 pages and more                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\tableofcontents
+
+
+\section*{A. Identification of causal estimands}
+%This section establishes the identifiability of causal estimands defined in section 2.1., with particular focus on the Causal Treatment Effect on Restricted Mean $\text{CERM}_{ij}(t^*, \mathbf{x}_{ij})$.
+Here, for notational convenience, we suppress the patient-index $j$ within unit $(i,j)$ of clusters $i$.
+Using the conditionally independent censoring assumption in (10),% \eqref{eq:Aoas_version-IndCensoring},
+the regularity condition that $P(C_{i} > t^* \mid \mathbf{X}_{i}, Z_{i}) > \epsilon$ for all subjects and for some $\epsilon > 0$, and existing survival analysis results, we can show that the joint survival function
+$  
+P(T_{1} > t_{1}, \ldots, T_{K} > t_{K} \mid \mathbf{X}^a, \mathbf{Z})
+$
+for any $t_{1},\cdots, t_K \in (0, t^*)$ is identifiable from observed survival data subject to noninformative right-censoring, where .
+%from $P(\mathbf{Y}, \boldsymbol{\Delta} \mid \mathbf{X}^a, \mathbf{Z})$, where $\mathbf{Y} = \{Y_{i}\}_{i=1,j=1}^{K,n_i}$, $\boldsymbol{\Delta} = \{\delta_{ij}\}_{i=1,j=1}^{K,n_i}$, $\mathbf{X}^a = \{\mathbf{X}_{ij}\}_{i=1,j=1}^{K,n_i}$, and $\mathbf{Z} = \{Z_{ij}\}_{i=1,j=1}^{K,n_i}$ denote the collections of observed survival times $T_{ij}$, censoring indicators $C_{ij}$, confounders, and treatment assignments, respectively.
+\noindent We now present our main identifiability result.
+
+\noindent \begin{theorem}[Identifiability of CERM]
+Suppose the joint survival function
+$
+S_a(t_1, \ldots, t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K) := P(T_1 > t_1, \ldots, T_K > t_K \mid Z_1 = z_1, \ldots, Z_K = z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)
+$ and the joint distribution $P(Z_1 = z_1, \ldots, Z_K = z_K \mid \mathbf{X}_1, \ldots, \mathbf{X}_K)$
+are known  for all treatment assignments $z_k \in \{0,1\}$, and time points $t_k \in (0, t^*)$, then the $\text{CERM}_{kj}(t, \mathbf{X}_k)$ is identifiable for any $t \in (0, t^*)$ and for any $ k \in \{1,\dots,K\}$.
+\end{theorem}
+
+
+\begin{proof}
+
+For any $t \in (0, t^*)$ and  $ k \in \{1,\dots,K\}$, 
+\begin{align}
+\nonumber &\text{CERM}_{kj}\bigl(t\mid \mathbf{X}_{k}\bigr)
+= \mathbb{E}\bigl[\{T_k(1) \wedge t\}\mid \mathbf{X}_{k}\bigr]
+ - \mathbb{E}\bigl[\{T_k(0) \wedge t\}\mid \mathbf{X}_{k}\bigr]\\ \nonumber 
+&= \mathbb{E}\bigl[\{T_k(1) \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=1\bigr]
+ - \mathbb{E}\bigl[\{T_k(0) \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=0\bigr] \quad (\text{by assumption in (5)%\eqref{eq:Unconfoundedness}
+ })  \\ \nonumber 
+&= \mathbb{E}\bigl[\{T_k \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=1\bigr]
+ - \mathbb{E}\bigl[\{T_k \wedge t\}\mid \mathbf{X}_{k},\,Z_{k}=0\bigr] \quad (\text{by assumption in (4)})\\ \nonumber.
+&=\int_{0}^{t}\bigl[P(T_k>t_k\mid \mathbf X_k,Z_k=1)\;-\;P(T_k>t_k\mid \mathbf X_k,Z_k=0)\bigr]\;dt_k. 
+\end{align}
+    To prove the theorem, we now show that the conditional survival probabilities $P(T_k > t_k \mid \mathbf{X}_k, Z_k = 1)$ and $P(T_k > t_k \mid \mathbf{X}_k, Z_k = 0)$ can be expressed in terms of the known joint survival function $S_a(t_1, \ldots, t_K \mid Z_1, \ldots, Z_K, \mathbf{X}_1, \ldots, \mathbf{X}_K)$ defined in the theorem statement.
+\begin{align*}
+&P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k\bigr) = \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k, \mathbf{W}\bigr)\bigr]   \quad ( \text{because }\mathbf{W} \perp\!\!\!\perp (\mathbf{Z},\mathbf{X}^a)) \\ 
+&= \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid Z_k, \mathbf{X}_k,\,\mathbf{Z}_{(_k)},\,\mathbf{X}_{(_k)},\,\mathbf{W}\bigr)\bigr] \quad (\text{using the outcome model in (9)})\\
+&= \mathbb{E}_{\mathbf{W}}\bigl[P\bigl(T_k > t_k \mid \mathbf{X}^a,\,\mathbf{Z},\,\mathbf{W}\bigr)\bigr]= P\bigl(T_k > t_k \mid \mathbf{X}^a,\,\mathbf{Z}\bigr)= 
+  S_a\bigl(0,\dots,0,\,t_k,\,0,\dots,0
+     \mid \mathbf{X}^a,\,\mathbf{Z}\bigr),
+\end{align*}
+where, $\mathbf{Z}_{(_k)}=(Z_1,\ldots,Z_{k-1},Z_{k+1},\ldots, Z_K)$ and $\mathbf{X}_{(_k)}=(\mathbf{X}_1,\ldots,\mathbf{X}_{k-1},\mathbf{X}_{k+1},\ldots, \mathbf{X}_K)$. We have therefore shown that $\text{CERM}_{kj}(t, \mathbf{X}_k)$ can be computed uniquely from the observable joint survival distribution for all $t \in (0, t^*)$ and $k \in \{1, \ldots, K\}$.
+\end{proof}
+
+
+
+\newpage
+\newpage
+
+
+\section*{B. MCMC sampling of the outcome model parameters}
+
+
+% for \mathds{1}
+
+\begin{algorithm}[H]
+\caption{MCMC Algorithm for PS-LND model}
+\begin{algorithmic}[1]
+\State Initialize all parameters: $b_2^{(0)}(\cdot)$, $\mathbf{W}^{(0)}$, $\sigma^{2(0)}$, $\tau_w^{(0)}$, $\rho^{(0)}$
+\For{$m = 1,2,\dots,M$}
+    \Statex
+    \State \textbf{(a) Imputation step:}
+    \If{$\delta_{ij}=0$}
+        \State Sample 
+        \[
+        \log \tilde{y}_{ij}^{(m)} \sim 
+        N(\tilde{\mu}_{ij}^{(m-1)}, \sigma^{2(m-1)})
+        \mathds{1}(\log y_{ij}, \infty),
+        \]
+        where $\tilde{\mu}_{ij}^{(m-1)} = b_2^{(m-1)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i^{(m-1)}$.
+    \Else
+        \State Set $\tilde{y}_{ij}^{(m)} = y_{ij}$.
+    \EndIf
+    \Statex
+    \State \textbf{(b) Update $(\mathbf{W},\rho,\tau_w)$:}
+    \State Sample $\mathbf{W}^{(m)}$ from
+    \[
+    p(\mathbf{W}|\cdot) \propto \exp\Biggl(-\tfrac{1}{2}\Bigl[
+    \sum_{i=1}^K \sum_{j=1}^{n_i} \frac{(\log \tilde{y}_{ij}^{(m)} - b_2^{(m-1)}(\cdot) - W_i)^2}{\sigma^{2(m-1)}}
+    + \tau_w^{(m-1)} \mathbf{W}^T Q_\pi(\rho^{(m-1)}) \mathbf{W}
+    \Bigr]\Biggr).
+    \]
+    \State Update $\tau_w^{(m)} \sim \text{Gamma}\!\left(a_\tau + \tfrac{K}{2},\, b_\tau + \tfrac{1}{2}\mathbf{W}^{(m)T} Q_\pi(\rho^{(m-1)}) \mathbf{W}^{(m)}\right)$.
+    \State Update $\rho^{(m)}$ via MH step with proposal $\rho^* \sim N(\rho^{(m-1)}, \sigma_\rho^2)\mathds{1}(0,1)$ and acceptance probability
+    \[
+    \min\!\left(1, \frac{(\rho^*)^{a_\rho-1}(1-\rho^*)^{b_\rho-1}}{(\rho^{(m-1)})^{a_\rho-1}(1-\rho^{(m-1)})^{b_\rho-1}}
+    \frac{|Q_\pi(\rho^*)|^{1/2} \exp\!\bigl(-\tfrac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T} Q_\pi(\rho^*) \mathbf{W}^{(m)}\bigr)}{|Q_\pi(\rho^{(m-1)})|^{1/2} \exp\!\bigl(-\tfrac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T} Q_\pi(\rho^{(m-1)}) \mathbf{W}^{(m)}\bigr)}\right).
+    \]
+    \Statex
+    \State \textbf{(c) Update $b_2$:}
+    \For{$h=1,2,\dots,H$}
+        \State Compute partial residuals
+        \[
+        R_{ij}^{(hm)} = \log \tilde{y}_{ij}^{(m)} - W_i^{(m)} - \sum_{l\neq h} g(z_{ij},\mathbf{x}_{oij},\hat{e}_{ij}; \mathcal{T}_l^{(m-1)}, \mathcal{M}_l^{(m-1)}).
+        \]
+        \State Update $(\mathcal{T}_h^{(m)},\mathcal{M}_h^{(m)})$ via Bayesian backfitting \parencite{Chipman10}.
+    \EndFor
+    \Statex
+    \State \textbf{(d) Update $\sigma^2$:}
+    \State Sample
+    \[
+    \sigma^{-2(m)} \sim \text{Gamma}\!\left(a_\sigma + \tfrac{N}{2},\, b_\sigma + \tfrac{1}{2}\sum_{i=1}^K\sum_{j=1}^{n_i}(r_{ij}^{(m)})^2\right),
+    \]
+    where $r_{ij}^{(m)} = \tilde{y}_{ij}^{(m)} - b_2^{(m)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i^{(m)}$.
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+% Required packages in preamble:
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
+% \usepackage{amsmath}
+% \usepackage{amssymb}  % for \mathds symbol
+
+% \begin{enumerate}
+% \item Initialize all parameters: $b_2^{(0)}(\cdot)$, $\mathbf{W}^{(0)}$, $\sigma^{2(0)}$, $\tau_w^{(0)}$, $\rho^{(0)}$
+   
+% \item For iterations $m = 1, 2, ..., M$:
+
+% \noindent a. 
+% When $\delta_{ij} = 0$, impute 
+%  $
+%       \log \tilde{y}_{ij}^{(m)} \sim N(\tilde{\mu}_{ij}^{(m-1)}, \sigma^{2(m-1)}) \mathds{1}( \log y_{ij}, \infty)
+%       $, where $\tilde{\mu}_{ij}^{(m-1)} = b_2^{(m-1)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) + W_i^{(m-1)}$. Otherwise $\tilde{y}_{ij}^{(m)}=y_{ij}$.
+   
+% \noindent b. \textbf{Updating of $(\mathbf{W},\rho,\tau_w$}):
+      
+%       Get the MCMC samples of $\mathbf{W}^{(m)}$ from
+%       \begin{equation}
+%      p(\mathbf{W} | \cdot) \propto \exp\left(-\frac{1}{2}\left[\sum_{i=1}^K\sum_{j=1}^{n_i} \frac{(\log \tilde{y}_{ij}^{(m)} - b_2^{(m-1)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i)^2}{\sigma^{2(m-1)}} \right.\right. \\
+% \left.\left. + \tau_w^{(m-1)} \mathbf{W}^T Q_\pi(\rho^{(m-1)}) \mathbf{W}\right]\right) \nonumber
+%       \hspace{2pt}. \end{equation}
+      
+%       Update $\tau_w^{(m)}$ from
+% $\text{Gamma}\left(a_\tau + \frac{K}{2}, b_\tau + \frac{1}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^{(m-1)})\mathbf{W}^{(m)}\right)$.
+      
+%       Update $\rho^{(m)}$ using the Metropolis-Hastings (Chib and Greenberg, 1995 \parencite{chib1995understanding}) step with proposal density $\rho^* \sim N(\rho^{(m-1)}, \sigma_\rho^2) \mathds{1}(0, 1)$, and 
+% acceptance probability:
+%       \begin{equation}
+% \begin{split}
+% \min\biggl(1, \frac{(\rho^*)^{a_\rho - 1}(1-\rho^*)^{b_\rho - 1}}{(\rho^{(m-1)})^{a_\rho - 1}(1-\rho^{(m-1)})^{b_\rho - 1}} \times \frac{|Q_\pi(\rho^*)|^{1/2}\exp\left(-\frac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^*)\mathbf{W}^{(m)}\right)}{|Q_\pi(\rho^{(m-1)})|^{1/2}\exp\left(-\frac{\tau_w^{(m)}}{2}\mathbf{W}^{(m)T}Q_\pi(\rho^{(m-1)})\mathbf{W}^{(m)}\right)}\biggr). \nonumber
+% \end{split}
+% \hspace{2pt}
+% \end{equation}
+   
+%  \noindent  c. \textbf{Updating of $b_2$:}
+% For each of $h = 1, 2, ..., H$, compute the partial residuals $   R_{ij}^{(hm)} $ as
+% $ 
+%     \log \tilde{y}_{ij}^{(m)} - W_i^{(m)} - \sum_{l \neq h} g(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}; \mathcal{T}_l^{(m-1)}, \mathcal{M}_l^{(m-1)})$, followed by obtaining  $(\mathcal{T}_h^{(m)}, \mathcal{M}_h^{(m)})$ using Bayesian backfitting (Chipman et al., 2010 \parencite{Chipman10}).
+   
+% \noindent d. Update $1\over\sigma^{2(m)}$ from
+%  $\text{Gamma}\biggl(a_\sigma + \frac{N}{2}, b_\sigma + \frac{1}{2}\sum_{i=1}^K\sum_{j=1}^{n_i}(r_{ij}^{(m)})^2\biggr)$, where $r_{ij}^{(m)}=\tilde{y}_{ij}^{(m)} - 
+%       b_2^{(m)}(z_{ij}, \mathbf{x}_{oij}, \hat{e}_{ij}) - W_i^{(m)}$.
+% \end{enumerate}
+
+
+
+
+
+
+
+
+
+section*{C. Causal analysis of Florida Cancer Registry (FCR) Study}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{pics/Plot3_C-RATU_5yr_10yr.pdf}
+\caption{Spatial pattern of  $\widehat{\text{ACERMU}}$ restricted within the interval of 5 (left panel) and 10 (right panel) years for every Florida county among WA patients with Distant stage cancer. Colors range from light shades of yellow (near 0 months) to darker shades of green (15+ months), with gray indicating counties with no WA-D patient in the available data.}
+\label{fig:county_atu}
+\end{figure}
+
+\printbibliography 
+
+
+
+
+
+
+\end{document}
