@@ -1,45 +1,74 @@
 \documentclass[final]{beamer}
-\usepackage[orientation=landscape,size=a0,scale=0.96]{beamerposter}
+\usepackage[orientation=landscape,size=a0,scale=0.80]{beamerposter}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{multirow}
 \usepackage{tikz}
-\usetikzlibrary{shadows}
+\usetikzlibrary{arrows.meta,shapes.geometric,positioning}
 \usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{array}
 \usepackage{adjustbox}
 \usepackage{enumitem}
-\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=2pt}
-\setlist[enumerate]{leftmargin=*,itemsep=2pt,topsep=2pt}
+\setlist[itemize]{leftmargin=12pt,itemsep=3pt,topsep=2pt,parsep=0pt}
 
+% ---- Colors ----
 \definecolor{FSUgarnet}{RGB}{120,47,64}
 \definecolor{FSUgold}{RGB}{206,184,136}
 \definecolor{accentblue}{RGB}{49,104,142}
 \definecolor{accentgreen}{RGB}{40,150,100}
-\definecolor{lightbg}{RGB}{250,250,254}
-\definecolor{verylightblue}{RGB}{232,242,252}
+\definecolor{lightbg}{RGB}{248,248,252}
+\definecolor{vlblue}{RGB}{228,238,250}
+\definecolor{vlgreen}{RGB}{228,248,238}
+\definecolor{lightyellow}{RGB}{255,250,230}
 
 \usetheme{default}
 \setbeamercolor{background canvas}{bg=lightbg}
 \setbeamertemplate{navigation symbols}{}
+\tcbuselibrary{skins}
 
-\tcbuselibrary{skins,breakable}
 \newtcolorbox{posterblock}[1]{
   colback=white, colframe=FSUgarnet, coltitle=white,
   fonttitle=\large\bfseries, title=#1,
-  arc=3mm, boxrule=1.8pt,
+  arc=3mm, boxrule=2pt,
   toptitle=4pt, bottomtitle=4pt,
-  top=4pt, bottom=4pt, left=7pt, right=7pt,
-  colbacktitle=FSUgarnet,
-  enhanced, drop shadow={shadow xshift=0.5mm, shadow yshift=-0.5mm, opacity=0.12}
+  top=5pt, bottom=5pt, left=8pt, right=8pt,
+  colbacktitle=FSUgarnet, enhanced
 }
-\newtcolorbox{highlightbox}{
-  colback=verylightblue, colframe=accentblue,
+\newtcolorbox{methodbox}[1]{
+  colback=white, colframe=accentblue, coltitle=white,
+  fonttitle=\large\bfseries, title=#1,
+  arc=3mm, boxrule=2pt,
+  toptitle=4pt, bottomtitle=4pt,
+  top=5pt, bottom=5pt, left=8pt, right=8pt,
+  colbacktitle=accentblue, enhanced
+}
+\newtcolorbox{appblock}[1]{
+  colback=white, colframe=accentgreen!80!black, coltitle=white,
+  fonttitle=\large\bfseries, title=#1,
+  arc=3mm, boxrule=2pt,
+  toptitle=4pt, bottomtitle=4pt,
+  top=5pt, bottom=5pt, left=8pt, right=8pt,
+  colbacktitle=accentgreen!80!black, enhanced
+}
+\newtcolorbox{keybox}{
+  colback=lightyellow, colframe=FSUgold!80!black,
   arc=2mm, boxrule=1.2pt,
   top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+\newtcolorbox{stagebox}[1]{
+  colback=vlblue, colframe=accentblue!60,
+  arc=2mm, boxrule=1pt,
+  top=3pt, bottom=3pt, left=5pt, right=5pt,
+  fonttitle=\normalsize\bfseries, title=#1, colbacktitle=accentblue!60, coltitle=white,
+  toptitle=2pt, bottomtitle=2pt
+}
+\newtcolorbox{findingbox}{
+  colback=vlgreen, colframe=accentgreen!60,
+  arc=2mm, boxrule=1pt,
+  top=3pt, bottom=3pt, left=6pt, right=6pt,
 }
 
 \begin{document}
@@ -48,251 +77,317 @@
 % ====== HEADER ======
 \begin{tcolorbox}[
   colback=FSUgarnet, colframe=FSUgarnet, arc=0mm, boxrule=0pt,
-  top=10pt, bottom=10pt, left=25pt, right=25pt, width=\textwidth
+  top=10pt, bottom=6pt, left=30pt, right=30pt, width=\textwidth
 ]
 \centering
 {\color{FSUgold}\VeryHuge\bfseries Estimation of Cluster-Specific Causal Effects on Spatially Associated Survival Data Using SoftBART}\\[10pt]
-{\color{white}\Large Indrabati Bhattacharya \quad Debajyoti Sinha \quad Durbadal Ghosh \quad George Rust}\\[4pt]
-{\color{FSUgold}\normalsize Department of Statistics, Florida State University \hspace{20pt}$\vert$\hspace{20pt} Submitted to the \textit{Annals of Applied Statistics}}
+{\color{white}\LARGE Durbadal Ghosh}\\[3pt]
+{\color{FSUgold}\large Department of Statistics, Florida State University}\\[2pt]
+{\color{white}\small Joint work with I.\ Bhattacharya, D.\ Sinha, and G.\ Rust}
 \end{tcolorbox}
 
-\vspace{6pt}
+\vspace{5pt}
 
 \begin{columns}[T]
 
-% ===================== COLUMN 1 =====================
+% ==================== COLUMN 1 (35%): MOTIVATION ====================
+\begin{column}{0.345\textwidth}
+
+\begin{posterblock}{The Problem: Treatment Delay in Breast Cancer}
+
+\begin{keybox}
+\centering
+\textbf{Does delaying breast cancer treatment ($>$90 days) cause worse survival? How does the effect vary across geographic regions?}
+\end{keybox}
+
+\vspace{4pt}
+
+\begin{minipage}[t]{0.47\textwidth}
+{\color{FSUgarnet}\textbf{Breast Cancer Facts}}
+\begin{itemize}
+\item Most diagnosed cancer in US women
+\item 2nd leading cause of cancer death
+\item \textbf{Treatment Delay (TD):} diagnosis to first treatment
+\item TD $>$ 90 days $\Rightarrow$ worse 5-year survival
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.50\textwidth}
+{\color{FSUgarnet}\textbf{Florida Cancer Registry (FCR)}}
+\begin{itemize}
+\item $N = 68{,}009$ patients in $K = 67$ counties
+\item 41.3\% right-censored
+\item Treatment: $Z\!=\!1$ (TD $\leq 90$ d), $Z\!=\!0$ (TD $> 90$ d)
+\item Confounders: Age, HR status, Tumor Grade, Biopsy Delay
+\end{itemize}
+\end{minipage}
+\end{posterblock}
+
+\vspace{4pt}
+
+\begin{posterblock}{Key Challenges}
+
+\begin{minipage}[t]{0.47\textwidth}
+{\color{FSUgarnet}\textbf{Data Challenges}}
+\begin{itemize}
+\item[$\triangleright$] \textbf{Spatial dependence} among neighboring counties
+\item[$\triangleright$] \textbf{Right-censoring} (41.3\%)
+\item[$\triangleright$] \textbf{Confounded treatment} --- TD not random
+\item[$\triangleright$] \textbf{Clustered} patients within counties
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.50\textwidth}
+{\color{FSUgarnet}\textbf{Modeling Challenges}}
+\begin{itemize}
+\item[$\triangleright$] \textbf{Non-linear} treatment--confounder--outcome relationships
+\item[$\triangleright$] \textbf{Unmeasured confounding} at county level
+\item[$\triangleright$] Need \textbf{county-} and \textbf{patient-specific} effects
+\item[$\triangleright$] Existing methods: no spatial + nonparametric
+\end{itemize}
+\end{minipage}
+\end{posterblock}
+
+\vspace{4pt}
+
+\begin{posterblock}{Our Innovation}
+
+\begin{keybox}
+\centering
+\textbf{PS-LND:} First framework combining \textbf{nonparametric causal inference} (SoftBART) with \textbf{spatial modeling} (DAGAR) for clustered survival data
+\end{keybox}
+
+\vspace{4pt}
+
+\begin{itemize}[itemsep=4pt]
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{Flexible:} SBART captures smooth non-linear effects without pre-specifying interactions
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{Proper spatial:} DAGAR guarantees valid distribution with interpretable $\rho \in (0,1)$
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{No feedback:} two-stage design isolates PS from outcome model
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{Bayesian UQ:} full posterior with credible intervals
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{Multi-level:} patient, county, and state-wide causal estimates
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{Robust:} works under misspecification \& distributional violations
+\end{itemize}
+
+\vspace{4pt}
+
+{\color{FSUgarnet}\textbf{Key Estimand --- CERM:}}
+$$\boxed{\text{CERM}_{ij}(t^*) = \mathbb{E}\bigl[\{T_{ij}(1)\wedge t^*\} - \{T_{ij}(0)\wedge t^*\} \,\big|\, \mathbf{x}_{ij},\, \text{County}=i\bigr]}$$
+\begin{center}
+\textit{Expected gain in restricted mean survival: short vs.\ long TD}
+\end{center}
+
+\vspace{4pt}
+\textbf{Assumptions:} SUTVA, Consistency, Unconfoundedness, Positivity, Non-informative censoring
+
+\vspace{6pt}
+{\color{FSUgarnet}\textbf{Heterogeneous Effects Preview:}}\\[2pt]
+\centering
+\includegraphics[width=0.85\textwidth]{BD_HR.png}\\
+\raggedright
+\vspace{1pt}
+{\scriptsize Average CERM (months) by Biopsy Delay and HR status at 5 \& 10 years --- effects vary substantially across patient subgroups}
+\end{posterblock}
+
+\end{column}
+
+% ==================== COLUMN 2 (30%+7%): METHOD + SIM ====================
 \begin{column}{0.325\textwidth}
 
-\begin{posterblock}{1. Big Picture \& Motivation}
-\textbf{Breast cancer:} Most frequently diagnosed cancer; 2nd leading cause of cancer death among US women.
+\begin{methodbox}{Proposed Method: PS-LND Framework}
 
-\vspace{3pt}
-\textbf{Treatment Delay (TD):} Interval between diagnosis and first treatment. Delays $>$90 days significantly worsen 5-year survival rates.
-
-\vspace{3pt}
-\textbf{Florida Cancer Registry (FCR):} $N\!=\!68{,}009$ patients $\times$ $K\!=\!67$ counties; 41.3\% censoring; 6 strata (2 races $\times$ 3 stages).
-
-\vspace{3pt}
-\begin{highlightbox}
 \centering
-\textbf{Goal:} Estimate county-specific and patient-specific \textbf{causal effects} of short TD ($\leq$90 days) on survival while accommodating spatial association.
-\end{highlightbox}
-\end{posterblock}
-
-\vspace{4pt}
-
-\begin{posterblock}{2. Key Challenges}
-\begin{enumerate}[label=\textcolor{FSUgarnet}{\textbf{\arabic*.}}]
-\item \textbf{Spatial dependence} among neighboring counties
-\item \textbf{Non-linear} treatment--confounder--outcome relationships
-\item \textbf{Right-censored} survival data (41.3\% censoring)
-\item \textbf{Non-random treatment} assignment with confounding
-\item \textbf{Clustered structure:} patients nested within counties
-\item Existing methods ignore spatial association or require rigid parametric forms
-\end{enumerate}
-\end{posterblock}
-
-\vspace{4pt}
-
-\begin{posterblock}{3. Proposed Method: PS-LND (SBART + DAGAR)}
-A \textbf{two-stage Bayesian} approach:
-
-\vspace{4pt}
-\begin{tcolorbox}[colback=verylightblue,colframe=accentblue,arc=2mm,boxrule=1pt,title={\small\color{white}\textbf{Stage 1: Propensity Score}},colbacktitle=accentblue,top=3pt,bottom=3pt]
-\vspace{-4pt}
-$$P(Z_{ij}\!=\!1\mid \mathbf{x}_{ij}, V_i) = \Phi\bigl(b(\mathbf{x}_{ij}) + V_i\bigr)$$
-\vspace{-8pt}
-\begin{itemize}
-\item $b(\cdot)$: \textbf{SBART} prior; $\mathbf{V}$: \textbf{DAGAR} spatial prior
-\item Output: estimated PS $\hat{e}_{ij}$
-\end{itemize}
-\end{tcolorbox}
+{\small\textbf{Data} $(y,\delta,z,\mathbf{x})$\; $\longrightarrow$\; \textbf{Stage 1:} PS $\hat{e}_{ij}$\; $\longrightarrow$\; \textbf{Stage 2:} Outcome\; $\longrightarrow$\; {\color{accentgreen}\textbf{Causal Effects}}}
+\raggedright
 
 \vspace{3pt}
-\begin{tcolorbox}[colback=verylightblue,colframe=accentgreen,arc=2mm,boxrule=1pt,title={\small\color{white}\textbf{Stage 2: Outcome Model (Log-Normal AFT)}},colbacktitle=accentgreen!80!black,top=3pt,bottom=3pt]
-\vspace{-4pt}
-$$\log T_{ij} \sim N\!\bigl(\underbrace{\mu(\mathbf{x}_{ij}, \hat{e}_{ij})}_{\text{prognostic}} + \underbrace{\tau(\mathbf{x}_{ij})}_{\text{treatment}}\!Z_{ij} + \underbrace{W_i}_{\text{spatial}},\; \sigma^2\bigr)$$
-\vspace{-8pt}
+
+\begin{stagebox}{Stage 1: Propensity Score (Spatial Probit-SBART)}
+\vspace{-3pt}
+$$P(Z_{ij}=1\mid \mathbf{x}_{ij}, V_i) = \Phi\!\bigl(\underbrace{b(\mathbf{x}_{ij})}_{\text{SBART}} + \underbrace{V_i}_{\text{DAGAR}}\bigr)$$
+\vspace{-6pt}
 \begin{itemize}
-\item $\mu,\tau$: \textbf{SBART} priors (BCF structure); $\mathbf{W}$: \textbf{DAGAR} prior
+\item $b(\cdot)$: unknown function --- \textbf{Soft BART prior} (smooth sigmoid splits)
+\item $\mathbf{V} \sim N(\mathbf{0},\, \tau_v^{-1}\mathbf{Q}(\rho_v)^{-1})$: \textbf{DAGAR prior} for spatial confounding
+\item Output: $\hat{e}_{ij} = E[\Phi\{b(\mathbf{x}_{ij}) + V_i\} \mid \mathcal{D}_1]$
 \end{itemize}
-\end{tcolorbox}
+\end{stagebox}
+
+\vspace{3pt}
+
+\begin{stagebox}{Stage 2: Outcome Model (Log-Normal AFT + BCF)}
+\vspace{-3pt}
+$$\log T_{ij} \sim N\!\Bigl(\underbrace{\mu(\mathbf{x}_{ij}, \hat{e}_{ij})}_{\text{prognostic SBART}} + \underbrace{\tau(\mathbf{x}_{ij})}_{\text{treatment SBART}}\!\cdot Z_{ij} + \underbrace{W_i}_{\text{DAGAR}},\;\; \sigma^2\Bigr)$$
+\vspace{-6pt}
+\begin{itemize}
+\item $\mu(\cdot)$: baseline survival (includes $\hat{e}_{ij}$ for targeted selection)
+\item $\tau(\cdot)$: heterogeneous treatment effect
+\item $\mathbf{W} \sim N(\mathbf{0},\, \tau_w^{-1}\mathbf{Q}(\rho_w)^{-1})$: county-level spatial effects
+\item Censored $y_{ij}$: data augmentation $\to$ sample latent $\tilde{y}_{ij}$
+\end{itemize}
+\end{stagebox}
 
 \vspace{4pt}
-\textbf{Key Estimand --- CERM:}
-\vspace{-2pt}
-$$\text{CERM}_{ij}(t^*) = \mathbb{E}[\{T_{ij}(1)\wedge t^*\} - \{T_{ij}(0)\wedge t^*\} \mid \mathbf{x}_{ij}, \text{Cluster}=i]$$
-\vspace{-4pt}
 
-\textbf{Advantages:} (i) No feedback issue; (ii) SBART captures smooth nonlinearities; (iii) DAGAR guarantees proper distribution with interpretable $\rho\!\in\!(0,1)$.
-\end{posterblock}
+\begin{minipage}[t]{0.47\textwidth}
+{\color{accentblue}\textbf{Why SBART?}}
+\begin{itemize}
+\item Smooth sigmoid splits
+\item No pre-specified interactions
+\item Proven for causal inference
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.50\textwidth}
+{\color{accentblue}\textbf{Why DAGAR over CAR/ICAR?}}
+\begin{itemize}
+\item \textbf{Proper} joint distribution
+\item Positive-definite precision
+\item Interpretable $\rho_w \in (0,1)$
+\item Scalable to many clusters
+\end{itemize}
+\end{minipage}
+
+\vspace{2pt}
+
+{\small\textbf{Aggregation:} $\widehat{\text{ACERM}}_i = \frac{1}{n_i}\sum_j\widehat{\text{CERM}}_{ij}$;\quad $\widehat{\text{RATE}} = \frac{1}{N}\sum_{i,j}\widehat{\text{CERM}}_{ij}$}
+
+\end{methodbox}
 
 \vspace{4pt}
 
-\begin{posterblock}{4. Simulation Study}
-$K\!=\!35$ clusters, $N\!=\!1{,}750$, 5 confounders, 150 replications.
+% --- SIMULATION (compact ~7%) ---
+\begin{methodbox}{Simulation Results}
 
-\vspace{4pt}
+$K\!=\!35$ clusters on $5\!\times\!7$ grid, $N\!=\!1750$, 5 confounders, 150 replications
+
+\vspace{3pt}
 \begin{adjustbox}{max width=\textwidth}
+\renewcommand{\arraystretch}{1.1}
 \small
 \begin{tabular}{ll >{\bfseries}c c c c}
 \toprule
 \textbf{Scenario} & \textbf{Metric} & \textbf{PS-LND} & riAFTBART & PSW-Fr. & IPW \\
 \midrule
-\multirow{2}{*}{\shortstack[l]{\textbf{1:} Correctly\\specified}}
-  & Cov.\ (Cl.4, $t\!=\!15$) & \cellcolor{verylightblue}0.93 & 0.46 & 0.97 & 0.39 \\
-  & MAE (Cl.4, $t\!=\!15$) & \cellcolor{verylightblue}0.01 & 0.58 & 0.23 & 0.07 \\
-\midrule
-\multirow{2}{*}{\shortstack[l]{\textbf{2:} Mis-\\specified}}
-  & Cov.\ (Cl.10, $t\!=\!5$) & \cellcolor{verylightblue}0.95 & 0.89 & 0.64 & 0.53 \\
-  & MAE (Cl.10, $t\!=\!15$) & \cellcolor{verylightblue}0.02 & 0.56 & 0.49 & 0.07 \\
-\midrule
-\multirow{2}{*}{\shortstack[l]{\textbf{3:} Weibull +\\50\% cens.}}
-  & Cov.\ (Cl.4, $t\!=\!15$) & \cellcolor{verylightblue}0.90 & 0.67 & 0.76 & 0.42 \\
-  & MAE (Cl.4, $t\!=\!5$) & \cellcolor{verylightblue}0.03 & 0.37 & 0.10 & 0.58 \\
+\textbf{1:} Correct & Cov / MAE & \cellcolor{vlgreen}0.93--0.97 / 0.01 & 0.46--0.95 / 0.08--0.58 & 0.54--0.97 / 0.08--0.50 & 0.38--0.52 / 0.06 \\
+\textbf{2:} Misspec. & Cov / MAE & \cellcolor{vlgreen}0.92--0.95 / 0.01 & 0.77--0.89 / 0.20--0.79 & 0.64--0.89 / 0.21--0.63 & 0.42--0.53 / 0.06 \\
+\textbf{3:} Weibull & Cov / MAE & \cellcolor{vlgreen}0.87--0.90 / 0.03 & 0.55--0.68 / 0.24--0.66 & 0.76--0.82 / 0.08--0.21 & 0.42--0.47 / 0.53 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
 
-\vspace{4pt}
-\begin{highlightbox}
+\vspace{3pt}
+\begin{findingbox}
 \centering
-\textbf{PS-LND: best coverage \& lowest MAE} across all scenarios.
-\end{highlightbox}
+\textbf{PS-LND: best coverage \& lowest MAE} --- robust under misspecification \& distributional violations
+\end{findingbox}
 
-\vspace{2pt}
-\begin{minipage}{0.48\textwidth}
+\vspace{3pt}
 \centering
-\includegraphics[width=0.9\textwidth]{poster_figs/sim1_crace-1.png}\\[-2pt]
-{\scriptsize Est.\ vs.\ true CRACE}
-\end{minipage}\hfill
-\begin{minipage}{0.48\textwidth}
-\centering
-\includegraphics[width=0.9\textwidth]{poster_figs/sim1_cpsce-1.png}\\[-2pt]
-{\scriptsize Est.\ vs.\ true CSPCE}
-\end{minipage}
-\end{posterblock}
+\includegraphics[width=0.46\textwidth]{poster_figs/sim1_crace-1.png}\hfill
+\includegraphics[width=0.46\textwidth]{poster_figs/sim1_cpsce-1.png}\\
+\raggedright
+{\scriptsize Est.\ (blue, 95\% CI) vs.\ true (dashed) causal effects across 10 clusters (Scenario 1)}
+
+\end{methodbox}
 
 \end{column}
 
-% ===================== COLUMN 2 =====================
-\begin{column}{0.34\textwidth}
+% ==================== COLUMN 3 (28%): APPLICATION ====================
+\begin{column}{0.31\textwidth}
 
-\begin{posterblock}{5. FCR Results: Patient-Level Causal Effects (Broward County)}
+\begin{appblock}{Application: Florida Cancer Registry --- WA-Distant Stratum}
+
+{\color{accentgreen!80!black}\textbf{Patient-Level Effects (Broward County)}}\\[2pt]
 \centering
-\includegraphics[width=0.88\textwidth]{poster_figs/cerm_plot.png}\\
+\includegraphics[width=0.93\textwidth]{poster_figs/cerm_plot.png}\\
 \raggedright
 \vspace{1pt}
-{\scriptsize Point \& 95\% CI of CERM (months) at 5 and 10 years for WA-Distant patients ($n\!=\!183$) across 36 covariate combinations.}
+{\scriptsize $\widehat{\text{CERM}}$ (months) at 5 \& 10 yr by Age, BD, HR, TG ($n\!=\!183$)}
+
 \vspace{3pt}
 \begin{itemize}
-\item HR$-$, no BD: strongest benefit (\textbf{13.8--15.9 mo.} at 10 yr)
-\item HR$+$, no BD: moderate (\textbf{6.9--9.6 mo.})
-\item With BD: \textbf{no significant effect} (CI $\ni$ 0)
+\item HR$-$, no BD: \textbf{13.8--15.9 mo.} gain (10 yr)
+\item HR$+$, no BD: \textbf{6.9--9.6 mo.} gain
+\item With BD: no significant effect (CI $\ni$ 0)
 \end{itemize}
-\vspace{3pt}
-\begin{minipage}{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth]{BD_HR.png}\\[-2pt]
-{\scriptsize CERM by BD/HR status}
-\end{minipage}\hfill
-\begin{minipage}{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth]{Age.png}\\[-2pt]
-{\scriptsize CERM by age group}
-\end{minipage}
-\end{posterblock}
 
-\vspace{4pt}
-
-\begin{posterblock}{6. FCR Results: County-Level Spatial Patterns}
+\vspace{5pt}
+{\color{accentgreen!80!black}\textbf{County-Level Spatial Patterns}}\\[2pt]
 \centering
-\includegraphics[width=0.92\textwidth]{poster_figs/crate-1.png}\\
+\includegraphics[width=0.93\textwidth]{poster_figs/crate-1.png}\\
 \raggedright
 \vspace{1pt}
-{\scriptsize $\widehat{\text{ACERM}}_i$ at 5 (left) and 10 (right) years. Yellow $\approx$ 0 mo.\ $\to$ green $=$ 15+ mo.; gray $=$ no data.}
+{\scriptsize $\widehat{\text{ACERM}}_i$ at 5 (L) \& 10 (R) yr. Yellow $=$ 0 mo $\to$ dark $=$ 15+ mo; gray $=$ no data}
+
 \vspace{3pt}
 \begin{itemize}
-\item \textbf{Highest:} Union ($>$15 mo.), Baker ($>$13 mo.)
-\item \textbf{Near-zero:} Bradford (CI $\ni$ 0)
-\item Clear \textbf{spatial clustering} of treatment effects
+\item Highest: Union ($>$15 mo.), Baker ($>$13 mo.)
+\item Near-zero: Bradford (CI $\ni$ 0)
+\item Clear \textbf{spatial clustering} of effects
 \end{itemize}
-\vspace{2pt}
+
+\vspace{5pt}
+{\color{accentgreen!80!black}\textbf{State-Wide Treatment Effects}}\\[2pt]
 \centering
-\includegraphics[width=0.90\textwidth]{poster_figs/acermt_map-1.png}\\
-\raggedright
-\vspace{1pt}
-{\scriptsize $\widehat{\text{ACERMT}}_i$ for treated patients. Glades County $>$14 months.}
-\end{posterblock}
-
-\end{column}
-
-% ===================== COLUMN 3 =====================
-\begin{column}{0.315\textwidth}
-
-\begin{posterblock}{7. FCR Results: State-Wide Treatment Effects}
-\centering
-\begin{adjustbox}{max width=0.95\textwidth}
-\begin{tabular}{lcccc}
+\begin{adjustbox}{max width=0.93\textwidth}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Estimand} & \textbf{Interval} & $\boldsymbol{N}$ & \textbf{Est.\ (mo.)} & \textbf{95\% CI} \\
+\textbf{Estimand} & $\boldsymbol{N}$ & \textbf{Est.\ (mo.)} & \textbf{95\% CI} \\
 \midrule
-\rowcolor{verylightblue} RATE & 10 yr & 1994 & \textbf{7.62} & (4.42, 10.86) \\
-RATT & 10 yr & 687 & 6.74 & (3.09, 10.08) \\
-\rowcolor{verylightblue} RATU & 10 yr & 1307 & \textbf{8.09} & (4.60, 11.42) \\
-RATE & 5 yr & 1994 & 4.43 & (2.56, 6.23) \\
-\rowcolor{verylightblue} RATT & 5 yr & 687 & 3.93 & (2.15, 5.64) \\
-RATU & 5 yr & 1307 & 4.70 & (2.75, 6.51) \\
+\rowcolor{vlgreen} RATE (10 yr) & 1994 & \textbf{7.62} & (4.42, 10.86) \\
+RATT (10 yr) & 687 & 6.74 & (3.09, 10.08) \\
+\rowcolor{vlgreen} RATU (10 yr) & 1307 & \textbf{8.09} & (4.60, 11.42) \\
+RATE (5 yr) & 1994 & 4.43 & (2.56, 6.23) \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
 
-\vspace{6pt}
 \raggedright
+\vspace{3pt}
 \begin{itemize}
-\item \textbf{No CI contains zero} $\Rightarrow$ strong evidence of survival benefit
-\item RATU $>$ RATE $>$ RATT: patients with \textbf{long TD stand to gain the most}
-\item 5-yr effects are $\approx$58\% of 10-yr effects $\Rightarrow$ benefits \textbf{persist beyond 5 years}
+\item \textbf{No CI contains zero} $\Rightarrow$ strong evidence
+\item \textbf{RATU $>$ RATT}: long-TD patients gain the most
+\item Benefits persist beyond 5 years
 \end{itemize}
 
-\vspace{4pt}
+\vspace{5pt}
 \centering
-\includegraphics[width=0.85\textwidth]{poster_figs/spte_plot.png}\\
+\includegraphics[width=0.82\textwidth]{poster_figs/spte_plot.png}\\
 \raggedright
-\vspace{2pt}
-{\small $\widehat{\text{SPTE}}(t)$: Causal effect on survival probability over time. Peaks at \textbf{11\%} at $t\!=\!2.2$ years; entire 95\% CI above 0 throughout follow-up.}
-\end{posterblock}
+\vspace{1pt}
+{\scriptsize $\widehat{\text{SPTE}}(t)$: peak \textbf{11\%} survival gain at $t\!=\!2.2$ yr; CI $>0$ throughout}
 
-\vspace{4pt}
-
-\begin{posterblock}{8. Conclusions \& Policy Implications}
+\vspace{5pt}
+\begin{keybox}
+\centering
+{\large\textbf{Policy Takeaway}}\\[2pt]
 \begin{itemize}[itemsep=3pt]
-\item[\color{accentgreen}\textbullet] \textbf{PS-LND} outperforms riAFT-BART, PSW-Frailty, and IPW in all simulations
-\item[\color{accentgreen}\textbullet] Short TD ($\leq$90 days) provides significant survival benefit: \textbf{7.6 months} average gain over 10 years for WA-Distant patients in FL
-\item[\color{accentgreen}\textbullet] \textbf{Significant spatial heterogeneity:} effects vary from near-zero to $>$15 months across counties
-\item[\color{accentgreen}\textbullet] \textbf{HR$-$ patients without biopsy delay} benefit most --- priority targets for policy intervention
-\item[\color{accentgreen}\textbullet] Patients currently experiencing \textbf{long TD have the most to gain} from intervention (RATU $>$ RATT)
-\item[\color{accentgreen}\textbullet] Results support \textbf{localized Patient Navigation Programs} to reduce TD in high-impact counties
+\item Short TD $\Rightarrow$ \textbf{7.6 mo.} average survival gain
+\item Priority: \textbf{HR$-$ patients without biopsy delay}
+\item Target \textbf{rural northern counties} for navigation programs
 \end{itemize}
-\end{posterblock}
+\end{keybox}
 
-\vspace{4pt}
-
-\begin{posterblock}{9. References \& Acknowledgments}
-{\footnotesize
-\textbf{Refs:}
-Bhattacharya et al.\ (2025), \textit{AOAS} $\bullet$
-Chipman et al.\ (2010) $\bullet$
-Datta et al.\ (2019) $\bullet$
-Hahn et al.\ (2020) $\bullet$
-Hu \& Lin (2022)
-\quad\textbf{Code:} \texttt{github.com/indrabati646/PS-LND-DAGAR}
-\quad\textbf{Funding:} NIH R03CA205018-01, R21DE034124-01A1; NSF 2413549
-}
-\end{posterblock}
+\end{appblock}
 
 \end{column}
+
 \end{columns}
+
+% ====== FOOTER ======
+\vspace{3pt}
+\begin{tcolorbox}[
+  colback=FSUgarnet, colframe=FSUgarnet, arc=0mm, boxrule=0pt,
+  left=30pt, right=30pt, top=4pt, bottom=4pt
+]
+{\color{white}\small
+\textbf{Contact:} dg20ea@fsu.edu
+\hfill
+\textbf{Code:} \texttt{github.com/indrabati646/PS-LND-DAGAR}
+\hfill
+\textbf{Funding:} NIH R03CA205018-01, R21DE034124-01A1; NSF 2413549
+\hfill
+\textbf{Coauthors:} I.\ Bhattacharya, D.\ Sinha, G.\ Rust (FSU)
+}
+\end{tcolorbox}
 
 \end{frame}
 \end{document}
