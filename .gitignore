@@ -1,0 +1,19 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Intermediate/temporary figure crops
+poster_figs/fullpage*.png
+poster_figs/cerm_broward*.png
+poster_figs/cerm_fig*.png
+poster_figs/acerm_map*.png
+poster_figs/cratt*.png
+poster_figs/cratu*.png
