@@ -1,5 +1,5 @@
 \documentclass[final]{beamer}
-\usepackage[orientation=landscape,size=a0,scale=0.85]{beamerposter}
+\usepackage[orientation=landscape,size=a0,scale=1.02]{beamerposter}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -11,6 +11,7 @@
 \usepackage{colortbl}
 \usepackage{array}
 \usepackage{adjustbox}
+\usepackage{tabularx}
 \usepackage{enumitem}
 \setlist[itemize]{leftmargin=12pt,itemsep=3pt,topsep=2pt,parsep=0pt}
 
@@ -103,7 +104,7 @@
 
 \begin{keybox}
 \centering
-\textbf{Does delaying breast cancer treatment ($>$90 days) \emph{cause} worse survival? And how does the effect vary across geographic regions?}
+\textbf{Does delaying breast cancer treatment ($>$90 days) \emph{cause} worse survival? How does the effect vary across geographic regions?}
 \end{keybox}
 
 \vspace{4pt}
@@ -123,7 +124,7 @@
 \item $N = 68{,}009$ patients, $K = 67$ counties
 \item 41.3\% right-censored
 \item $Z\!=\!1$ (TD $\leq 90$ d) vs.\ $Z\!=\!0$ (TD $> 90$ d)
-\item Confounders: Age, HR status, Tumor Grade, Biopsy Delay
+\item Confounders: Age, HR, Tumor Grade, Biopsy Delay
 \end{itemize}
 \end{minipage}
 \end{posterblock}
@@ -153,7 +154,31 @@
 
 \vspace{4pt}
 
-\begin{posterblock}{Goal \& Causal Estimands}
+\begin{posterblock}{The Gap --- No Unified Method Exists}
+\centering
+\begin{adjustbox}{width=0.92\textwidth}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l c c c c}
+\toprule
+\textbf{Method} & \textbf{Spatial} & \textbf{Nonparametric} & \textbf{Survival} & \textbf{Causal} \\
+\midrule
+IPW / PSW & $\times$ & $\times$ & $\times$ & $\checkmark$ \\
+riAFTBART & $\times$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+Spatial Frailty & $\checkmark$ & $\times$ & $\checkmark$ & $\times$ \\
+\rowcolor{vlgreen} \textbf{PS-LND (Ours)} & $\boldsymbol{\checkmark}$ & $\boldsymbol{\checkmark}$ & $\boldsymbol{\checkmark}$ & $\boldsymbol{\checkmark}$ \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\raggedright
+\vspace{3pt}
+\begin{itemize}
+\item \textbf{PS-LND} is the first to unify all four in a single Bayesian framework
+\end{itemize}
+\end{posterblock}
+
+\vspace{4pt}
+
+\begin{posterblock}{Causal Estimands}
 
 {\color{FSUgarnet}\textbf{Counterfactual survival:}} $S^{(z)}_{ij}(t\mid\mathbf{x}_{ij}) = P\bigl(T_{ij}(z)\geq t \mid \mathbf{x}_{ij}, \text{County}=i\bigr)$
 
@@ -167,20 +192,17 @@ $\text{CERM}_{ij}(t^*) = \mathbb{E}\bigl[\{T_{ij}(1)\wedge t^*\} - \{T_{ij}(0)\w
 \vspace{4pt}
 {\color{FSUgarnet}\textbf{Multi-resolution aggregation:}}
 \begin{itemize}
-\item \textbf{County:}\; $\text{ACERM}_i(t^*) = \frac{1}{n_i}\sum_{j}\text{CERM}_{ij}(t^*)$\; (also for treated/untreated: ACERMT, ACERMU)
-\item \textbf{State:}\; $\text{RATE}(t^*) = \frac{1}{N}\sum_{i,j}\text{CERM}_{ij}(t^*)$\; (RATT, RATU by group)
-\item \textbf{Survival-prob effect:}\; $\text{SPTE}_i(t) = S^{(1)}_i(t) - S^{(0)}_i(t)$
+\item \textbf{County:}\; $\text{ACERM}_i(t^*) = \frac{1}{n_i}\sum_{j}\text{CERM}_{ij}(t^*)$\; (also ACERMT, ACERMU)
+\item \textbf{State:}\; $\text{RATE}(t^*) = \frac{1}{N}\sum_{i,j}\text{CERM}_{ij}(t^*)$\; (RATT, RATU)
+\item \textbf{Survival-prob:}\; $\text{SPTE}_i(t) = S^{(1)}_i(t) - S^{(0)}_i(t)$
 \end{itemize}
 
-\vspace{4pt}
-{\color{FSUgarnet}\textbf{Identifiability under:}} SUTVA, Consistency, Unconfoundedness, Positivity, Non-informative censoring.
+\vspace{3pt}
+{\color{FSUgarnet}\textbf{Identifiability:}} SUTVA, Consistency, Unconfoundedness, Positivity, Non-informative censoring
 
 \vspace{5pt}
 \centering
-\includegraphics[width=0.92\textwidth]{BD_HR.png}\\
-\raggedright
-\vspace{1pt}
-{\scriptsize Heterogeneous CERM (months) by Biopsy Delay \& HR status --- effects differ sharply across subgroups, motivating a \emph{flexible} model.}
+\includegraphics[width=\textwidth]{BD_HR.png}
 \end{posterblock}
 
 \end{column}
@@ -210,7 +232,7 @@ $$P(Z_{ij}=1\mid \mathbf{x}_{ij}, V_i) = \Phi\!\bigl(\underbrace{b(\mathbf{x}_{i
 $$\log T_{ij} \sim N\!\Bigl(\underbrace{\mu(\mathbf{x}_{ij}, \hat{e}_{ij})}_{\text{prognostic SBART}} + \underbrace{\tau(\mathbf{x}_{ij})}_{\text{treatment SBART}}\!\cdot Z_{ij} + \underbrace{W_i}_{\text{county DAGAR}},\;\; \sigma^2\Bigr)$$
 \vspace{-7pt}
 \begin{itemize}
-\item Separate prognostic $\mu$ \& treatment $\tau$ surfaces handle \textbf{targeted selection}; $\hat{e}_{ij}$ enters as a confounder
+\item Separate prognostic $\mu$ \& treatment $\tau$ surfaces handle \textbf{targeted selection}; $\hat{e}_{ij}$ enters as confounder
 \item $\mathbf{W}\sim N(\mathbf{0},\tau_w^{-1}\mathbf{Q}(\rho_w)^{-1})$: county random effects; right-censoring via data augmentation
 \end{itemize}
 \end{stagebox}
@@ -240,7 +262,7 @@ $$W_i \mid W_{\mathcal{N}(i)} \sim N\!\Bigl(\tfrac{\rho_w}{1+(n_i-1)\rho_w^2}\!\
 \end{minipage}\hfill
 \begin{minipage}[t]{0.49\textwidth}
 \begin{itemize}[itemsep=4pt]
-\item[\color{accentgreen}\Large$\checkmark$] \textbf{No feedback:} two-stage design isolates PS from a misspecified outcome; efficient
+\item[\color{accentgreen}\Large$\checkmark$] \textbf{No feedback:} two-stage design isolates PS from misspecified outcome
 \item[\color{accentgreen}\Large$\checkmark$] \textbf{Targeted selection (BCF):} splits prognostic vs.\ treatment effect for clean heterogeneity
 \item[\color{accentgreen}\Large$\checkmark$] \textbf{County-specific \& multi-level:} full posterior for patient, county \& state effects
 \end{itemize}
@@ -250,34 +272,29 @@ $$W_i \mid W_{\mathcal{N}(i)} \sim N\!\Bigl(\tfrac{\rho_w}{1+(n_i-1)\rho_w^2}\!\
 \vspace{4pt}
 
 \begin{methodbox}{Simulation: Verifying the Method}
-$K\!=\!35$ clusters on a $5\!\times\!7$ grid, $N\!=\!1750$, 5 confounders, 150 replications. Method stress-tested under three regimes:
+$K\!=\!35$ clusters on a $5\!\times\!7$ grid, $N\!=\!1750$, 5 confounders, 150 replications.
 
 \vspace{3pt}
-\begin{adjustbox}{max width=\textwidth}
-\renewcommand{\arraystretch}{1.15}
-\footnotesize
-\begin{tabular}{p{1.9cm} p{4.7cm} p{6.5cm}}
+\begin{tabularx}{\linewidth}{p{2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
 \toprule
 \textbf{Scenario} & \textbf{What it tests} & \textbf{Data-generating truth} \\
 \midrule
-\textbf{1. Ideal} & Correct specification & Log-Normal $+$ DAGAR effects ($\rho_w\!=\!0.7$); nonlinear main effects $+$ treatment interactions \\
-\textbf{2. Misspecified} & Robustness to model error & Adds covariate $\times$ random-effect interactions $g(\mathbf{x},z,w)$ omitted by fitted model \\
-\textbf{3. Stress test} & Distribution violation $+$ heavy censoring & Weibull (not log-Normal), 50\% censoring, \emph{strong} confounding \\
+\textbf{1.\ Ideal} & Correct specification & Log-Normal $+$ DAGAR ($\rho_w\!=\!0.7$); nonlinear main effects $+$ treatment interactions \\[2pt]
+\textbf{2.\ Misspec.} & Robustness to model error & Adds covariate $\times$ random-effect interactions $g(\mathbf{x},z,w)$ omitted by fitted model \\[2pt]
+\textbf{3.\ Stress} & Distribution violation $+$ heavy censoring & Weibull (not log-Normal), 50\% censoring, strong confounding \\
 \bottomrule
-\end{tabular}
-\end{adjustbox}
+\end{tabularx}
 
 \vspace{4pt}
-\begin{adjustbox}{max width=\textwidth}
-\renewcommand{\arraystretch}{1.1}
-\small
+\begin{adjustbox}{width=\linewidth}
+\renewcommand{\arraystretch}{1.15}
 \begin{tabular}{ll >{\bfseries}c c c c}
 \toprule
 \textbf{Scenario} & \textbf{Metric} & \textbf{PS-LND} & riAFTBART & PSW-Fr. & IPW \\
 \midrule
-\textbf{1. Ideal} & Cov / MAE & \cellcolor{vlgreen}0.93--0.97 / 0.01 & 0.46--0.95 / 0.08--0.58 & 0.54--0.97 / 0.08--0.50 & 0.38--0.52 / 0.06 \\
-\textbf{2. Misspec.} & Cov / MAE & \cellcolor{vlgreen}0.92--0.95 / 0.01 & 0.77--0.89 / 0.20--0.79 & 0.64--0.89 / 0.21--0.63 & 0.42--0.53 / 0.06 \\
-\textbf{3. Stress} & Cov / MAE & \cellcolor{vlgreen}0.87--0.90 / 0.03 & 0.55--0.68 / 0.24--0.66 & 0.76--0.82 / 0.08--0.21 & 0.42--0.47 / 0.53 \\
+\textbf{1.\ Ideal} & Cov / MAE & \cellcolor{vlgreen}0.93--0.97 / 0.01 & 0.46--0.95 / 0.08--0.58 & 0.54--0.97 / 0.08--0.50 & 0.38--0.52 / 0.06 \\
+\textbf{2.\ Misspec.} & Cov / MAE & \cellcolor{vlgreen}0.92--0.95 / 0.01 & 0.77--0.89 / 0.20--0.79 & 0.64--0.89 / 0.21--0.63 & 0.42--0.53 / 0.06 \\
+\textbf{3.\ Stress} & Cov / MAE & \cellcolor{vlgreen}0.87--0.90 / 0.03 & 0.55--0.68 / 0.24--0.66 & 0.76--0.82 / 0.08--0.21 & 0.42--0.47 / 0.53 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
@@ -294,42 +311,37 @@ $K\!=\!35$ clusters on a $5\!\times\!7$ grid, $N\!=\!1750$, 5 confounders, 150 r
 % ==================== COLUMN 3 (28%): APPLICATION ====================
 \begin{column}{0.28\textwidth}
 
-\begin{appblock}{Application: Florida Cancer Registry --- WA-Distant Stratum}
+\begin{appblock}{Application: Florida Cancer Registry --- WA-Distant}
 
 {\color{accentgreen!80!black}\textbf{Patient-Level Effects (Broward County)}}\\[2pt]
 \centering
-\includegraphics[width=0.97\textwidth]{poster_figs/cerm_plot.png}\\
+\includegraphics[width=\textwidth]{poster_figs/cerm_plot.png}\\
 \raggedright
-\vspace{1pt}
-{\scriptsize $\widehat{\text{CERM}}$ (months) at 5 \& 10 yr by Age, BD, HR, Tumor Grade ($n\!=\!183$)}
 
 \vspace{3pt}
 \begin{itemize}
 \item HR$-$, no BD: \textbf{13.8--15.9 mo.} gain (10 yr)
 \item HR$+$, no BD: \textbf{6.9--9.6 mo.} gain
-\item With biopsy delay: no significant effect (CI $\ni$ 0)
+\item With biopsy delay: effect vanishes (CI $\ni$ 0)
 \end{itemize}
 
-\vspace{4pt}
+\vspace{5pt}
 {\color{accentgreen!80!black}\textbf{County-Level Spatial Patterns}}\\[2pt]
 \centering
-\includegraphics[width=0.97\textwidth]{poster_figs/crate-1.png}\\
+\includegraphics[width=\textwidth]{poster_figs/crate-1.png}\\
 \raggedright
-\vspace{1pt}
-{\scriptsize $\widehat{\text{ACERM}}_i$ at 5 (left) \& 10 (right) yr. Yellow $=0$ mo $\to$ dark $=15{+}$ mo; gray $=$ no data}
 
 \vspace{3pt}
 \begin{itemize}
 \item Highest: Union ($>$15 mo.), Baker ($>$13 mo.)
 \item Near-zero: Bradford (CI $\ni$ 0)
-\item Clear \textbf{spatial clustering} of treatment effects
 \end{itemize}
 
-\vspace{4pt}
+\vspace{5pt}
 {\color{accentgreen!80!black}\textbf{State-Wide Treatment Effects}}\\[2pt]
 \centering
-\begin{adjustbox}{max width=0.97\textwidth}
-\renewcommand{\arraystretch}{1.1}
+\begin{adjustbox}{width=0.97\linewidth}
+\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lccc}
 \toprule
 \textbf{Estimand} & $\boldsymbol{N}$ & \textbf{Est.\ (mo.)} & \textbf{95\% CI} \\
@@ -345,19 +357,17 @@ RATE (5 yr) & 1994 & 4.43 & (2.56, 6.23) \\
 \raggedright
 \vspace{3pt}
 \begin{itemize}
-\item \textbf{No CI contains zero} $\Rightarrow$ strong evidence
-\item \textbf{RATU $>$ RATT}: long-TD patients gain the most
-\item Benefits persist beyond 5 years
+\item All CIs exclude zero $\Rightarrow$ strong evidence of benefit
+\item RATU $>$ RATT: long-TD patients gain the most
 \end{itemize}
 
-\vspace{4pt}
-\centering
-\includegraphics[width=0.82\textwidth]{poster_figs/spte_plot.png}\\
-\raggedright
-\vspace{1pt}
-{\scriptsize $\widehat{\text{SPTE}}(t)$: peak \textbf{11\%} survival-probability gain at $t\!=\!2.2$ yr; CI $>0$ throughout}
+\vspace{3pt}
+\begin{findingbox}
+{\color{accentgreen!80!black}\textbf{Survival Probability:}} Peak \textbf{11\%} survival-probability gain at $t\!=\!2.2$ yr; CI $> 0$ for all $t$\\[2pt]
+{\color{accentgreen!80!black}\textbf{Spatial Fit:}} $\hat{\rho}_w = 0.72$ (strong spatial borrowing); $\hat{\rho}_v = 0.58$ (spatial confounding present)
+\end{findingbox}
 
-\vspace{4pt}
+\vspace{3pt}
 \begin{keybox}
 \centering
 {\large\textbf{Policy Takeaway}}\\[2pt]
@@ -365,6 +375,7 @@ RATE (5 yr) & 1994 & 4.43 & (2.56, 6.23) \\
 \item Short TD $\Rightarrow$ \textbf{7.6 mo.} average survival gain statewide
 \item Priority: \textbf{HR$-$ patients without biopsy delay}
 \item Target \textbf{rural northern counties} for patient-navigation programs
+\item Spatial model reveals \textbf{county-level heterogeneity} missed by global estimates
 \end{itemize}
 \end{keybox}
 
